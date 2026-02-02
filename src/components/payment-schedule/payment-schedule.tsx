@@ -1,0 +1,1005 @@
+import type { FC } from "react";
+
+import React, { useState } from "react";
+
+import {
+  Box,
+  Chip,
+  Paper,
+  Table,
+  Button,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableHead,
+  Typography,
+  TableContainer,
+  IconButton,
+  Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
+import { format, addMonths } from "date-fns";
+import { uz } from "date-fns/locale";
+
+import { Iconify } from "../iconify";
+import { PaymentModal } from "../payment-modal";
+import { StatusBadge } from "./StatusBadge";
+
+interface PaymentScheduleItem {
+  month: number;
+  date: string;
+  amount: number;
+  isPaid: boolean;
+  isInitial?: boolean;
+}
+
+interface PaymentScheduleProps {
+  startDate: string;
+  monthlyPayment: number;
+  period: number;
+  initialPayment?: number;
+  initialPaymentDueDate?: string;
+  contractId?: string;
+  remainingDebt?: number;
+  totalPaid?: number;
+  totalPrice?: number; 
+  prepaidBalance?: number; 
+  payments?: Array<{
+    _id?: string; 
+    date: Date;
+    amount: number;
+    actualAmount?: number; 
+    isPaid: boolean;
+    paymentType?: string;
+    status?: string;
+    remainingAmount?: number;
+    excessAmount?: number;
+    expectedAmount?: number;
+    confirmedAt?: Date;
+    notes?: string | { text?: string };
+  }>;
+  onPaymentSuccess?: () => void;
+}
+
+const PaymentSchedule: FC<PaymentScheduleProps> = ({
+  startDate,
+  monthlyPayment,
+  period,
+  initialPayment = 0,
+  initialPaymentDueDate,
+  contractId,
+  remainingDebt = 0,
+  totalPaid = 0,
+  totalPrice, 
+  prepaidBalance = 0, 
+  payments = [],
+  onPaymentSuccess,
+}) => {
+  const [paymentModal, setPaymentModal] = useState<{
+    open: boolean;
+    amount: number;
+    isPayAll?: boolean;
+    paymentId?: string;
+  }>({
+    open: false,
+    amount: 0,
+    isPayAll: false,
+    paymentId: undefined,
+  });
+
+  const [noteDialog, setNoteDialog] = useState<{
+    open: boolean;
+    note: string;
+    month: string;
+  }>({
+    open: false,
+    note: "",
+    month: "",
+  });
+  React.useEffect(() => {}, [payments]);
+
+  const generateSchedule = (): PaymentScheduleItem[] => {
+    const schedule: PaymentScheduleItem[] = [];
+    const start = new Date(startDate);
+
+    // ✅ TUZATILDI: period nol yoki undefined bo'lsa, xato
+    if (!period || period <= 0) {
+      console.warn('⚠️ Period is invalid:', period);
+      return schedule;
+    }
+
+    const initialPaymentRecord = payments.find(
+      (p) => p.paymentType === "initial" && p.isPaid
+    );
+    const isInitialPaid = !!initialPaymentRecord;
+
+    if (initialPayment > 0) {
+      // ✅ TUZATILDI: Boshlang'ich to'lov sanasi = startDate (shartnoma boshlanish sanasi)
+      // initialPaymentDueDate emas - bu har oy to'lanadigan kun
+      const initialDate = start; // startDate ishlatish
+
+      schedule.push({
+        month: 0,
+        date: format(initialDate, "yyyy-MM-dd"),
+        amount: initialPayment,
+        isPaid: isInitialPaid,
+        isInitial: true,
+      });
+    }
+    const monthlyPayments = payments
+      .filter((p) => p.paymentType !== "initial" && p.isPaid)
+      .sort((a, b) => {
+        const dateA = a.confirmedAt
+          ? new Date(a.confirmedAt)
+          : new Date(a.date);
+        const dateB = b.confirmedAt
+          ? new Date(b.confirmedAt)
+          : new Date(b.date);
+
+        if (dateA.getTime() === dateB.getTime()) {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        }
+
+        return dateA.getTime() - dateB.getTime();
+      });
+
+    // ✅ TUZATILDI: Oylik to'lovlar uchun initialPaymentDueDate ishlatish
+    // Bu har oy to'lanadigan kun (masalan: 10)
+    const monthlyPaymentStartDate = initialPaymentDueDate 
+      ? new Date(initialPaymentDueDate)
+      : addMonths(start, 1); // Fallback: startDate + 1 oy
+
+    for (let i = 1; i <= period; i++) {
+      // i=1 uchun monthlyPaymentStartDate, i=2 uchun +1 oy, va hokazo
+      const paymentDate = addMonths(monthlyPaymentStartDate, i - 1);
+
+      const isPaid = i <= monthlyPayments.length;
+
+      schedule.push({
+        month: i,
+        date: format(paymentDate, "yyyy-MM-dd"),
+        amount: monthlyPayment,
+        isPaid,
+      });
+    }
+
+    return schedule;
+  };
+
+  const schedule = generateSchedule();
+  const today = new Date();
+
+  const handlePayment = (amount: number, paymentId?: string) => {
+  
+    setPaymentModal({ open: true, amount, paymentId });
+  };
+
+  const handlePayAll = () => {
+    setPaymentModal({ open: true, amount: remainingDebt, isPayAll: true });
+  };
+
+  const handlePaymentSuccess = () => {
+    setPaymentModal({
+      open: false,
+      amount: 0,
+      isPayAll: false,
+      paymentId: undefined,
+    });
+    if (onPaymentSuccess) {
+      onPaymentSuccess();
+    } else {
+      console.warn("onPaymentSuccess callback not provided");
+    }
+  };
+
+  return (
+    <>
+      <Paper
+        elevation={0}
+        sx={{ p: { xs: 1, sm: 1.5 }, border: 1, borderColor: "divider" }}
+      >
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={1.5}
+          flexWrap="wrap"
+          gap={1}
+        >
+          <Box>
+            <Typography variant="subtitle1" fontWeight="600">
+              To'lov jadvali
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {(period || 0)} oylik • {(schedule?.filter((s) => s.isPaid).length || 0)}/
+              {(schedule?.length || 0)} to'langan
+            </Typography>
+            {prepaidBalance > 0 && (
+              <Box 
+                display="flex" 
+                alignItems="center" 
+                gap={0.5}
+                sx={{
+                  mt: 0.5,
+                  px: 1,
+                  py: 0.5,
+                  bgcolor: "success.lighter",
+                  borderRadius: 0,
+                  border: "1px solid",
+                  borderColor: "success.main"
+                }}
+              >
+                <Iconify icon="mdi:check-circle" width={16} color="green" />
+                <Typography variant="caption" fontWeight={600} color="success.main">
+                  Oldindan: ${prepaidBalance.toFixed(2)}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+          {remainingDebt > 0 && contractId && (
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              onClick={handlePayAll}
+            >
+              Barchasini to'lash ({remainingDebt.toLocaleString()} $)
+            </Button>
+          )}
+        </Box>
+
+        <TableContainer sx={{ maxHeight: "60vh", overflowX: "auto" }}>
+          <Table
+            size="small"
+            stickyHeader
+            sx={{ minWidth: "100%", width: "100%" }}
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  sx={{
+                    fontWeight: 600,
+                    bgcolor: "grey.50",
+                    py: 0.25,
+                    px: { xs: 0.5, sm: 0.75, md: 1 },
+                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  #
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: 600,
+                    bgcolor: "grey.50",
+                    py: 0.25,
+                    px: { xs: 0.5, sm: 0.75, md: 1 },
+                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Belgilangan sana
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: 600,
+                    bgcolor: "grey.50",
+                    py: 0.25,
+                    px: { xs: 0.5, sm: 0.75, md: 1 },
+                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  To'langan sana
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    fontWeight: 600,
+                    bgcolor: "grey.50",
+                    py: 0.25,
+                    px: { xs: 0.5, sm: 0.75, md: 1 },
+                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Summa
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    fontWeight: 600,
+                    bgcolor: "grey.50",
+                    py: 0.25,
+                    px: { xs: 0.5, sm: 0.75, md: 1 },
+                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  To&apos;langan
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{
+                    fontWeight: 600,
+                    bgcolor: "grey.50",
+                    py: 0.25,
+                    px: { xs: 0.5, sm: 0.75, md: 1 },
+                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Holat
+                </TableCell>
+                {contractId && (
+                  <TableCell
+                    align="center"
+                    sx={{
+                      fontWeight: 600,
+                      bgcolor: "grey.50",
+                      py: 0.25,
+                      px: { xs: 0.5, sm: 0.75, md: 1 },
+                      fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                      borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Amal
+                  </TableCell>
+                )}
+                <TableCell
+                  align="center"
+                  sx={{
+                    fontWeight: 600,
+                    bgcolor: "grey.50",
+                    py: 0.25,
+                    px: { xs: 0.5, sm: 0.75 },
+                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Izoh
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(() => {
+                const sortedPayments = [...payments].sort((a, b) => {
+                  const dateA = a.confirmedAt
+                    ? new Date(a.confirmedAt)
+                    : new Date(a.date);
+                  const dateB = b.confirmedAt
+                    ? new Date(b.confirmedAt)
+                    : new Date(b.date);
+
+                  if (dateA.getTime() === dateB.getTime()) {
+                    return (
+                      new Date(a.date).getTime() - new Date(b.date).getTime()
+                    );
+                  }
+
+                  return dateA.getTime() - dateB.getTime();
+                });
+
+                const paidMonthlyPayments = sortedPayments.filter(
+                  (p) => p.paymentType !== "initial" && p.isPaid
+                );
+
+                let previousExcess = 0;
+
+                return schedule.map((item, index) => {
+                  const isPast = new Date(item.date) < today;
+
+                  let actualPayment;
+
+                  if (item.isInitial) {
+                    actualPayment = payments.find(
+                      (p) => p.paymentType === "initial" && p.isPaid
+                    );
+                  } else {
+                    actualPayment = paidMonthlyPayments[item.month - 1];
+                  }
+
+                  // Ortiqcha va kam to'langan summalarni tekshirish
+                  const hasExcess = false; // Disabled for now
+                  let remainingAmountToShow = 0;
+                  let hasShortage = false;
+
+                  if (actualPayment && item.isPaid) {
+                    // PRIORITY 1: remainingAmount (backend'dan to'g'ridan-to'g'ri)
+                    if (
+                      actualPayment.remainingAmount != null &&
+                      actualPayment.remainingAmount > 0.01
+                    ) {
+                      remainingAmountToShow = actualPayment.remainingAmount;
+                      hasShortage = true;
+                    }
+                    // PRIORITY 2: actualAmount mavjud va expectedAmount'dan kam
+                    else if (
+                      actualPayment.actualAmount != null &&
+                      actualPayment.actualAmount !== undefined
+                    ) {
+                      const expected =
+                        actualPayment.expectedAmount ||
+                        actualPayment.amount ||
+                        item.amount;
+                      const actual = actualPayment.actualAmount;
+                      const diff = expected - actual;
+
+                      if (diff > 0.01) {
+                        remainingAmountToShow = diff;
+                        hasShortage = true;
+                      }
+                    }
+                    // PRIORITY 3: Status UNDERPAID
+                    else if (actualPayment.status === "UNDERPAID") {
+                      const expected =
+                        actualPayment.expectedAmount ||
+                        actualPayment.amount ||
+                        item.amount;
+                      const actual = actualPayment.amount;
+                      const diff = expected - actual;
+
+                      if (diff > 0.01) {
+                        remainingAmountToShow = diff;
+                        hasShortage = true;
+                      }
+                    }
+                    
+                    else if (
+                      actualPayment.actualAmount === undefined ||
+                      actualPayment.actualAmount === null
+                    ) {
+                      const expected = item.amount; // Oylik to'lov
+                      const actual = actualPayment.amount; // Haqiqatda to'langan (eski to'lovlarda)
+                      const diff = expected - actual;
+
+                      if (diff > 0.01) {
+                        remainingAmountToShow = diff;
+                        hasShortage = true;
+                      }
+                    }
+                  }
+
+
+                  let actualPaidAmount = 0;
+                  if (item.isPaid && actualPayment) {
+                    actualPaidAmount = actualPayment.actualAmount || actualPayment.amount || 0;
+                  }
+
+                  const expectedAmount =
+                    actualPayment?.expectedAmount || item.amount;
+
+                  // ✅ TUZATILDI: Kechikish kunlarini to'g'ri hisoblash
+                  let delayDays = 0;
+                  const scheduledDate = new Date(item.date);
+                  const todayNormalized = new Date();
+                  todayNormalized.setHours(0, 0, 0, 0); // Faqat sana, vaqtsiz
+                  
+                  if (actualPayment && item.isPaid) {
+                    // To'lov qilingan: to'lov sanasi bilan scheduled sana o'rtasidagi farq
+                    const paidDate = new Date(actualPayment.date);
+                    paidDate.setHours(0, 0, 0, 0);
+                    delayDays = Math.floor(
+                      (paidDate.getTime() - scheduledDate.getTime()) /
+                        (1000 * 60 * 60 * 24)
+                    );
+                  } else if (!item.isPaid && scheduledDate < todayNormalized) {
+                    // To'lov qilinmagan va muddat o'tgan: bugun bilan scheduled sana o'rtasidagi farq
+                    delayDays = Math.floor(
+                      (todayNormalized.getTime() - scheduledDate.getTime()) /
+                        (1000 * 60 * 60 * 24)
+                    );
+                  }
+
+                  // KASKAD LOGIKA - Serverdan kelgan ma'lumotlarni ishlatish
+                  const fromPreviousMonth = previousExcess; // Oldingi oydan kelgan
+                  const monthlyPaymentAmount = item.amount; // Oylik to'lov
+
+                  // Agar actualPayment mavjud bo'lsa, serverdan kelgan expectedAmount ni ishlatamiz
+                  const needToPay = actualPayment?.expectedAmount
+                    ? actualPayment.expectedAmount
+                    : Math.max(0, monthlyPaymentAmount - fromPreviousMonth); // To'lash kerak
+
+                  const actuallyPaid = actualPaidAmount; // To'langan
+
+                  // Ortiqcha/Kam summani hisoblash
+                  let toNextMonth = 0;
+                  let shortage = 0;
+
+                  if (item.isPaid && actualPayment) {
+                    // Serverdan kelgan ma'lumotlarni ishlatish
+                    // Excess amount calculation disabled for now
+                    if (
+                      actualPayment.remainingAmount &&
+                      actualPayment.remainingAmount > 0.01
+                    ) {
+                      shortage = actualPayment.remainingAmount;
+                    } else {
+                      // Agar server ma'lumoti bo'lmasa, o'zimiz hisoblash
+                      const diff = actuallyPaid - needToPay;
+                      if (diff > 0.01) {
+                        toNextMonth = diff;
+                      } else if (diff < -0.01) {
+                        shortage = Math.abs(diff);
+                      }
+                    }
+                  }
+
+                  // Keyingi oy uchun previousExcess ni yangilash
+                  if (item.isPaid) {
+                    previousExcess = toNextMonth;
+                  } else {
+                    previousExcess = 0; // Agar to'lanmagan bo'lsa, kaskad to'xtaydi
+                  }
+
+                  return (
+                    <React.Fragment key={`payment-${item.month}`}>
+                      <TableRow
+                        sx={{
+                          bgcolor: item.isPaid
+                            ? "success.lighter"
+                            : isPast && !item.isPaid
+                              ? "error.lighter"
+                              : "inherit",
+                          borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          "&:hover": {
+                            bgcolor: item.isPaid
+                              ? "success.light"
+                              : isPast && !item.isPaid
+                                ? "error.light"
+                                : "grey.100",
+                          },
+                          "&:last-child": {
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          },
+                        }}
+                      >
+                        {/* # */}
+                        <TableCell
+                          sx={{
+                            py: 0.25,
+                            px: { xs: 0.5, sm: 0.75, md: 1 },
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          }}
+                        >
+                          <Box display="flex" alignItems="center" gap={0.5}>
+                            {isPast && !item.isPaid && (
+                              <Iconify
+                                icon="mdi:alert-circle"
+                                width={16}
+                                sx={{ color: "error.main" }}
+                              />
+                            )}
+                            <Typography
+                              variant="body2"
+                              fontWeight="600"
+                              fontSize={{ xs: "0.688rem", sm: "0.75rem" }}
+                              color={
+                                isPast && !item.isPaid
+                                  ? "error.main"
+                                  : "inherit"
+                              }
+                            >
+                              {item.isInitial
+                                ? "Boshlang'ich"
+                                : `${item.month}-oy`}
+                              {isPast && !item.isPaid && " (Kechikkan)"}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+
+                        {/* Belgilangan sana */}
+                        <TableCell
+                          sx={{
+                            py: 0.25,
+                            px: { xs: 0.5, sm: 0.75, md: 1 },
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          }}
+                        >
+                          <Typography
+                            variant="body2"
+                            fontSize={{ xs: "0.688rem", sm: "0.75rem" }}
+                          >
+                            {format(new Date(item.date), "dd.MM.yyyy")}
+                          </Typography>
+                        </TableCell>
+
+                        {/* To'langan sana */}
+                        <TableCell
+                          sx={{
+                            py: 0.25,
+                            px: { xs: 0.5, sm: 0.75, md: 1 },
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          }}
+                        >
+                          {item.isPaid ? (
+                            <Typography
+                              variant="body2"
+                              fontSize="0.75rem"
+                              color={
+                                delayDays > 0 ? "error.main" : "success.main"
+                              }
+                            >
+                              {item.isInitial
+                                ? format(new Date(item.date), "dd.MM.yyyy")
+                                : actualPayment && actualPayment.confirmedAt
+                                  ? format(
+                                      new Date(actualPayment.confirmedAt),
+                                      "dd.MM.yyyy"
+                                    )
+                                  : actualPayment
+                                    ? format(
+                                        new Date(actualPayment.date),
+                                        "dd.MM.yyyy"
+                                      )
+                                    : format(new Date(item.date), "dd.MM.yyyy")}
+                              {!item.isInitial &&
+                                delayDays > 0 &&
+                                ` (+${delayDays})`}
+                            </Typography>
+                          ) : (
+                            <Typography variant="body2" color="text.disabled">
+                              —
+                            </Typography>
+                          )}
+                        </TableCell>
+
+                        {/* Summa - Oylik to'lov (har doim bir xil) */}
+                        <TableCell
+                          align="right"
+                          sx={{
+                            py: 0.25,
+                            px: { xs: 0.5, sm: 0.75, md: 1 },
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          }}
+                        >
+                          <Typography
+                            variant="body2"
+                            fontWeight="medium"
+                            fontSize={{ xs: "0.688rem", sm: "0.75rem" }}
+                          >
+                            {item.amount.toLocaleString()} $
+                          </Typography>
+                        </TableCell>
+
+                        {/* To'langan */}
+                        <TableCell
+                          align="right"
+                          sx={{
+                            py: 0.25,
+                            px: { xs: 0.5, sm: 0.75, md: 1 },
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          }}
+                        >
+                          {item.isPaid ? (
+                            <Box display="flex" flexDirection="column" alignItems="flex-end" gap={0.3}>
+                              <Typography
+                                variant="body2"
+                                fontWeight="medium"
+                                color="success.main"
+                                fontSize="0.813rem"
+                              >
+                                {actualPaidAmount.toLocaleString()} $
+                              </Typography>
+                              {hasShortage && remainingAmountToShow > 0.01 && (
+                                <Typography
+                                  variant="caption"
+                                  sx={{
+                                    color: "error.main",
+                                    fontWeight: 600,
+                                    fontSize: "0.688rem",
+                                    lineHeight: 1.2,
+                                  }}
+                                >
+                                  ({remainingAmountToShow.toLocaleString()} $ kam)
+                                </Typography>
+                              )}
+                            </Box>
+                          ) : (
+                            <Typography variant="body2" color="text.disabled">
+                              —
+                            </Typography>
+                          )}
+                        </TableCell>
+
+                        {/* Holat */}
+                        <TableCell
+                          align="center"
+                          sx={{
+                            py: 0.25,
+                            px: { xs: 0.5, sm: 0.75, md: 1 },
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          }}
+                        >
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                              fontWeight: 600,
+                              color: item.isPaid
+                                ? "success.main"
+                                : isPast
+                                  ? "error.main"
+                                  : "text.secondary",
+                            }}
+                          >
+                            {item.isPaid
+                              ? "Paid"
+                              : isPast
+                                ? "Kechikkan"
+                                : "Kutilmoqda"}
+                          </Typography>
+                        </TableCell>
+
+                        {/* Amal */}
+                        {contractId && (
+                          <TableCell
+                            align="center"
+                            sx={{
+                              py: 0.25,
+                              px: { xs: 0.5, sm: 0.75, md: 1 },
+                              borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            }}
+                          >
+                            {!item.isPaid ? (
+                              <Typography
+                                variant="body2"
+                                onClick={() => handlePayment(item.amount)}
+                                sx={{
+                                  fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                                  fontWeight: 600,
+                                  color: isPast ? "error.main" : "primary.main",
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  gap: 0.5,
+                                  "&:hover": {
+                                    opacity: 0.8,
+                                  },
+                                }}
+                              >
+                                <Iconify icon="mdi:cash" width={16} />
+                                To'lash
+                              </Typography>
+                            ) : hasShortage && remainingAmountToShow > 0.01 ? (
+                              <Box>
+                                <Typography
+                                  variant="body2"
+                                  onClick={() => {
+                                    console.log("🔴 Qarz tugmasi bosildi:", {
+                                      month: item.month,
+                                      remainingAmount: remainingAmountToShow,
+                                      paymentId: actualPayment?._id,
+                                      hasPaymentId: !!actualPayment?._id,
+                                      actualPayment: actualPayment,
+                                    });
+
+                                    if (!actualPayment?._id) {
+                                      console.error("❌ Payment ID topilmadi!");
+                                      alert(
+                                        "Xatolik: To'lov ID topilmadi. Sahifani yangilang va qayta urinib ko'ring."
+                                      );
+                                      return;
+                                    }
+
+                                    handlePayment(
+                                      remainingAmountToShow,
+                                      actualPayment._id
+                                    );
+                                  }}
+                                  sx={{
+                                    fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                                    fontWeight: 600,
+                                    color: "error.main",
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: 0.5,
+                                    animation: "pulse 2s infinite",
+                                    "@keyframes pulse": {
+                                      "0%, 100%": { opacity: 1 },
+                                      "50%": { opacity: 0.7 },
+                                    },
+                                    "&:hover": {
+                                      opacity: 0.8,
+                                    },
+                                  }}
+                                >
+                                  <Iconify icon="mdi:alert-circle" width={16} />
+                                  Qarz ({remainingAmountToShow.toLocaleString()} $)
+                                </Typography>
+                              </Box>
+                            ) : (
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  fontSize: { xs: "0.688rem", sm: "0.75rem" },
+                                  fontWeight: 600,
+                                  color: "success.main",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  gap: 0.5,
+                                }}
+                              >
+                                <Iconify icon="mdi:check-circle" width={16} />
+                                To'langan
+                              </Typography>
+                            )}
+                          </TableCell>
+                        )}
+
+                        {/* ✅ YANGI: Izoh icon */}
+                        <TableCell
+                          align="center"
+                          sx={{
+                            py: 0.25,
+                            px: { xs: 0.5, sm: 0.75 },
+                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          }}
+                        >
+                          {item.isPaid && actualPayment?.notes ? (
+                            <Tooltip title="Izohni ko'rish">
+                              <IconButton
+                                size="small"
+                                color="info"
+                                onClick={() => {
+                                  // notes string yoki object bo'lishi mumkin
+                                  const noteText = typeof actualPayment.notes === 'string' 
+                                    ? actualPayment.notes 
+                                    : actualPayment.notes?.text || "";
+                                  
+                                  setNoteDialog({
+                                    open: true,
+                                    note: noteText,
+                                    month: item.isInitial
+                                      ? "Boshlang'ich to'lov"
+                                      : `${item.month}-oy`,
+                                  });
+                                }}
+                                sx={{
+                                  fontSize: { xs: "0.9rem", sm: "1rem" },
+                                }}
+                              >
+                                <Iconify icon="solar:chat-round-line-bold" width={20} />
+                              </IconButton>
+                            </Tooltip>
+                          ) : (
+                            <Typography
+                              variant="caption"
+                              color="text.disabled"
+                              sx={{ fontSize: { xs: "0.6rem", sm: "0.75rem" } }}
+                            >
+                              -
+                            </Typography>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    </React.Fragment>
+                  );
+                });
+              })()}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        {/* Xulosa - Ixcham */}
+        <Box
+          sx={{
+            mt: 1.5,
+            p: 1.5,
+            bgcolor: "grey.50",
+            borderRadius: 0,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+          }}
+        >
+          <Box display="flex" gap={3} flexWrap="wrap">
+            <Box>
+              <Typography variant="caption" color="text.secondary">
+                Umumiy
+              </Typography>
+              <Typography variant="body2" fontWeight="600">
+                {/* ✅ FIXED: totalPrice backend'dan kelsa uni ishlatamiz, aks holda hisoblash. NaN oldini olish uchun 0 bilan almashtiramiz */}
+                {(totalPrice || ((monthlyPayment || 0) * (period || 0) + (initialPayment || 0))).toLocaleString()} $
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="caption" color="text.secondary">
+                To'langan
+              </Typography>
+              <Typography variant="body2" fontWeight="600" color="success.main">
+                {(totalPaid || 0).toLocaleString()} $
+              </Typography>
+            </Box>
+            {remainingDebt > 0 && (
+              <Box>
+                <Typography variant="caption" color="text.secondary">
+                  Qolgan
+                </Typography>
+                <Typography variant="body2" fontWeight="600" color="error.main">
+                  {(remainingDebt || 0).toLocaleString()} $
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        </Box>
+      </Paper>
+
+      {/* To'lov modal */}
+      {contractId && (
+        <PaymentModal
+          open={paymentModal.open}
+          amount={paymentModal.amount}
+          contractId={contractId}
+          isPayAll={paymentModal.isPayAll}
+          paymentId={paymentModal.paymentId} // ✅ Qolgan qarzni to'lash uchun
+          onClose={() =>
+            setPaymentModal({
+              open: false,
+              amount: 0,
+              isPayAll: false,
+              paymentId: undefined,
+            })
+          }
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
+
+      {/* ✅ YANGI: Izoh dialog */}
+      <Dialog
+        open={noteDialog.open}
+        onClose={() => setNoteDialog({ open: false, note: "", month: "" })}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Box display="flex" alignItems="center" gap={1}>
+            <Iconify icon="solar:chat-round-line-bold" width={24} />
+            <Typography variant="h6">To'lov izohi - {noteDialog.month}</Typography>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              mt: 2,
+              p: 2,
+              bgcolor: "grey.100",
+              borderRadius: 0,
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+            }}
+          >
+            <Typography variant="body2">{noteDialog.note}</Typography>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setNoteDialog({ open: false, note: "", month: "" })}
+            color="primary"
+          >
+            Yopish
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export default PaymentSchedule;
