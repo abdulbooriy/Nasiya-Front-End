@@ -33,7 +33,7 @@ export default function App() {
       dispatch(refreshProfile());
     }
   }, []);
-
+  
   if (isLoadingRefresh) {
     return <Loader />;
   }
