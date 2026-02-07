@@ -1,5 +1,13 @@
 import type { Column } from "src/components/table/types";
-import { Chip, Box, IconButton, Tooltip, Stack, Typography, Avatar } from "@mui/material";
+import {
+  Chip,
+  Box,
+  IconButton,
+  Tooltip,
+  Stack,
+  Typography,
+  Avatar,
+} from "@mui/material";
 import {
   MdAccessTime,
   MdCheckCircle,
@@ -25,22 +33,28 @@ export const columnsCash: Column[] = [
       // Agar bu oylik to'lov bo'lsa
       if (row.paymentType === "monthly") {
         if (row.initialPaymentDueDate) {
-          return new Date(row.initialPaymentDueDate).getDate().toString().padStart(2, "0");
+          return new Date(row.initialPaymentDueDate)
+            .getDate()
+            .toString()
+            .padStart(2, "0");
         }
         if (row.originalPaymentDay) {
           return row.originalPaymentDay.toString().padStart(2, "0");
         }
-      } 
-      
+      }
+
       // Agar bu boshlang'ich to'lov bo'lsa yoki shartnoma boshlangan kun kerak bo'lsa
       if (row.paymentType === "initial" && row.contractStartDate) {
-        return new Date(row.contractStartDate).getDate().toString().padStart(2, "0");
+        return new Date(row.contractStartDate)
+          .getDate()
+          .toString()
+          .padStart(2, "0");
       }
 
       // Fallback: row.date dan kunni olish
       if (row.date) {
         const day = new Date(row.date).getDate();
-        
+
         // ✅ Eslatma uchun icon qo'shish
         if (row.isReminderNotification) {
           const paymentDate = new Date(row.date);
@@ -48,15 +62,18 @@ export const columnsCash: Column[] = [
           today.setHours(0, 0, 0, 0);
           paymentDate.setHours(0, 0, 0, 0);
           const isExpired = paymentDate < today;
-          
+
           return (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              <MdAccessTime size={16} color={isExpired ? "#f44336" : "#ff9800"} />
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+              <MdAccessTime
+                size={16}
+                color={isExpired ? "#f44336" : "#ff9800"}
+              />
               <span>{day.toString().padStart(2, "0")}</span>
             </Box>
           );
         }
-        
+
         return day.toString().padStart(2, "0");
       }
       return "—";
@@ -73,8 +90,8 @@ export const columnsCash: Column[] = [
         e.stopPropagation();
         if (row.contractId) {
           navigator.clipboard.writeText(row.contractId);
-          enqueueSnackbar(`${row.contractId} nusxa olindi`, { 
-            variant: 'success',
+          enqueueSnackbar(`${row.contractId} nusxa olindi`, {
+            variant: "success",
             autoHideDuration: 2000,
           });
         }
@@ -82,12 +99,12 @@ export const columnsCash: Column[] = [
 
       if (row.contractId) {
         return (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             <Typography
-              sx={{ 
-                fontSize: '0.75rem',
+              sx={{
+                fontSize: "0.75rem",
                 fontWeight: 600,
-                color: 'primary.main',
+                color: "primary.main",
               }}
             >
               {row.contractId}
@@ -98,9 +115,9 @@ export const columnsCash: Column[] = [
                 onClick={handleCopy}
                 sx={{
                   p: 0.25,
-                  '&:hover': {
-                    bgcolor: 'primary.lighter',
-                    color: 'primary.main',
+                  "&:hover": {
+                    bgcolor: "primary.lighter",
+                    color: "primary.main",
                   },
                 }}
               >
@@ -140,7 +157,7 @@ export const columnsCash: Column[] = [
               color: "primary.main",
               fontWeight: 500,
               fontSize: "0.8rem",
-              "&:hover": { 
+              "&:hover": {
                 textDecoration: "underline",
                 color: "primary.dark",
               },
@@ -162,9 +179,10 @@ export const columnsCash: Column[] = [
     renderCell: (row) => {
       // ✅ Faqat managerId'dan menejer ma'lumotlarini olish
       if (!row.managerId) return "—";
-      
-      const managerName = `${row.managerId.firstName || ""} ${row.managerId.lastName || ""}`.trim();
-      
+
+      const managerName =
+        `${row.managerId.firstName || ""} ${row.managerId.lastName || ""}`.trim();
+
       if (!managerName) return "—";
 
       return (
@@ -195,16 +213,18 @@ export const columnsCash: Column[] = [
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         paymentDate.setHours(0, 0, 0, 0);
-        
+
         const diffTime = paymentDate.getTime() - today.getTime();
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        
+
         // ✅ Muddati o'tgan eslatma - qizil rang
         const isExpired = diffDays < 0;
-        
+
         return (
           <Chip
-            label={isExpired ? `${Math.abs(diffDays)} kun o'tdi` : `${diffDays} kun`}
+            label={
+              isExpired ? `${Math.abs(diffDays)} kun o'tdi` : `${diffDays} kun`
+            }
             color={isExpired ? "error" : "warning"}
             size="small"
             sx={{
@@ -239,18 +259,18 @@ export const columnsCash: Column[] = [
 
       const isRemainingPayment = !!row.linkedPaymentId;
 
-      const displayAmount = isRemainingPayment 
-        ? (row.actualAmount || 0) 
-        : (row.actualAmount || row.amount || 0); 
+      const displayAmount = isRemainingPayment
+        ? row.actualAmount || 0
+        : row.actualAmount || row.amount || 0;
 
       return (
         <Stack direction="column" spacing={0.5}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Typography 
-              sx={{ 
-                fontWeight: 700, 
-                fontSize: '0.85rem',
-                color: isRemainingPayment ? 'warning.dark' : 'success.dark',
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                color: isRemainingPayment ? "warning.dark" : "success.dark",
               }}
             >
               ${displayAmount?.toLocaleString() || 0}
@@ -262,11 +282,11 @@ export const columnsCash: Column[] = [
               size="small"
               color="warning"
               variant="filled"
-              sx={{ 
-                fontSize: '0.6rem', 
-                height: '18px',
+              sx={{
+                fontSize: "0.6rem",
+                height: "18px",
                 fontWeight: 600,
-                width: 'fit-content',
+                width: "fit-content",
               }}
             />
           )}
@@ -296,7 +316,16 @@ export const columnsCash: Column[] = [
         dollar_card_visa: "Dollar karta (Visa)",
       };
 
-      const methodColors: Record<string, "default" | "primary" | "success" | "warning" | "error" | "info" | "secondary"> = {
+      const methodColors: Record<
+        string,
+        | "default"
+        | "primary"
+        | "success"
+        | "warning"
+        | "error"
+        | "info"
+        | "secondary"
+      > = {
         som_cash: "success",
         som_card: "primary",
         dollar_cash: "warning",
@@ -317,8 +346,8 @@ export const columnsCash: Column[] = [
           label={methodLabels[method] || method}
           color={methodColors[method] || "default"}
           size="small"
-          sx={{ 
-            fontSize: '0.65rem',
+          sx={{
+            fontSize: "0.65rem",
             fontWeight: 500,
           }}
         />
@@ -340,20 +369,22 @@ export const columnsCash: Column[] = [
         const paymentDate = new Date(date);
         paymentDate.setHours(0, 0, 0, 0);
         const isPast = paymentDate < today;
-        
+
         return (
           <Stack spacing={0.5}>
-            <Box sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: 0.75,
-            }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 0.75,
+              }}
+            >
               <MdAccessTime size={16} color={isPast ? "#f44336" : "#666"} />
-              <Typography 
-                sx={{ 
-                  fontSize: '0.75rem',
+              <Typography
+                sx={{
+                  fontSize: "0.75rem",
                   fontWeight: 500,
-                  color: isPast ? 'error.main' : 'text.primary',
+                  color: isPast ? "error.main" : "text.primary",
                 }}
               >
                 {date.toLocaleDateString("uz-UZ")}
@@ -365,11 +396,11 @@ export const columnsCash: Column[] = [
                 size="small"
                 color="error"
                 variant="filled"
-                sx={{ 
-                  fontSize: '0.55rem', 
-                  height: '16px',
+                sx={{
+                  fontSize: "0.55rem",
+                  height: "16px",
                   fontWeight: 600,
-                  width: 'fit-content',
+                  width: "fit-content",
                 }}
               />
             )}
@@ -395,12 +426,12 @@ export const columnsCash: Column[] = [
         today.setHours(0, 0, 0, 0);
         paymentDate.setHours(0, 0, 0, 0);
         const isExpired = paymentDate < today;
-        
+
         return (
-          <Tooltip 
+          <Tooltip
             title={
-              isExpired 
-                ? "Muddati o'tgan eslatma. Keyingi tungi 00:00 da avtomatik o'chiriladi." 
+              isExpired
+                ? "Muddati o'tgan eslatma. Keyingi tungi 00:00 da avtomatik o'chiriladi."
                 : "Bu eslatma notification, to'lov emas. Faqat ma'lumot uchun ko'rsatilmoqda."
             }
             arrow
@@ -489,7 +520,7 @@ export const columnsCash: Column[] = [
         today.setHours(0, 0, 0, 0);
         paymentDate.setHours(0, 0, 0, 0);
         const isExpired = paymentDate < today;
-        
+
         return (
           <Tooltip title={row.reminderComment} arrow>
             <IconButton
@@ -501,9 +532,9 @@ export const columnsCash: Column[] = [
                 }
               }}
               sx={{
-                color: isExpired ? 'error.main' : 'warning.main',
-                '&:hover': {
-                  bgcolor: isExpired ? 'error.lighter' : 'warning.lighter',
+                color: isExpired ? "error.main" : "warning.main",
+                "&:hover": {
+                  bgcolor: isExpired ? "error.lighter" : "warning.lighter",
                 },
                 p: 1,
               }}
@@ -513,11 +544,11 @@ export const columnsCash: Column[] = [
           </Tooltip>
         );
       }
-      
+
       if (row.notes && typeof row.notes === "object" && "text" in row.notes) {
         const text = row.notes.text || "—";
         const hasNotes = text && text !== "—";
-        
+
         return (
           <Tooltip title={hasNotes ? "Izohni ko'rish" : "Izoh yo'q"} arrow>
             <IconButton
@@ -530,9 +561,9 @@ export const columnsCash: Column[] = [
               }}
               disabled={!hasNotes}
               sx={{
-                color: hasNotes ? 'primary.main' : 'text.disabled',
-                '&:hover': {
-                  bgcolor: hasNotes ? 'primary.lighter' : 'transparent',
+                color: hasNotes ? "primary.main" : "text.disabled",
+                "&:hover": {
+                  bgcolor: hasNotes ? "primary.lighter" : "transparent",
                 },
                 p: 1,
               }}
@@ -560,43 +591,57 @@ export const columnsCash: Column[] = [
     minWidth: 110,
     width: 130,
     renderCell: (row) => {
-      if (row.nextPaymentDate && row.remainingAmount && row.remainingAmount > 0) {
-        const date = new Date(row.nextPaymentDate);
-        const now = new Date();
-        const isPast = date < now;
-        
+      if (row.remainingAmount && row.remainingAmount > 0) {
+        const date = new Date(row.createdAt); // <-- use createdAt now
         const formattedDate = date.toLocaleDateString("uz-UZ", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
+          timeZone: "Asia/Tashkent",
         });
         const formattedTime = date.toLocaleTimeString("uz-UZ", {
           hour: "2-digit",
           minute: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Tashkent",
         });
-        
+
         return (
-          <Tooltip title={`Qolgan $${row.remainingAmount.toFixed(2)} ni to'lash sanasi`} arrow>
-            <Box sx={{ 
-              display: "flex", 
-              alignItems: "center", 
-              gap: 1,
-              whiteSpace: "nowrap"
-            }}>
-              <Box sx={{ 
-                fontWeight: 600, 
-                fontSize: "0.7rem", 
-                color: isPast ? "error.main" : "warning.main"
-              }}>
+          <Tooltip
+            title={`Qolgan $${row.remainingAmount.toFixed(2)} ni to'lash sanasi`}
+            arrow
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                whiteSpace: "nowrap",
+              }}
+            >
+              <Box
+                sx={{
+                  fontWeight: 600,
+                  fontSize: "0.7rem",
+                  color: "text.primary",
+                }}
+              >
                 {formattedDate}
               </Box>
-              <Box sx={{ fontSize: "0.65rem", color: "text.secondary", fontWeight: 500 }}>
+              <Box
+                sx={{
+                  fontSize: "0.65rem",
+                  color: "text.secondary",
+                  fontWeight: 500,
+                }}
+              >
                 {formattedTime}
               </Box>
             </Box>
           </Tooltip>
         );
       }
+
       return <Box sx={{ color: "text.disabled", fontSize: "0.7rem" }}>—</Box>;
     },
   },

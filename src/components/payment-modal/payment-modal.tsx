@@ -28,7 +28,7 @@ interface PaymentModalProps {
   amount: number;
   contractId: string;
   isPayAll?: boolean;
-  paymentId?: string; 
+  paymentId?: string;
   onClose: () => void;
   onSuccess: () => void;
 }
@@ -38,7 +38,7 @@ const PaymentModal: FC<PaymentModalProps> = ({
   amount,
   contractId,
   isPayAll = false,
-  paymentId, 
+  paymentId,
   onClose,
   onSuccess,
 }) => {
@@ -48,19 +48,19 @@ const PaymentModal: FC<PaymentModalProps> = ({
   const [dollarAmount, setDollarAmount] = useState(amount);
   const [sumAmount, setSumAmount] = useState(0);
   const [currencyCourse, setCurrencyCourse] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState<string>("dollar_cash");
-  console.log(paymentMethod);
-   // ✅ YANGI: To'lov usuli
-  
-   const [checkIfMethodSet, setCheckIfMethodSet] = useState(false);
-  //  Tasdiqlashdan oldin to'lov usuli to'g'ri tanlanganini tekshirish
-   
-  const totalAmountInDollar = dollarAmount + (sumAmount / currencyCourse);
+  // const [paymentMethod, setPaymentMethod] = useState<string>("dollar_cash");
+  // console.log(paymentMethod);
+  //  // ✅ YANGI: To'lov usuli
+  //  const [checkIfMethodSet, setCheckIfMethodSet] = useState(false);
+  // //  Tasdiqlashdan oldin to'lov usuli to'g'ri tanlanganini tekshirish
+
+  const [paymentMethod, setPaymentMethod] = useState<string>("");
+
+  const totalAmountInDollar = dollarAmount + sumAmount / currencyCourse;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-
     const fetchCurrencyCourse = async () => {
       try {
         const res = await authApi.get("/dashboard/currency-course");
@@ -70,8 +70,8 @@ const PaymentModal: FC<PaymentModalProps> = ({
 
           setDollarAmount(0);
           setSumAmount(0);
-          setDollarInput(""); 
-          setSumInput(""); 
+          setDollarInput("");
+          setSumInput("");
 
           setTimeout(() => {
             if (dollarInputRef.current) {
@@ -159,9 +159,15 @@ const PaymentModal: FC<PaymentModalProps> = ({
         setLoading(false);
         return;
       }
-      
-      if (!checkIfMethodSet) {
-        setError("To'lov usuli tanlanmadi. Iltimos, qayta urinib ko'ring."); // ✅ YANGI: To'lov usuli
+
+      // if (!checkIfMethodSet) {
+      //   setError("To'lov usuli tanlanmadi. Iltimos, qayta urinib ko'ring."); // ✅ YANGI: To'lov usuli
+      //   setLoading(false);
+      //   return;
+      // }
+
+      if (!paymentMethod) {
+        setError("To'lov usulini tanlang.");
         setLoading(false);
         return;
       }
@@ -215,8 +221,7 @@ const PaymentModal: FC<PaymentModalProps> = ({
             res.data.message ||
             `${res.data.paymentsCreated} oylik to'lovlar muvaffaqiyatli amalga oshirildi`;
         }
-      }
-      else if (paymentId) {
+      } else if (paymentId) {
         // payRemaining response
         const payment = res.data.payment;
         if (payment) {
@@ -247,7 +252,7 @@ const PaymentModal: FC<PaymentModalProps> = ({
         enqueueSnackbar({
           message: notificationMessage,
           options: { variant: notificationVariant },
-        })
+        }),
       );
 
       // Modal'ni yopish va ma'lumotlarni tozalash
@@ -263,8 +268,6 @@ const PaymentModal: FC<PaymentModalProps> = ({
         onSuccess();
       }, 1000);
     } catch (err: any) {
-    
-
       const errorMessage =
         err.response?.data?.message ||
         err.message ||
@@ -276,7 +279,7 @@ const PaymentModal: FC<PaymentModalProps> = ({
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
     } finally {
       setLoading(false);
@@ -354,21 +357,43 @@ const PaymentModal: FC<PaymentModalProps> = ({
           />
 
           {/* ✅ YANGI: To'lov usuli tanlash */}
+
           <FormControl fullWidth>
             <InputLabel id="payment-method-label">To'lov usuli</InputLabel>
+
             <Select
               labelId="payment-method-label"
-              id="payment-method-select"
               value={paymentMethod}
               label="To'lov usuli"
-              onChange={(e) => {setPaymentMethod(e.target.value); setCheckIfMethodSet(true);}}
+              onChange={(e) => setPaymentMethod(e.target.value)}
             >
+              <MenuItem value="">
+                <em>Tanlang</em>
+              </MenuItem>
               <MenuItem value="som_cash">So'm naqd</MenuItem>
               <MenuItem value="som_card">So'm karta</MenuItem>
               <MenuItem value="dollar_cash">Dollar naqd</MenuItem>
               <MenuItem value="dollar_card_visa">Dollar karta (Visa)</MenuItem>
             </Select>
           </FormControl>
+          {/* <FormControl fullWidth>
+            <InputLabel id="payment-method-label">To'lov usuli</InputLabel>
+            <Select
+              labelId="payment-method-label"
+              id="payment-method-select"
+              value={paymentMethod}
+              label="To'lov usuli"
+              onChange={(e) => {
+                setPaymentMethod(e.target.value);
+                setCheckIfMethodSet(true);
+              }}
+            >
+              <MenuItem value="som_cash">So'm naqd</MenuItem>
+              <MenuItem value="som_card">So'm karta</MenuItem>
+              <MenuItem value="dollar_cash">Dollar naqd</MenuItem>
+              <MenuItem value="dollar_card_visa">Dollar karta (Visa)</MenuItem>
+            </Select>
+          </FormControl> */}
 
           <Box
             sx={{
@@ -384,8 +409,13 @@ const PaymentModal: FC<PaymentModalProps> = ({
               Kurs: 1$ = {currencyCourse.toLocaleString()} so'm
             </Typography>
             {sumAmount > 0 && (
-              <Typography variant="caption" color="primary.main" fontWeight="bold">
-                Jami: {dollarAmount.toFixed(2)} $ + {sumAmount.toFixed(0)} so'm = {totalAmountInDollar.toFixed(2)} $
+              <Typography
+                variant="caption"
+                color="primary.main"
+                fontWeight="bold"
+              >
+                Jami: {dollarAmount.toFixed(2)} $ + {sumAmount.toFixed(0)} so'm
+                = {totalAmountInDollar.toFixed(2)} $
               </Typography>
             )}
           </Box>
