@@ -536,7 +536,7 @@ export default function AuditLogTable({
                 <TableCell>Harakat</TableCell>
                 <TableCell>Entity</TableCell>
                 <TableCell>Shartnoma ID</TableCell>
-                <TableCell>Obyekt</TableCell>
+                {/* <TableCell>Obyekt</TableCell> */}
                 <TableCell>Mijoz</TableCell>
                 <TableCell>Xodim</TableCell>
                 <TableCell>Summa</TableCell>
@@ -588,7 +588,7 @@ export default function AuditLogTable({
                 ))
               ) : data.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={12} align="center" sx={{ py: 4 }}>
+                  <TableCell colSpan={11} align="center" sx={{ py: 4 }}>
                     <Stack spacing={1} alignItems="center">
                       <Iconify
                         icon="eva:file-text-outline"
@@ -657,11 +657,11 @@ export default function AuditLogTable({
                           )}
                         </TableCell>
 
-                        <TableCell>
+                        {/* <TableCell>
                           <Typography variant="caption" noWrap sx={{ maxWidth: 50, fontSize: '0.6rem' }}>
                             {formatEntityName(log)}
                           </Typography>
-                        </TableCell>
+                        </TableCell> */}
 
                         <TableCell>
                           <Typography variant="caption" noWrap sx={{ maxWidth: 70, fontSize: '0.6rem' }}>

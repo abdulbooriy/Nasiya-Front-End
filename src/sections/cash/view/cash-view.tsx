@@ -171,9 +171,10 @@ export function CashView() {
     <Autocomplete
       onFocus={handleCustomerFocus}
       options={dataEmployee.managers}
-      getOptionLabel={(option) => option.fullName}
+      getOptionLabel={(option) => `${option.firstName} ${option.lastName}`} // ✅ combine names
       isOptionEqualToValue={(option, value) =>
-        option.fullName === value.fullName
+        `${option.firstName} ${option.lastName}` ===
+        `${value.firstName} ${value.lastName}`
       }
       loading={dataEmployee.isLoading}
       loadingText="Yuklanmoqda..."
