@@ -11,7 +11,7 @@ export enum AuditAction {
   STATUS_CHANGE = "STATUS_CHANGE",
   POSTPONE = "POSTPONE",
   CONFIRM = "CONFIRM",
-  REJECT = "REJECT"
+  REJECT = "REJECT",
 }
 
 export enum AuditEntity {
@@ -22,7 +22,7 @@ export enum AuditEntity {
   BALANCE = "balance",
   AUTH = "auth",
   EXCEL_IMPORT = "excel_import",
-  EXPENSES = "expenses"
+  EXPENSES = "expenses",
 }
 
 export interface IAuditMetadata {
@@ -32,28 +32,26 @@ export interface IAuditMetadata {
   failedRows?: number;
   paymentType?: string;
   paymentStatus?: string;
-  paymentMethod?: string; // ✅ YANGI: To'lov usuli
-  amount?: number; 
-  expectedAmount?: number; 
+  paymentMethod?: string;
+  amount?: number;
+  expectedAmount?: number;
   targetMonth?: number;
-  remainingAmount?: number; 
+  remainingAmount?: number;
   excessAmount?: number;
-  paymentCreatorId?: string; // ✅ YANGI: Pulni yig'ib to'lovni qilgan odam (managerId)
-  paymentCreatorName?: string; // ✅ YANGI: Pulni yig'ib to'lovni qilgan odam ismi 
-  
+  paymentCreatorId?: string;
+  paymentCreatorName?: string;
+
   contractStatus?: string;
   monthlyPayment?: number;
   totalPrice?: number;
-  
-  // Expenses uchun
+
   dollar?: number;
   sum?: number;
   expensesNotes?: string;
   managerName?: string;
-  
-  // Mijoz ismi
+
   customerName?: string;
-  
+
   affectedEntities?: {
     entityType: string;
     entityId: string;
@@ -73,7 +71,7 @@ export interface IAuditLog {
     role: string;
   };
   userType: "employee" | "customer";
-  
+
   changes?: {
     field: string;
     oldValue: any;
@@ -112,7 +110,6 @@ export interface AuditLogStatsResponse {
       end: string;
     };
     stats: {
-      
       _id: string;
       actions: {
         action: string;
@@ -183,7 +180,7 @@ export interface AuditLogFilters {
 
 export const AUDIT_ACTION_LABELS: Record<AuditAction, string> = {
   [AuditAction.CREATE]: "Yaratish",
-  [AuditAction.UPDATE]: "Tahrirlash", 
+  [AuditAction.UPDATE]: "Tahrirlash",
   [AuditAction.DELETE]: "O'chirish",
   [AuditAction.PAYMENT]: "To'lov amalga oshirildi",
   [AuditAction.PAYMENT_CONFIRMED]: "To'lov tasdiqlandi",
@@ -194,7 +191,7 @@ export const AUDIT_ACTION_LABELS: Record<AuditAction, string> = {
   [AuditAction.STATUS_CHANGE]: "Status O'zgarishi",
   [AuditAction.POSTPONE]: "Kechiktirish",
   [AuditAction.CONFIRM]: "Tasdiqlash",
-  [AuditAction.REJECT]: "Rad etish"
+  [AuditAction.REJECT]: "Rad etish",
 };
 
 export const AUDIT_ENTITY_LABELS: Record<AuditEntity, string> = {
@@ -205,7 +202,7 @@ export const AUDIT_ENTITY_LABELS: Record<AuditEntity, string> = {
   [AuditEntity.BALANCE]: "Balans",
   [AuditEntity.AUTH]: "Autentifikatsiya",
   [AuditEntity.EXCEL_IMPORT]: "Excel Import",
-  [AuditEntity.EXPENSES]: "Xarajatlar"
+  [AuditEntity.EXPENSES]: "Xarajatlar",
 };
 
 export const AUDIT_ACTION_COLORS: Record<AuditAction, string> = {
@@ -220,6 +217,6 @@ export const AUDIT_ACTION_COLORS: Record<AuditAction, string> = {
   [AuditAction.LOGOUT]: "default",
   [AuditAction.STATUS_CHANGE]: "warning",
   [AuditAction.POSTPONE]: "warning",
-  [AuditAction.CONFIRM]: "success", 
-  [AuditAction.REJECT]: "error"
+  [AuditAction.CONFIRM]: "success",
+  [AuditAction.REJECT]: "error",
 };

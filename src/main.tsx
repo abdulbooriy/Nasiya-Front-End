@@ -4,21 +4,20 @@ import ReactDOM from "react-dom/client";
 import { SnackbarProvider } from "notistack";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
-import 'dayjs/locale/en';
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import dayjs from "dayjs";
+import "dayjs/locale/en";
 
 import App from "./app";
 import { store } from "./store";
 import { ThemeProvider } from "./theme/theme-provider";
 
-// Set default locale for dayjs
-dayjs.locale('en');
-
+dayjs.locale("en");
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 
 root.render(
@@ -27,8 +26,7 @@ root.render(
       <Provider store={store}>
         <SnackbarProvider
           maxSnack={5}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        >
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Suspense>
               <ThemeProvider>
@@ -39,5 +37,5 @@ root.render(
         </SnackbarProvider>
       </Provider>
     </BrowserRouter>
-  </HelmetProvider>
+  </HelmetProvider>,
 );

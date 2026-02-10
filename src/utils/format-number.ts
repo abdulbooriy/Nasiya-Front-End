@@ -9,7 +9,6 @@ function processInput(inputValue: InputNumberValue): number | null {
   return Number(inputValue);
 }
 
-
 export const formatNumber = (num: number) => {
   const formatted = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 0,
@@ -34,7 +33,6 @@ export function fNumber(inputValue: InputNumberValue, options?: Options) {
   return fm;
 }
 
-
 export function fCurrency(inputValue: InputNumberValue, options?: Options) {
   const locale = DEFAULT_LOCALE;
 
@@ -52,7 +50,6 @@ export function fCurrency(inputValue: InputNumberValue, options?: Options) {
   return fm;
 }
 
-
 export function fPercent(inputValue: InputNumberValue, options?: Options) {
   const locale = DEFAULT_LOCALE;
 
@@ -69,10 +66,9 @@ export function fPercent(inputValue: InputNumberValue, options?: Options) {
   return fm;
 }
 
-
 export function fShortenNumber(
   inputValue: InputNumberValue,
-  options?: Options
+  options?: Options,
 ) {
   const locale = DEFAULT_LOCALE;
 
@@ -88,7 +84,6 @@ export function fShortenNumber(
   return fm.replace(/[A-Z]/g, (match) => match.toLowerCase());
 }
 
-
 export function fData(inputValue: InputNumberValue) {
   const number = processInput(inputValue);
   if (number === null || number === 0) return "0 bytes";
@@ -103,7 +98,6 @@ export function fData(inputValue: InputNumberValue) {
   return fm;
 }
 
-
 export function formatUzbekPhoneNumber(phone: string): string {
   if (!phone) return "";
 
@@ -116,9 +110,9 @@ export function formatUzbekPhoneNumber(phone: string): string {
   if (normalized.length === 12) {
     return normalized.replace(
       /^(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})$/,
-      "+$1$2 $3 $4 $5"
+      "+$1$2 $3 $4 $5",
     );
   }
 
-  return `+${normalized}`; 
+  return `+${normalized}`;
 }

@@ -1,8 +1,6 @@
 import { Helmet } from "react-helmet-async";
-
-import { CONFIG } from "src/config-global";
-
-import { UsersView } from "src/sections/contract/view";
+import { CONFIG } from "../config-global";
+import { UsersView } from "../sections/contract/view";
 
 // ----------------------------------------------------------------------
 

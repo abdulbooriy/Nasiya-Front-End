@@ -79,7 +79,6 @@ export function DashboardLayout({
         />
       }
       footerSection={null}
- 
       cssVars={{
         // "--layout-nav-vertical-width": "300px",
         "--layout-dashboard-content-pt": theme.spacing(1),
@@ -93,8 +92,7 @@ export function DashboardLayout({
           },
         },
         ...sx,
-      }}
-    >
+      }}>
       <Main>{children}</Main>
     </LayoutSection>
   );

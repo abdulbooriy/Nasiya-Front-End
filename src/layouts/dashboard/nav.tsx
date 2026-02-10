@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { RootState } from "src/store";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { Theme, SxProps } from "@mui/material/styles";
 
@@ -11,13 +10,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Drawer, { drawerClasses } from "@mui/material/Drawer";
 
-import { usePathname } from "src/routes/hooks";
-import { RouterLink } from "src/routes/components";
-
-import { Logo } from "src/components/logo";
-import { Scrollbar } from "src/components/scrollbar";
-
 import { navData } from "../config-nav-dashboard";
+import { RootState } from "../../store";
+import { usePathname } from "../../routes/hooks";
+import { Logo } from "../../components/logo";
+import { Scrollbar } from "../../components/scrollbar";
+import { RouterLink } from "../../routes/components";
 
 // ----------------------------------------------------------------------
 
@@ -56,8 +54,7 @@ export function NavMobile({
           width: "var(--layout-nav-mobile-width)",
           ...sx,
         },
-      }}
-    >
+      }}>
       <NavContent slots={slots} />
     </Drawer>
   );
@@ -78,15 +75,13 @@ export function NavContent({ slots, sx }: NavContentProps) {
 
       {slots?.topArea}
 
-
       <Scrollbar fillContent>
         <Box
           component="nav"
           display="flex"
           flex="1 1 auto"
           flexDirection="column"
-          sx={sx}
-        >
+          sx={sx}>
           <Box component="ul" gap={0.5} display="flex" flexDirection="column">
             {roleNavItems.map((item) => {
               const isActived = item.path === pathname;
@@ -115,8 +110,7 @@ export function NavContent({ slots, sx }: NavContentProps) {
                           bgcolor: "var(--layout-nav-item-hover-bg)",
                         },
                       }),
-                    }}
-                  >
+                    }}>
                     <Box component="span" sx={{ width: 24, height: 24 }}>
                       {item.icon}
                     </Box>
