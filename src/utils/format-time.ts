@@ -44,8 +44,8 @@ export function fDateTime(date: DatePickerFormat, format?: string) {
 
   const isValid = dayjs(date).isValid();
 
-  return isValid
-    ? dayjs(date).format(format ?? formatStr.dateTime)
+  return isValid ?
+      dayjs(date).format(format ?? formatStr.dateTime)
     : "Invalid time value";
 }
 
@@ -56,8 +56,8 @@ export function fDate(date: DatePickerFormat, format?: string) {
 
   const isValid = dayjs(date).isValid();
 
-  return isValid
-    ? dayjs(date).format(format ?? formatStr.date)
+  return isValid ?
+      dayjs(date).format(format ?? formatStr.date)
     : "Invalid time value";
 }
 
@@ -68,8 +68,8 @@ export function fTime(date: DatePickerFormat, format?: string) {
 
   const isValid = dayjs(date).isValid();
 
-  return isValid
-    ? dayjs(date).format(format ?? formatStr.time)
+  return isValid ?
+      dayjs(date).format(format ?? formatStr.time)
     : "Invalid time value";
 }
 

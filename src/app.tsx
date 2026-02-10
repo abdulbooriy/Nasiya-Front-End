@@ -1,11 +1,15 @@
 import "src/global.css";
-import type { TypedUseSelectorHook } from "react-redux";
+
 import { useEffect } from "react";
+import type { TypedUseSelectorHook } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Router } from "src/routes/sections";
 import { useScrollToTop } from "src/hooks/use-scroll-to-top";
+
 import Loader from "./components/loader/Loader";
 import Snackbar from "./components/snackbar/Snankbar";
+
 import { refreshProfile } from "./store/actions/authActions";
 import type { RootState, AppDispatch } from "./store";
 
@@ -16,7 +20,7 @@ export default function App() {
   const dispatch = useDispatch<AppDispatch>();
 
   const { isLoadingRefresh, loggedIn } = useTypedSelector(
-    (state) => state.auth
+    (state) => state.auth,
   );
 
   useEffect(() => {
@@ -33,7 +37,7 @@ export default function App() {
       dispatch(refreshProfile());
     }
   }, []);
-  
+
   if (isLoadingRefresh) {
     return <Loader />;
   }

@@ -1,4 +1,5 @@
 const isDevelopment = import.meta.env.MODE === "development";
+
 const isLoggingEnabled =
   import.meta.env.VITE_ENABLE_LOGS === "true" || isDevelopment;
 

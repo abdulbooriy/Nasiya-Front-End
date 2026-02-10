@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import axiosInstance, { API_URL } from "./api";
+import { API_URL } from "./api";
 
 const authApi = axios.create({
   withCredentials: true,
@@ -78,7 +78,7 @@ authApi.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default authApi;

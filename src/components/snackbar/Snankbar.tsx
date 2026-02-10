@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { removeSnackbar } from "src/store/slices/snackbar";
 
 import type { RootState } from "../../store/index";

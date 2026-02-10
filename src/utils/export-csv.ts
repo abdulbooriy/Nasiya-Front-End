@@ -19,7 +19,7 @@ export const exportToCSV = (data: any[], filename: string) => {
           }
           return value ?? "";
         })
-        .join(",")
+        .join(","),
     ),
   ].join("\n");
 
@@ -30,11 +30,15 @@ export const exportToCSV = (data: any[], filename: string) => {
 
   const link = document.createElement("a");
   const url = URL.createObjectURL(blob);
+
   link.setAttribute("href", url);
   link.setAttribute("download", `${filename}.csv`);
   link.style.visibility = "hidden";
+
   document.body.appendChild(link);
+
   link.click();
+
   document.body.removeChild(link);
 };
 
@@ -43,16 +47,16 @@ export const exportCustomersToCSV = (customers: any[]) => {
     const contracts = customer.contracts || [];
     const activeContracts = contracts.filter((c: any) => c.status === "active");
     const completedContracts = contracts.filter(
-      (c: any) => c.status === "completed"
+      (c: any) => c.status === "completed",
     );
 
     const totalDebt = contracts.reduce(
       (sum: number, c: any) => sum + (c.remainingDebt || 0),
-      0
+      0,
     );
     const totalPaid = contracts.reduce(
       (sum: number, c: any) => sum + (c.totalPaid || 0),
-      0
+      0,
     );
 
     return {
@@ -60,20 +64,23 @@ export const exportCustomersToCSV = (customers: any[]) => {
       Mijoz: customer.fullName || "",
       Telefon: customer.phoneNumber || "",
       Passport: customer.passportSeries || "",
-      "Tug'ilgan sana": customer.birthDate
-        ? new Date(customer.birthDate).toLocaleDateString("uz-UZ")
+      "Tug'ilgan sana":
+        customer.birthDate ?
+          new Date(customer.birthDate).toLocaleDateString("uz-UZ")
         : "",
       Manzil: customer.address || "",
-      Manager: customer.manager
-        ? `${customer.manager.firstName || ""} ${customer.manager.lastName || ""}`.trim()
+      Manager:
+        customer.manager ?
+          `${customer.manager.firstName || ""} ${customer.manager.lastName || ""}`.trim()
         : "",
       "Shartnomalar soni": contracts.length,
       "Faol shartnomalar": activeContracts.length,
       Tugallangan: completedContracts.length,
       "Jami qarz": `${totalDebt.toFixed(2)} $`,
       "Jami to'langan": `${totalPaid.toFixed(2)} $`,
-      "Yaratilgan sana": customer.createdAt
-        ? new Date(customer.createdAt).toLocaleDateString("uz-UZ")
+      "Yaratilgan sana":
+        customer.createdAt ?
+          new Date(customer.createdAt).toLocaleDateString("uz-UZ")
         : "",
       Status: customer.isActive ? "Faol" : "Nofaol",
     };
@@ -81,7 +88,7 @@ export const exportCustomersToCSV = (customers: any[]) => {
 
   exportToCSV(
     formattedData,
-    `mijozlar_${new Date().toISOString().split("T")[0]}`
+    `mijozlar_${new Date().toISOString().split("T")[0]}`,
   );
 };
 
@@ -100,17 +107,18 @@ export const exportContractsToCSV = (contracts: any[]) => {
       .filter((p: any) => p.paymentType === "monthly")
       .map(
         (p: any, i: number) =>
-          `${paidPayments.filter((pp: any) => pp.paymentType === "monthly").length + i + 1}-oy`
+          `${paidPayments.filter((pp: any) => pp.paymentType === "monthly").length + i + 1}-oy`,
       )
       .join(", ");
 
     const progressPercent =
-      contract.totalPrice > 0
-        ? ((contract.totalPaid / contract.totalPrice) * 100).toFixed(1)
-        : "0";
+      contract.totalPrice > 0 ?
+        ((contract.totalPaid / contract.totalPrice) * 100).toFixed(1)
+      : "0";
 
-    const contractNumber = contract.createdAt
-      ? `SH-${new Date(contract.createdAt).toISOString().split("T")[0].replace(/-/g, "")}-${String(index + 1).padStart(4, "0")}`
+    const contractNumber =
+      contract.createdAt ?
+        `SH-${new Date(contract.createdAt).toISOString().split("T")[0].replace(/-/g, "")}-${String(index + 1).padStart(4, "0")}`
       : `SH-${String(index + 1).padStart(4, "0")}`;
 
     return {
@@ -119,8 +127,9 @@ export const exportContractsToCSV = (contracts: any[]) => {
       Mijoz: contract.customer?.fullName || "",
       Telefon: contract.customer?.phoneNumber || "",
       Passport: contract.customer?.passportSeries || "",
-      Manager: contract.customer?.manager
-        ? `${contract.customer.manager.firstName || ""} ${contract.customer.manager.lastName || ""}`.trim()
+      Manager:
+        contract.customer?.manager ?
+          `${contract.customer.manager.firstName || ""} ${contract.customer.manager.lastName || ""}`.trim()
         : "",
       Mahsulot: contract.productName || "",
       "Asl narx": `${contract.originalPrice || 0} $`,
@@ -139,19 +148,20 @@ export const exportContractsToCSV = (contracts: any[]) => {
       "To'langan to'lovlar": paidPayments.length,
       "Kutilayotgan to'lovlar": pendingPayments.length,
       Status:
-        contract.status === "active"
-          ? "Faol"
-          : contract.status === "completed"
-            ? "Tugallangan"
-            : "Bekor qilingan",
-      "Boshlangan sana": contract.startDate
-        ? new Date(contract.startDate).toLocaleDateString("uz-UZ")
+        contract.status === "active" ? "Faol"
+        : contract.status === "completed" ? "Tugallangan"
+        : "Bekor qilingan",
+      "Boshlangan sana":
+        contract.startDate ?
+          new Date(contract.startDate).toLocaleDateString("uz-UZ")
         : "",
-      "Keyingi to'lov": contract.nextPaymentDate
-        ? new Date(contract.nextPaymentDate).toLocaleDateString("uz-UZ")
+      "Keyingi to'lov":
+        contract.nextPaymentDate ?
+          new Date(contract.nextPaymentDate).toLocaleDateString("uz-UZ")
         : "",
-      "Yaratilgan sana": contract.createdAt
-        ? new Date(contract.createdAt).toLocaleDateString("uz-UZ")
+      "Yaratilgan sana":
+        contract.createdAt ?
+          new Date(contract.createdAt).toLocaleDateString("uz-UZ")
         : "",
       Quti: contract.info?.box ? "Ha" : "Yo'q",
       "Muslim quti": contract.info?.mbox ? "Ha" : "Yo'q",
@@ -163,6 +173,6 @@ export const exportContractsToCSV = (contracts: any[]) => {
 
   exportToCSV(
     formattedData,
-    `shartnomalar_${new Date().toISOString().split("T")[0]}`
+    `shartnomalar_${new Date().toISOString().split("T")[0]}`,
   );
 };

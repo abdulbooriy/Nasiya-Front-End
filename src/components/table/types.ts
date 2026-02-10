@@ -8,7 +8,7 @@ export interface Column<T = any> {
   renderCell?: (
     row: T,
     onCustomerClick?: (customer: any) => void,
-    onNotesClick?: (row: T) => void
+    onNotesClick?: (row: T) => void,
   ) => React.ReactNode;
   sortable?: boolean;
   filterable?: boolean;

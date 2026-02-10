@@ -1,18 +1,16 @@
-import type { RootState } from "src/store";
 import type { TypedUseSelectorHook } from "react-redux";
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
-
-import { setContractId } from "src/store/slices/contractSlice";
-
-import ModalCustomer from "src/sections/customer/modal/modal-customer";
-
 import { ContractsView } from "./contract-view";
 import ContractDetails from "./contract-detail";
 import ModalContract from "../modal/modal-contract";
+import { RootState } from "../../../store";
+
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { setContractId } from "../../../store/slices/contractSlice";
+import ModalCustomer from "../../customer/modal/modal-customer";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -25,7 +23,9 @@ export function UsersView() {
   }, [dispatch]);
   return (
     <>
-      {contractId ? <ContractDetails /> : <ContractsView />}
+      {contractId ?
+        <ContractDetails />
+      : <ContractsView />}
       <ModalContract />
       <ModalCustomer show />
     </>
