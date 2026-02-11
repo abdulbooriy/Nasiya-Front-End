@@ -1,16 +1,14 @@
-import type { RootState } from "src/store";
 import type { Theme, SxProps, Breakpoint } from "@mui/material/styles";
 
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { stylesMode } from "src/theme/styles";
-
-import Loader from "src/components/loader/Loader";
-
-import { Main } from "./main";
 import { LayoutSection } from "../core/layout-section";
+import Loader from "../../components/loader/Loader";
+import { stylesMode } from "../../theme/styles";
+import { RootState } from "../../store";
+import { Main } from "./main";
 
 // ----------------------------------------------------------------------
 
@@ -53,8 +51,7 @@ export function AuthLayout({ sx, children }: AuthLayoutProps) {
           [stylesMode.dark]: { opacity: 0.08 },
         },
         ...sx,
-      }}
-    >
+      }}>
       <Main layoutQuery={layoutQuery}>{children}</Main>
     </LayoutSection>
   );

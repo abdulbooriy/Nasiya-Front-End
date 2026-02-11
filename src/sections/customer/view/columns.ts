@@ -1,4 +1,4 @@
-import type { Column } from "src/components/table/types";
+import { Column } from "../../../components/table/types";
 import dayjs from "dayjs";
 
 export const columnsPageCustomers: Column[] = [
@@ -9,18 +9,25 @@ export const columnsPageCustomers: Column[] = [
     filterable: false,
     renderCell: (row) => {
       // 🔍 DEBUG LOG - MIJOZLAR BO'LIMI
-      // if (row.fullName?.includes('P AUS ZAFAR') || row.fullName?.includes('P ISLOM')) {
-      //   console.log('🔍 MIJOZLAR BO\'LIMI:', {
-      //     mijoz: row.fullName,
-      //     contracts: row.contracts,
-      //     contractsCount: row.contracts?.length,
-      //     firstContract: row.contracts?.[0],
-      //     originalPaymentDay: row.contracts?.[0]?.originalPaymentDay,
-      //   });
-      // }
+      if (
+        row.fullName?.includes("P AUS ZAFAR") ||
+        row.fullName?.includes("P ISLOM")
+      ) {
+        console.log("🔍 MIJOZLAR BO'LIMI:", {
+          mijoz: row.fullName,
+          contracts: row.contracts,
+          contractsCount: row.contracts?.length,
+          firstContract: row.contracts?.[0],
+          originalPaymentDay: row.contracts?.[0]?.originalPaymentDay,
+        });
+      }
 
       // ✅ TUZATISH: originalPaymentDay ni birinchi o'rinda ishlatish
-      if (row.contracts && Array.isArray(row.contracts) && row.contracts.length > 0) {
+      if (
+        row.contracts &&
+        Array.isArray(row.contracts) &&
+        row.contracts.length > 0
+      ) {
         const days = row.contracts
           .map((c: any) => {
             // Birinchi: originalPaymentDay (eng ishonchli)
@@ -37,7 +44,9 @@ export const columnsPageCustomers: Column[] = [
 
         if (days.length > 0) {
           // Takrorlanmagan kunlarni olish
-          const uniqueDays = [...new Set<number>(days as number[])].sort((a, b) => a - b);
+          const uniqueDays = [...new Set<number>(days as number[])].sort(
+            (a, b) => a - b,
+          );
           return uniqueDays.join(", ");
         }
       }
@@ -99,7 +108,11 @@ export const columnsNewPageCustomers: Column[] = [
     filterable: false,
     renderCell: (row) => {
       // ✅ TUZATISH: originalPaymentDay ni birinchi o'rinda ishlatish
-      if (row.contracts && Array.isArray(row.contracts) && row.contracts.length > 0) {
+      if (
+        row.contracts &&
+        Array.isArray(row.contracts) &&
+        row.contracts.length > 0
+      ) {
         const days = row.contracts
           .map((c: any) => {
             // Birinchi: originalPaymentDay (eng ishonchli)
@@ -116,7 +129,9 @@ export const columnsNewPageCustomers: Column[] = [
 
         if (days.length > 0) {
           // Takrorlanmagan kunlarni olish
-          const uniqueDays = [...new Set<number>(days as number[])].sort((a, b) => a - b);
+          const uniqueDays = [...new Set<number>(days as number[])].sort(
+            (a, b) => a - b,
+          );
           return uniqueDays.join(", ");
         }
       }

@@ -1,9 +1,9 @@
-import type { RootState } from "src/store";
-import type { IRole } from "src/types/role";
-
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { IRole } from "../../types/role";
+import { RootState } from "../../store";
 
 export type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export function ProtectedRoute({
   requiredRoles,
 }: ProtectedRouteProps) {
   const { loggedIn, profile, isLoadingRefresh } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.auth,
   );
   const navigate = useNavigate();
 

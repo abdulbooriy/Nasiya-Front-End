@@ -1,7 +1,4 @@
-import type { RootState } from "src/store";
-
 import { useSelector } from "react-redux";
-import { RiUploadCloud2Fill } from "react-icons/ri";
 import React, { useRef, useState, useEffect } from "react";
 import {
   MdCheckCircle,
@@ -32,13 +29,15 @@ import {
   DialogContentText,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import ContractTable from "./contactTable";
+import ActionContract from "../action/action-contract";
+import { columnsPageContract, columnsPageNewContract } from "./columns-fixed";
 
-import { setModal } from "src/store/slices/modalSlice";
-import { DashboardContent } from "src/layouts/dashboard";
-import { setCustomer } from "src/store/slices/customerSlice";
-import { setContractId } from "src/store/slices/contractSlice";
+import { RootState } from "../../../store";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import {
+  approveContract,
+  getCompletedContracts,
   getContract,
   getContracts,
   getNewContracts,
@@ -50,9 +49,13 @@ import { Iconify } from "../../../components/iconify";
 import Loader from "src/components/loader/Loader";
 import { exportContractsToCSV } from "src/utils/export-csv";
 
-import ContractTable from "./contactTable";
-import ActionContract from "../action/action-contract";
-import { columnsPageContract, columnsPageNewContract } from "./columns-fixed";
+import Loader from "../../../components/loader/Loader";
+import { DashboardContent } from "../../../layouts/dashboard";
+import { Iconify } from "../../../components/iconify";
+import { exportContractsToCSV } from "../../../utils/export-csv";
+import { setCustomer } from "../../../store/slices/customerSlice";
+import { setModal } from "../../../store/slices/modalSlice";
+import { setContractId } from "../../../store/slices/contractSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -69,8 +72,7 @@ function CustomTabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
     </div>
   );
@@ -203,8 +205,7 @@ export function ContractsView() {
                 if (tab === 1) dataToExport = newContracts;
                 if (tab === 2) dataToExport = completedContracts;
                 exportContractsToCSV(dataToExport);
-              }}
-            >
+              }}>
               Export CSV
             </Button>
           </Tooltip>
@@ -221,8 +222,7 @@ export function ContractsView() {
                     data: { type: "add", data: undefined },
                   }),
                 );
-              }}
-            >
+              }}>
               Qo&apos;shish
             </Button>
           </Tooltip>
@@ -234,8 +234,7 @@ export function ContractsView() {
             aria-label="basic tabs example"
             variant="scrollable"
             scrollButtons="auto"
-            sx={{ minHeight: 40 }}
-          >
+            sx={{ minHeight: 40 }}>
             <Tab
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
@@ -324,8 +323,7 @@ export function ContractsView() {
                 onClick={(e) => {
                   e.stopPropagation();
                   handleOpenConfirmDialog(row);
-                }}
-              >
+                }}>
                 Tasdiqlash
               </Button>
             )}
@@ -335,12 +333,11 @@ export function ContractsView() {
         </CustomTabPanel>
 
         <CustomTabPanel value={tab} index={2}>
-          {completedContracts.length === 0 ? (
+          {completedContracts.length === 0 ?
             <Box width="100%" height="100px" display="flex" alignItems="center">
               <Loader />
             </Box>
-          ) : (
-            <ContractTable
+          : <ContractTable
               data={completedContracts}
               columns={columnsPageContract}
               onRowClick={(row) => {
@@ -360,8 +357,7 @@ export function ContractsView() {
         open={customerInfoDialog.open}
         onClose={handleCloseCustomerDialog}
         maxWidth="sm"
-        fullWidth
-      >
+        fullWidth>
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <MdPerson size={24} color="#1976d2" />
           Mijoz ma'lumotlari
@@ -395,8 +391,7 @@ export function ContractsView() {
                       alignItems: "center",
                       gap: 1,
                       mr: 2,
-                    }}
-                  >
+                    }}>
                     <MdPhone size={20} color="#666" />
                   </Box>
                   <ListItemText
@@ -412,8 +407,7 @@ export function ContractsView() {
                       alignItems: "center",
                       gap: 1,
                       mr: 2,
-                    }}
-                  >
+                    }}>
                     <MdLocationOn size={20} color="#666" />
                   </Box>
                   <ListItemText
@@ -429,8 +423,7 @@ export function ContractsView() {
                       alignItems: "center",
                       gap: 1,
                       mr: 2,
-                    }}
-                  >
+                    }}>
                     <MdCreditCard size={20} color="#666" />
                   </Box>
                   <ListItemText
@@ -460,10 +453,12 @@ export function ContractsView() {
                       <ListItemText
                         primary="Mas'ul menejer"
                         secondary={
-                          typeof customerInfoDialog.customer.manager ===
-                          "object"
-                            ? `${customerInfoDialog.customer.manager.firstName || ""} ${customerInfoDialog.customer.manager.lastName || ""}`
-                            : "—"
+                          (
+                            typeof customerInfoDialog.customer.manager ===
+                            "object"
+                          ) ?
+                            `${customerInfoDialog.customer.manager.firstName || ""} ${customerInfoDialog.customer.manager.lastName || ""}`
+                          : "—"
                         }
                       />
                     </ListItem>
@@ -485,8 +480,7 @@ export function ContractsView() {
         open={confirmDialog.open}
         onClose={handleCloseConfirmDialog}
         maxWidth="sm"
-        fullWidth
-      >
+        fullWidth>
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <MdCheckCircle color="green" size={24} />
           Shartnomani tasdiqlash
@@ -529,8 +523,7 @@ export function ContractsView() {
           <Typography
             variant="caption"
             color="text.secondary"
-            sx={{ mt: 2, display: "block" }}
-          >
+            sx={{ mt: 2, display: "block" }}>
             Tasdiqlangandan so'ng shartnoma faol bo'ladi va to'lov jadvali
             yaratiladi.
           </Typography>
@@ -539,16 +532,14 @@ export function ContractsView() {
           <Button
             onClick={handleCloseConfirmDialog}
             color="inherit"
-            variant="outlined"
-          >
+            variant="outlined">
             Bekor qilish
           </Button>
           <Button
             onClick={handleConfirmContract}
             color="success"
             variant="contained"
-            startIcon={<MdCheckCircle />}
-          >
+            startIcon={<MdCheckCircle />}>
             Tasdiqlash
           </Button>
         </DialogActions>

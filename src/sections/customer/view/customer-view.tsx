@@ -1,5 +1,3 @@
-import type { RootState } from "src/store";
-
 import { useSelector } from "react-redux";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { memo, useRef, useState, useEffect } from "react";
@@ -17,23 +15,23 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import CustomerTable from "./customerTable";
+import { columnsPageCustomers, columnsNewPageCustomers } from "./columns";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { RootState } from "../../../store";
 
-import authApi from "src/server/auth";
-import { setModal } from "src/store/slices/modalSlice";
-import { DashboardContent } from "src/layouts/dashboard";
-import { setCustomerId } from "src/store/slices/customerSlice";
 import {
   getCustomers,
   getNewCustomers,
-} from "src/store/actions/customerActions";
+} from "../../../store/actions/customerActions";
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import { exportCustomersToCSV } from "src/utils/export-csv";
-
-import CustomerTable from "./customerTable";
-import { columnsPageCustomers, columnsNewPageCustomers } from "./columns";
+import authApi from "../../../server/auth";
+import Loader from "../../../components/loader/Loader";
+import { DashboardContent } from "../../../layouts/dashboard";
+import { Iconify } from "../../../components/iconify";
+import { exportCustomersToCSV } from "../../../utils/export-csv";
+import { setModal } from "../../../store/slices/modalSlice";
+import { setCustomerId } from "../../../store/slices/customerSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,8 +47,7 @@ function CustomTabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
     </div>
   );
@@ -193,8 +190,7 @@ const CustomerView = () => {
           alignItems="center"
           justifyContent="end"
           gap={3}
-          mb={2}
-        >
+          mb={2}>
           <Tooltip title="CSV formatda yuklab olish">
             <Button
               variant="outlined"
@@ -206,8 +202,7 @@ const CustomerView = () => {
                 enqueueSnackbar("Mijozlar CSV formatda yuklandi", {
                   variant: "success",
                 });
-              }}
-            >
+              }}>
               Export CSV
             </Button>
           </Tooltip>
@@ -219,16 +214,13 @@ const CustomerView = () => {
                   variant="contained"
                   color="primary"
                   startIcon={
-                    uploading ? (
+                    uploading ?
                       <CircularProgress size={20} color="inherit" />
-                    ) : (
-                      <RiUploadCloud2Fill />
-                    )
+                    : <RiUploadCloud2Fill />
                   }
                   onClick={handleImportClick}
                   disabled={uploading}
-                  sx={{ ml: 2 }}
-                >
+                  sx={{ ml: 2 }}>
                   {uploading ? "Yuklanmoqda..." : "Import"}
                 </Button>
               </Tooltip>
@@ -254,8 +246,7 @@ const CustomerView = () => {
                     data: { type: "add", data: undefined },
                   }),
                 );
-              }}
-            >
+              }}>
               Qo&apos;shish
             </Button>
           </Tooltip>
@@ -264,8 +255,7 @@ const CustomerView = () => {
           <Tabs
             value={tab}
             onChange={handleChangeTab}
-            aria-label="basic tabs example"
-          >
+            aria-label="basic tabs example">
             <Tab
               label={
                 <Typography variant="h6" flexGrow={1}>

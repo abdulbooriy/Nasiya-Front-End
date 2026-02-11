@@ -1,20 +1,19 @@
-import type { Column, SortConfig } from "src/components/table/types";
-
 import { useMemo, useState } from "react";
+import { Column, SortConfig } from "../components/table/types";
 
 export function useTableLogic<T extends Record<string, any>>(
   data: T[],
-  columns: Column[]
+  columns: Column[],
 ) {
   const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(
-    null
+    null,
   );
   const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
   const [columnAnchorEl, setColumnAnchorEl] = useState<null | HTMLElement>(
-    null
+    null,
   );
   const [selectedColumns, setSelectedColumns] = useState(
-    columns.map((col) => col.id)
+    columns.map((col) => col.id),
   );
   const [searchText, setSearchText] = useState("");
   const [filterValues, setFilterValues] = useState<Record<string, string>>({});
@@ -51,7 +50,7 @@ export function useTableLogic<T extends Record<string, any>>(
             return managerName.includes(lowerSearch);
           }
           return value && value.toString().toLowerCase().includes(lowerSearch);
-        })
+        }),
       );
     }
 
@@ -107,9 +106,9 @@ export function useTableLogic<T extends Record<string, any>>(
 
   const handleColumnToggle = (columnId: string) => {
     setSelectedColumns((prev) =>
-      prev.includes(columnId)
-        ? prev.filter((id) => id !== columnId)
-        : [...prev, columnId]
+      prev.includes(columnId) ?
+        prev.filter((id) => id !== columnId)
+      : [...prev, columnId],
     );
   };
 
