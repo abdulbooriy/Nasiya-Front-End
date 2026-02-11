@@ -11,6 +11,8 @@ interface ContractTableProps {
   onRowClick: (row: IContract) => void;
   onCustomerClick?: (customer: any) => void;
   renderActions?: (row: IContract) => React.ReactNode;
+  setSelectedRows?: (selected: string[]) => void;
+  selectable?: boolean;
 }
 
 const ContractTable = ({
@@ -19,9 +21,10 @@ const ContractTable = ({
   onRowClick,
   onCustomerClick,
   renderActions,
+  selectable,
+  setSelectedRows,
 }: ContractTableProps) => {
   const logic = useTableLogic<IContract>(data, columns);
-
 
   return (
     <GenericTable
@@ -31,6 +34,8 @@ const ContractTable = ({
       onRowClick={onRowClick}
       onCustomerClick={onCustomerClick}
       renderActions={renderActions}
+      selectable={selectable}
+      setSelectedRows={setSelectedRows}
     />
   );
 };

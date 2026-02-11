@@ -58,6 +58,8 @@ export function CashView() {
   const dataEmployee = useSelector((state: RootState) => state.employee);
   const { profile } = useSelector((state: RootState) => state.auth);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  console.log("selectedRows:", selectedRows); // ✅ DEBUG: selectedRows tekshirish
+  
   const { isLoading, payments, error } = useSelector(
     (state: RootState) => state.cash
   );
@@ -357,8 +359,8 @@ export function CashView() {
               })
             );
           }}
-          onCustomerClick={handleCustomerClick}
           onNotesClick={handleNotesClick}
+          onCustomerClick={handleCustomerClick}
           selectable={canConfirmPayments}
           setSelectedRows={setSelectedRows}
           renderActions={(cash) => <ActionCash cash={cash} />}

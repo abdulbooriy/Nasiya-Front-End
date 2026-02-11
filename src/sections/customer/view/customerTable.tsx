@@ -15,9 +15,17 @@ interface CustomerTableProps {
   data: ICustomer[];
   columns: Column[];
   onRowClick: (row: ICustomer) => void;
+  setSelectedRows?: (selected: string[]) => void;
+  selectable?: boolean;
 }
 
-const CustomerTable = ({ data, columns, onRowClick }: CustomerTableProps) => {
+const CustomerTable = ({
+  data,
+  columns,
+  onRowClick,
+  selectable,
+  setSelectedRows,
+}: CustomerTableProps) => {
   const dispatch = useAppDispatch();
   const logic = useTableLogic<ICustomer>(data, columns);
 
@@ -44,9 +52,12 @@ const CustomerTable = ({ data, columns, onRowClick }: CustomerTableProps) => {
   return (
     <GenericTable
       data={data}
+      selectable={selectable}
       columns={enhancedColumns}
       logic={logic}
       onRowClick={onRowClick}
+      // onCustomerClick={onRowClick}
+      setSelectedRows={setSelectedRows}
       renderActions={(row) => <ActionCustomer customer={row} />}
     />
   );

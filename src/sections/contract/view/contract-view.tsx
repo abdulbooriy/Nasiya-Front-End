@@ -41,7 +41,13 @@ import {
   getContract,
   getContracts,
   getNewContracts,
+  getCompletedContracts,
+  approveContract,
 } from "../../../store/actions/contractActions";
+
+import { Iconify } from "../../../components/iconify";
+import Loader from "src/components/loader/Loader";
+import { exportContractsToCSV } from "src/utils/export-csv";
 
 import Loader from "../../../components/loader/Loader";
 import { DashboardContent } from "../../../layouts/dashboard";
@@ -84,6 +90,13 @@ export function ContractsView() {
 
   const { contracts, newContracts, completedContracts, isLoading } =
     useSelector((state: RootState) => state.contract);
+
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  console.log("selected customers",selectedRows);
+  
+
+  const { profile } = useSelector((state: RootState) => state.auth);
+  const isAdmin = profile?.role === "admin";
 
   const [tab, setTab] = useState(0);
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -174,7 +187,8 @@ export function ContractsView() {
           alignItems="center"
           justifyContent="end"
           gap={3}
-          mb={2}>
+          mb={2}
+        >
           <input
             type="file"
             ref={fileInputRef}
@@ -225,11 +239,8 @@ export function ContractsView() {
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
                 <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%",
-                  }}>
+                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
+                >
                   <Typography variant="subtitle1" fontWeight={700}>
                     Faol shartnomalar
                   </Typography>
@@ -241,11 +252,8 @@ export function ContractsView() {
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
                 <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%",
-                  }}>
+                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
+                >
                   <Badge
                     color="error"
                     badgeContent={newContracts.length}
@@ -254,7 +262,8 @@ export function ContractsView() {
                         top: 4,
                         right: -10,
                       },
-                    }}>
+                    }}
+                  >
                     <Typography variant="subtitle1" fontWeight={700}>
                       Yangi shartnomalar
                     </Typography>
@@ -267,11 +276,8 @@ export function ContractsView() {
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
                 <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%",
-                  }}>
+                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
+                >
                   <Typography variant="subtitle1" fontWeight={700}>
                     Tugatilgan
                   </Typography>
@@ -292,6 +298,8 @@ export function ContractsView() {
             }}
             onCustomerClick={handleCustomerClick}
             renderActions={(contract) => <ActionContract contract={contract} />}
+            selectable={isAdmin}
+            setSelectedRows={setSelectedRows}
           />
         </CustomTabPanel>
         <CustomTabPanel value={tab} index={1}>
@@ -319,6 +327,8 @@ export function ContractsView() {
                 Tasdiqlash
               </Button>
             )}
+            selectable={isAdmin}
+            setSelectedRows={setSelectedRows}
           />
         </CustomTabPanel>
 
@@ -335,8 +345,10 @@ export function ContractsView() {
                 dispatch(setContractId(row._id));
               }}
               onCustomerClick={handleCustomerClick}
+              // selectable={isAdmin}
+              // setSelectedRows={setSelectedRows} // completedContracts tab'ında seçim yapılmaz, bu yüzden boş bir fonksiyon geçiyoruz
             />
-          }
+          )}
         </CustomTabPanel>
       </Stack>
 
@@ -426,11 +438,11 @@ export function ContractsView() {
                   <ListItemText
                     primary="Tug'ilgan sana"
                     secondary={
-                      customerInfoDialog.customer.birthDate ?
-                        new Date(
-                          customerInfoDialog.customer.birthDate,
-                        ).toLocaleDateString("uz-UZ")
-                      : "—"
+                      customerInfoDialog.customer.birthDate
+                        ? new Date(
+                            customerInfoDialog.customer.birthDate,
+                          ).toLocaleDateString("uz-UZ")
+                        : "—"
                     }
                   />
                 </ListItem>

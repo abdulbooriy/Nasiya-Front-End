@@ -42,20 +42,25 @@ function getUserDisplayName(userId: string, allLogs: IAuditLog[]): string {
   if (userCache[userId]) {
     return userCache[userId];
   }
-  
-  const userLog = allLogs.find(log => 
-    typeof log.userId === 'object' && 
-    log.userId !== null && 
-    'firstName' in log.userId && 
-    ('_id' in log.userId ? log.userId._id === userId : false)
+
+  const userLog = allLogs.find(
+    (log) =>
+      typeof log.userId === "object" &&
+      log.userId !== null &&
+      "firstName" in log.userId &&
+      ("_id" in log.userId ? log.userId._id === userId : false),
   );
-  
-  if (userLog && typeof userLog.userId === 'object' && 'firstName' in userLog.userId) {
+
+  if (
+    userLog &&
+    typeof userLog.userId === "object" &&
+    "firstName" in userLog.userId
+  ) {
     const displayName = `${userLog.userId.firstName} ${userLog.userId.lastName}`;
     userCache[userId] = displayName;
     return displayName;
   }
-  
+
   return "Noma'lum foydalanuvchi";
 }
 
@@ -80,40 +85,55 @@ function getFieldLabel(field: string): string {
     PAID: "To'langan",
     REJECTED: "Rad etilgan",
     true: "Ha",
-    false: "Yo'q"
+    false: "Yo'q",
   };
-  
+
   return fieldLabels[field] || field;
 }
 
-function formatFieldValue(value: any, fieldName?: string, allLogs?: IAuditLog[]): string {
+function formatFieldValue(
+  value: any,
+  fieldName?: string,
+  allLogs?: IAuditLog[],
+): string {
   if (value === null || value === undefined) return "-";
   if (value === true) return "Ha";
   if (value === false) return "Yo'q";
   if (value === "PENDING") return "Kutilmoqda";
   if (value === "PAID") return "To'langan";
   if (value === "REJECTED") return "Rad etilgan";
-  
-  if (typeof value === "object" && value !== null && value.firstName && value.lastName) {
+
+  if (
+    typeof value === "object" &&
+    value !== null &&
+    value.firstName &&
+    value.lastName
+  ) {
     return `${value.firstName} ${value.lastName}`;
   }
-  
-  if (typeof value === "string" && 
-      value.match(/^[0-9a-fA-F]{24}$/) && 
-      (fieldName === "confirmedBy" || fieldName === "rejectedBy" || fieldName === "userId")) {
+
+  if (
+    typeof value === "string" &&
+    value.match(/^[0-9a-fA-F]{24}$/) &&
+    (fieldName === "confirmedBy" ||
+      fieldName === "rejectedBy" ||
+      fieldName === "userId")
+  ) {
     if (allLogs && allLogs.length > 0) {
       return getUserDisplayName(value, allLogs);
     }
     return "Tasdiqlangan";
   }
-  
-  if (typeof value === "string" && value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
+
+  if (
+    typeof value === "string" &&
+    value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)
+  ) {
     return dayjs(value).format("DD.MM.YYYY HH:mm");
   }
-  
+
   return String(value);
 }
-
 
 interface ExpandedRowProps {
   log: IAuditLog;
@@ -122,36 +142,58 @@ interface ExpandedRowProps {
 
 function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
   // Ortiqcha o'zgarishlarni filter qilish
-  const redundantFields = ['status', 'isPaid', 'confirmedBy', 'confirmedAt'];
-  
-  const meaningfulChanges = log.changes?.filter(change => {
-    if (log.action === 'CONFIRM' || log.action === 'REJECT') {
-      return !redundantFields.includes(change.field);
-    }
-    return true;
-  }) || [];
+  const redundantFields = ["status", "isPaid", "confirmedBy", "confirmedAt"];
 
-  const isPaymentAction = log.action === 'CONFIRM' || log.action === 'REJECT';
-  
+  const meaningfulChanges =
+    log.changes?.filter((change) => {
+      if (log.action === "CONFIRM" || log.action === "REJECT") {
+        return !redundantFields.includes(change.field);
+      }
+      return true;
+    }) || [];
+
+  const isPaymentAction = log.action === "CONFIRM" || log.action === "REJECT";
+
   return (
     <Box sx={{ p: 0.5, bgcolor: "grey.50", borderRadius: 0 }}>
       <Stack spacing={0.5}>
         {/* To'lov tasdiqlash/rad etish uchun sodda ko'rinish */}
         {isPaymentAction && (
-          <Paper sx={{ p: 1, bgcolor: "background.default", border: 'none', boxShadow: 'none' }}>
+          <Paper
+            sx={{
+              p: 1,
+              bgcolor: "background.default",
+              border: "none",
+              boxShadow: "none",
+            }}
+          >
             <Stack spacing={0.5}>
-              {log.action === 'CONFIRM' && (
-                <Typography variant="body2" color="success.main" fontWeight={600}>
+              {log.action === "CONFIRM" && (
+                <Typography
+                  variant="body2"
+                  color="success.main"
+                  fontWeight={600}
+                >
                   Tasdiqlangan: {log.userId.firstName} {log.userId.lastName}
-                  <Typography component="span" variant="caption" color="text.secondary" sx={{ ml: 1 }}>
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ ml: 1 }}
+                  >
                     ({dayjs(log.timestamp).format("DD.MM.YYYY HH:mm")})
                   </Typography>
                 </Typography>
               )}
-              {log.action === 'REJECT' && (
+              {log.action === "REJECT" && (
                 <Typography variant="body2" color="error.main" fontWeight={600}>
                   Rad etilgan: {log.userId.firstName} {log.userId.lastName}
-                  <Typography component="span" variant="caption" color="text.secondary" sx={{ ml: 1 }}>
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ ml: 1 }}
+                  >
                     ({dayjs(log.timestamp).format("DD.MM.YYYY HH:mm")})
                   </Typography>
                 </Typography>
@@ -160,7 +202,7 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
                 <Typography variant="body2">
                   Summa: <strong>${log.metadata.amount}</strong>
                   {log.metadata.targetMonth && (
-                    <span style={{ color: '#666', marginLeft: 8 }}>
+                    <span style={{ color: "#666", marginLeft: 8 }}>
                       ({log.metadata.targetMonth}-oy)
                     </span>
                   )}
@@ -180,21 +222,30 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
               {/* ✅ YANGI: To'lov usuli */}
               {log.metadata?.paymentMethod && (
                 <Typography variant="body2" color="text.secondary">
-                  To'lov usuli: <Chip 
+                  To'lov usuli:{" "}
+                  <Chip
                     label={
-                      log.metadata.paymentMethod === 'som_cash' ? 'So\'m naqd' :
-                      log.metadata.paymentMethod === 'som_card' ? 'So\'m karta' :
-                      log.metadata.paymentMethod === 'dollar_cash' ? 'Dollar naqd' :
-                      log.metadata.paymentMethod === 'dollar_card_visa' ? 'Dollar karta (Visa)' :
-                      log.metadata.paymentMethod
+                      log.metadata.paymentMethod === "som_cash"
+                        ? "So'm naqd"
+                        : log.metadata.paymentMethod === "som_card"
+                          ? "So'm karta"
+                          : log.metadata.paymentMethod === "dollar_cash"
+                            ? "Dollar naqd"
+                            : log.metadata.paymentMethod === "dollar_card_visa"
+                              ? "Dollar karta (Visa)"
+                              : log.metadata.paymentMethod
                     }
                     size="small"
                     color={
-                      log.metadata.paymentMethod === 'som_cash' ? 'success' :
-                      log.metadata.paymentMethod === 'som_card' ? 'primary' :
-                      log.metadata.paymentMethod === 'dollar_cash' ? 'warning' :
-                      log.metadata.paymentMethod === 'dollar_card_visa' ? 'info' :
-                      'default'
+                      log.metadata.paymentMethod === "som_cash"
+                        ? "success"
+                        : log.metadata.paymentMethod === "som_card"
+                          ? "primary"
+                          : log.metadata.paymentMethod === "dollar_cash"
+                            ? "warning"
+                            : log.metadata.paymentMethod === "dollar_card_visa"
+                              ? "info"
+                              : "default"
                     }
                     sx={{ ml: 1 }}
                   />
@@ -214,7 +265,12 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
               {meaningfulChanges.map((change, index) => (
                 <Paper
                   key={index}
-                  sx={{ p: 1, bgcolor: "background.default", border: 'none', boxShadow: 'none' }}
+                  sx={{
+                    p: 1,
+                    bgcolor: "background.default",
+                    border: "none",
+                    boxShadow: "none",
+                  }}
                 >
                   <Stack spacing={0.5}>
                     <Typography variant="caption" color="text.secondary">
@@ -223,14 +279,22 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
                     <Stack direction="row" spacing={1} alignItems="center">
                       <Chip
                         size="small"
-                        label={formatFieldValue(change.oldValue, change.field, allLogs)}
+                        label={formatFieldValue(
+                          change.oldValue,
+                          change.field,
+                          allLogs,
+                        )}
                         color="default"
                         variant="outlined"
                       />
                       <Iconify icon="eva:arrow-forward-fill" width={16} />
                       <Chip
                         size="small"
-                        label={formatFieldValue(change.newValue, change.field, allLogs)}
+                        label={formatFieldValue(
+                          change.newValue,
+                          change.field,
+                          allLogs,
+                        )}
                         color="primary"
                         variant="filled"
                       />
@@ -248,26 +312,40 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
             <Typography variant="subtitle2" gutterBottom>
               Qo'shimcha:
             </Typography>
-            <Paper sx={{ p: 1, bgcolor: "background.default", border: 'none', boxShadow: 'none' }}>
+            <Paper
+              sx={{
+                p: 1,
+                bgcolor: "background.default",
+                border: "none",
+                boxShadow: "none",
+              }}
+            >
               <Stack spacing={0.5}>
                 {log.metadata.fileName && (
                   <Typography variant="caption">
-                    <strong>Excel fayl:</strong> {log.metadata.fileName.replace(/^.*[\\/]/, "").replace(/excel-\d+-\d+\./, "")}
+                    <strong>Excel fayl:</strong>{" "}
+                    {log.metadata.fileName
+                      .replace(/^.*[\\/]/, "")
+                      .replace(/excel-\d+-\d+\./, "")}
                   </Typography>
                 )}
 
                 {log.metadata.totalRows && (
                   <Typography variant="caption">
-                    <strong>Import:</strong> {log.metadata.successfulRows}/{log.metadata.totalRows} muvaffaqiyatli
+                    <strong>Import:</strong> {log.metadata.successfulRows}/
+                    {log.metadata.totalRows} muvaffaqiyatli
                     {log.metadata.failedRows && log.metadata.failedRows > 0 && (
-                      <span style={{ color: "#d32f2f", marginLeft: 8 }}>({log.metadata.failedRows} xato)</span>
+                      <span style={{ color: "#d32f2f", marginLeft: 8 }}>
+                        ({log.metadata.failedRows} xato)
+                      </span>
                     )}
                   </Typography>
                 )}
 
                 {log.metadata.totalPrice && (
                   <Typography variant="caption">
-                    <strong>Shartnoma summasi:</strong> ${log.metadata.totalPrice}
+                    <strong>Shartnoma summasi:</strong> $
+                    {log.metadata.totalPrice}
                   </Typography>
                 )}
               </Stack>
@@ -350,7 +428,7 @@ export default function AuditLogTable({
       // Agar 10 belgidan uzun bo'lsa, qisqartirish
       return name.length > 10 ? name.substring(0, 10) + "..." : name;
     }
-    
+
     // affectedEntities'dan olish (qisqartirilgan)
     if (
       log.metadata?.affectedEntities &&
@@ -358,20 +436,22 @@ export default function AuditLogTable({
     ) {
       const entityName = log.metadata.affectedEntities[0].entityName || "-";
       // Agar 10 belgidan uzun bo'lsa, qisqartirish
-      return entityName.length > 10 ? entityName.substring(0, 10) + "..." : entityName;
+      return entityName.length > 10
+        ? entityName.substring(0, 10) + "..."
+        : entityName;
     }
-    
+
     // ObjectId'ni ko'rsatmaslik
     if (log.entityId && log.entityId.match(/^[0-9a-fA-F]{24}$/)) {
       return "-";
     }
-    
+
     return log.entityId || "-";
   };
 
   const formatAmountInfo = (log: IAuditLog) => {
     if (log.entity === "payment" && log.metadata?.amount) {
-      const paidAmount = log.metadata.amount; 
+      const paidAmount = log.metadata.amount;
       const status = log.metadata.paymentStatus;
       const targetMonth = log.metadata.targetMonth;
       let statusText = "";
@@ -492,10 +572,18 @@ export default function AuditLogTable({
         <CardHeader
           sx={{ py: 0.5, px: 1 }}
           title={title}
-          titleTypographyProps={{ variant: 'body2', fontWeight: 600, fontSize: '0.875rem' }}
+          titleTypographyProps={{
+            variant: "body2",
+            fontWeight: 600,
+            fontSize: "0.875rem",
+          }}
           action={
             !loading && (
-              <Typography variant="caption" color="text.secondary" fontSize="0.65rem">
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                fontSize="0.65rem"
+              >
                 {total || data.length}
               </Typography>
             )
@@ -504,28 +592,28 @@ export default function AuditLogTable({
       )}
 
       <CardContent sx={{ p: 0 }}>
-        <TableContainer sx={{ maxHeight, border: 'none' }}>
-          <Table 
+        <TableContainer sx={{ maxHeight, border: "none" }}>
+          <Table
             stickyHeader
             size="small"
             sx={{
-              borderCollapse: 'separate',
+              borderCollapse: "separate",
               borderSpacing: 0,
-              '& .MuiTableCell-root': {
+              "& .MuiTableCell-root": {
                 py: 0.2,
                 px: 0.5,
-                fontSize: '0.6rem',
+                fontSize: "0.6rem",
                 lineHeight: 1.1,
-                borderBottom: '1px solid',
-                borderColor: 'divider',
-                height: '22px',
+                borderBottom: "1px solid",
+                borderColor: "divider",
+                height: "22px",
               },
-              '& .MuiTableCell-head': {
-                boxShadow: 'none !important',
+              "& .MuiTableCell-head": {
+                boxShadow: "none !important",
                 py: 0.3,
                 fontWeight: 600,
-                fontSize: '0.6rem',
-                bgcolor: 'grey.50',
+                fontSize: "0.6rem",
+                bgcolor: "grey.50",
               },
             }}
           >
@@ -611,7 +699,7 @@ export default function AuditLogTable({
                     <React.Fragment key={log._id}>
                       <TableRow
                         hover
-                        sx={{ 
+                        sx={{
                           "&:hover": { bgcolor: "action.hover" },
                         }}
                       >
@@ -619,24 +707,38 @@ export default function AuditLogTable({
                           <Iconify
                             icon={getActionIcon(log.action, log.entity)}
                             width={12}
-                            sx={{ color: `${AUDIT_ACTION_COLORS[log.action] || "default"}.main` }}
+                            sx={{
+                              color: `${AUDIT_ACTION_COLORS[log.action] || "default"}.main`,
+                            }}
                           />
                         </TableCell>
 
                         <TableCell>
-                          <Typography variant="caption" noWrap sx={{ maxWidth: 80, fontSize: '0.6rem' }}>
+                          <Typography
+                            variant="caption"
+                            noWrap
+                            sx={{ maxWidth: 80, fontSize: "0.6rem" }}
+                          >
                             {log.userId.firstName} {log.userId.lastName}
                           </Typography>
                         </TableCell>
 
                         <TableCell>
-                          <Typography variant="caption" noWrap sx={{ fontSize: '0.6rem' }}>
+                          <Typography
+                            variant="caption"
+                            noWrap
+                            sx={{ fontSize: "0.6rem" }}
+                          >
                             {AUDIT_ACTION_LABELS[log.action] || log.action}
                           </Typography>
                         </TableCell>
 
                         <TableCell>
-                          <Typography variant="caption" noWrap sx={{ fontSize: '0.6rem' }}>
+                          <Typography
+                            variant="caption"
+                            noWrap
+                            sx={{ fontSize: "0.6rem" }}
+                          >
                             {AUDIT_ENTITY_LABELS[log.entity] || log.entity}
                           </Typography>
                         </TableCell>
@@ -648,10 +750,13 @@ export default function AuditLogTable({
                               size="small"
                               variant="filled"
                               color="info"
-                              sx={{ fontSize: '0.6rem', height: 18 }}
+                              sx={{ fontSize: "0.6rem", height: 18 }}
                             />
                           ) : (
-                            <Typography variant="caption" sx={{ fontSize: '0.6rem' }}>
+                            <Typography
+                              variant="caption"
+                              sx={{ fontSize: "0.6rem" }}
+                            >
                               —
                             </Typography>
                           )}
@@ -664,31 +769,52 @@ export default function AuditLogTable({
                         </TableCell> */}
 
                         <TableCell>
-                          <Typography variant="caption" noWrap sx={{ maxWidth: 70, fontSize: '0.6rem' }}>
-                            {log.metadata?.customerName || "-"}
+                          <Typography
+                            variant="caption"
+                            noWrap
+                            sx={{ maxWidth: 70, fontSize: "0.6rem" }}
+                          >
+                            {`${log.metadata?.customerName || "-"} - ${dayjs(log.createdAt).format("DD/MM/YYYY")}`}
                           </Typography>
                         </TableCell>
 
                         <TableCell>
-                          <Typography variant="caption" noWrap sx={{ maxWidth: 70, fontSize: '0.6rem' }}>
+                          <Typography
+                            variant="caption"
+                            noWrap
+                            sx={{ maxWidth: 70, fontSize: "0.6rem" }}
+                          >
                             {log.metadata?.paymentCreatorName || "-"}
                           </Typography>
                         </TableCell>
 
                         <TableCell>
-                          <Typography variant="caption" noWrap sx={{ fontSize: '0.6rem' }}>
-                            {log.metadata?.amount ? `$${log.metadata.amount}` : "-"}
+                          <Typography
+                            variant="caption"
+                            noWrap
+                            sx={{ fontSize: "0.6rem" }}
+                          >
+                            {log.metadata?.amount
+                              ? `$${log.metadata.amount}`
+                              : "-"}
                           </Typography>
                         </TableCell>
 
                         <TableCell>
-                          <Typography variant="caption" sx={{ fontSize: '0.6rem' }}>
+                          <Typography
+                            variant="caption"
+                            sx={{ fontSize: "0.6rem" }}
+                          >
                             {dayjs(log.timestamp).format("DD.MM.YY")}
                           </Typography>
                         </TableCell>
 
                         <TableCell>
-                          <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.6rem' }}>
+                          <Typography
+                            variant="caption"
+                            color="text.secondary"
+                            sx={{ fontSize: "0.6rem" }}
+                          >
                             {dayjs(log.timestamp).format("HH:mm")}
                           </Typography>
                         </TableCell>
@@ -715,7 +841,10 @@ export default function AuditLogTable({
                       {/* Expanded row */}
                       {hasDetails && isExpanded && (
                         <TableRow sx={{ height: "auto" }}>
-                          <TableCell colSpan={11} sx={{ p: 0, borderBottom: 0 }}>
+                          <TableCell
+                            colSpan={11}
+                            sx={{ p: 0, borderBottom: 0 }}
+                          >
                             <Collapse
                               in={isExpanded}
                               timeout="auto"
