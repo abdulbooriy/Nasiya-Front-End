@@ -43,7 +43,6 @@ interface TabPanelProps {
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -68,11 +67,13 @@ const CustomerView = () => {
   const dispatch = useAppDispatch();
 
   const { customers, newCustomers, isLoading } = useSelector(
-    (state: RootState) => state.customer
+    (state: RootState) => state.customer,
   );
 
   const { profile } = useSelector((state: RootState) => state.auth);
   const isAdmin = profile?.role === "admin";
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  console.log("Selected Rows IDs:", selectedRows); // ✅ DEBUG: selectedRows içeriğini kontrol et
 
   useEffect(() => {
     dispatch(getCustomers());
@@ -81,6 +82,9 @@ const CustomerView = () => {
 
   const [tab, setTab] = useState(0);
   const [uploading, setUploading] = useState(false);
+
+  // const selectedCustomersData= customers.filter((customer) => selectedRows.includes(customer._id));
+  // console.log("Selected Customers Data:", selectedCustomersData); // ✅ DEBUG: selectedRows ile eşleşen müşteri verilerini kontrol et
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -93,7 +97,7 @@ const CustomerView = () => {
   };
 
   const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -139,7 +143,7 @@ const CustomerView = () => {
           `Yaratildi: ${stats.contractsCreated} ta shartnoma, ${stats.customersCreated} ta yangi mijoz`,
           {
             variant: "info",
-          }
+          },
         );
 
         dispatch(getCustomers());
@@ -155,7 +159,7 @@ const CustomerView = () => {
               `Qator ${error.row} (${error.customer}): ${error.error}`,
               {
                 variant: "error",
-              }
+              },
             );
           });
         }
@@ -167,7 +171,7 @@ const CustomerView = () => {
           "Excel import qilishda xatolik yuz berdi",
         {
           variant: "error",
-        }
+        },
       );
     } finally {
       setUploading(false);
@@ -248,7 +252,7 @@ const CustomerView = () => {
                   setModal({
                     modal: "customerModal",
                     data: { type: "add", data: undefined },
-                  })
+                  }),
                 );
               }}
             >
@@ -290,6 +294,8 @@ const CustomerView = () => {
             onRowClick={(row) => {
               dispatch(setCustomerId(row._id));
             }}
+            selectable={isAdmin}
+            setSelectedRows={setSelectedRows}
           />
         </CustomTabPanel>
 
@@ -300,6 +306,8 @@ const CustomerView = () => {
             onRowClick={(row) => {
               dispatch(setCustomerId(row._id));
             }}
+            selectable={isAdmin}
+            setSelectedRows={setSelectedRows}
           />
         </CustomTabPanel>
       </Stack>

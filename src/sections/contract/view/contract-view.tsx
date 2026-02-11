@@ -44,9 +44,9 @@ import {
   getNewContracts,
   getCompletedContracts,
   approveContract,
-} from "src/store/actions/contractActions";
+} from "../../../store/actions/contractActions";
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "../../../components/iconify";
 import Loader from "src/components/loader/Loader";
 import { exportContractsToCSV } from "src/utils/export-csv";
 
@@ -88,6 +88,13 @@ export function ContractsView() {
 
   const { contracts, newContracts, completedContracts, isLoading } =
     useSelector((state: RootState) => state.contract);
+
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  console.log("selected customers",selectedRows);
+  
+
+  const { profile } = useSelector((state: RootState) => state.auth);
+  const isAdmin = profile?.role === "admin";
 
   const [tab, setTab] = useState(0);
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -180,7 +187,6 @@ export function ContractsView() {
           gap={3}
           mb={2}
         >
-
           <input
             type="file"
             ref={fileInputRef}
@@ -213,7 +219,7 @@ export function ContractsView() {
                   setModal({
                     modal: "contractModal",
                     data: { type: "add", data: undefined },
-                  })
+                  }),
                 );
               }}
             >
@@ -233,7 +239,9 @@ export function ContractsView() {
             <Tab
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
-                <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
+                >
                   <Typography variant="subtitle1" fontWeight={700}>
                     Faol shartnomalar
                   </Typography>
@@ -244,15 +252,17 @@ export function ContractsView() {
             <Tab
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
-                <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                  <Badge 
-                    color="error" 
+                <Box
+                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
+                >
+                  <Badge
+                    color="error"
                     badgeContent={newContracts.length}
                     sx={{
-                      '& .MuiBadge-badge': {
+                      "& .MuiBadge-badge": {
                         top: 4,
                         right: -10,
-                      }
+                      },
                     }}
                   >
                     <Typography variant="subtitle1" fontWeight={700}>
@@ -266,7 +276,9 @@ export function ContractsView() {
             <Tab
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
-                <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
+                >
                   <Typography variant="subtitle1" fontWeight={700}>
                     Tugatilgan
                   </Typography>
@@ -274,8 +286,6 @@ export function ContractsView() {
               }
               {...a11yProps(1)}
             />
-
-
           </Tabs>
         </Box>
 
@@ -289,8 +299,9 @@ export function ContractsView() {
             }}
             onCustomerClick={handleCustomerClick}
             renderActions={(contract) => <ActionContract contract={contract} />}
+            selectable={isAdmin}
+            setSelectedRows={setSelectedRows}
           />
-
         </CustomTabPanel>
         <CustomTabPanel value={tab} index={1}>
           <ContractTable
@@ -301,7 +312,7 @@ export function ContractsView() {
                 setModal({
                   modal: "contractModal",
                   data: { type: "edit", data: row },
-                })
+                }),
               );
             }}
             onCustomerClick={handleCustomerClick}
@@ -318,8 +329,9 @@ export function ContractsView() {
                 Tasdiqlash
               </Button>
             )}
+            selectable={isAdmin}
+            setSelectedRows={setSelectedRows}
           />
-
         </CustomTabPanel>
 
         <CustomTabPanel value={tab} index={2}>
@@ -336,11 +348,10 @@ export function ContractsView() {
                 dispatch(setContractId(row._id));
               }}
               onCustomerClick={handleCustomerClick}
+              // selectable={isAdmin}
+              // setSelectedRows={setSelectedRows} // completedContracts tab'ında seçim yapılmaz, bu yüzden boş bir fonksiyon geçiyoruz
             />
-
-
           )}
-
         </CustomTabPanel>
       </Stack>
 
@@ -436,7 +447,7 @@ export function ContractsView() {
                     secondary={
                       customerInfoDialog.customer.birthDate
                         ? new Date(
-                            customerInfoDialog.customer.birthDate
+                            customerInfoDialog.customer.birthDate,
                           ).toLocaleDateString("uz-UZ")
                         : "—"
                     }

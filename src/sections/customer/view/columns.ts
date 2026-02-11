@@ -9,15 +9,15 @@ export const columnsPageCustomers: Column[] = [
     filterable: false,
     renderCell: (row) => {
       // 🔍 DEBUG LOG - MIJOZLAR BO'LIMI
-      if (row.fullName?.includes('P AUS ZAFAR') || row.fullName?.includes('P ISLOM')) {
-        console.log('🔍 MIJOZLAR BO\'LIMI:', {
-          mijoz: row.fullName,
-          contracts: row.contracts,
-          contractsCount: row.contracts?.length,
-          firstContract: row.contracts?.[0],
-          originalPaymentDay: row.contracts?.[0]?.originalPaymentDay,
-        });
-      }
+      // if (row.fullName?.includes('P AUS ZAFAR') || row.fullName?.includes('P ISLOM')) {
+      //   console.log('🔍 MIJOZLAR BO\'LIMI:', {
+      //     mijoz: row.fullName,
+      //     contracts: row.contracts,
+      //     contractsCount: row.contracts?.length,
+      //     firstContract: row.contracts?.[0],
+      //     originalPaymentDay: row.contracts?.[0]?.originalPaymentDay,
+      //   });
+      // }
 
       // ✅ TUZATISH: originalPaymentDay ni birinchi o'rinda ishlatish
       if (row.contracts && Array.isArray(row.contracts) && row.contracts.length > 0) {
