@@ -41,15 +41,10 @@ import {
   getContract,
   getContracts,
   getNewContracts,
-  getCompletedContracts,
-  approveContract,
 } from "../../../store/actions/contractActions";
 
-import { Iconify } from "../../../components/iconify";
 import Loader from "src/components/loader/Loader";
-import { exportContractsToCSV } from "src/utils/export-csv";
 
-import Loader from "../../../components/loader/Loader";
 import { DashboardContent } from "../../../layouts/dashboard";
 import { Iconify } from "../../../components/iconify";
 import { exportContractsToCSV } from "../../../utils/export-csv";
@@ -337,7 +332,7 @@ export function ContractsView() {
             <Box width="100%" height="100px" display="flex" alignItems="center">
               <Loader />
             </Box>
-          : <ContractTable
+          : (<ContractTable
               data={completedContracts}
               columns={columnsPageContract}
               onRowClick={(row) => {
