@@ -11,6 +11,9 @@ interface TableFiltersProps {
   onFilterChange: (columnId: string, value: string) => void;
   onClearFilters: () => void;
   onApplyFilters: () => void;
+  dateFilterFrom?: string;
+  dateFilterTo?: string;
+  onDateFilterChange?: (field: "from" | "to", value: string) => void;
 }
 
 export function TableFilters({
@@ -21,6 +24,9 @@ export function TableFilters({
   onFilterChange,
   onClearFilters,
   onApplyFilters,
+  dateFilterFrom = "",
+  dateFilterTo = "",
+  onDateFilterChange,
 }: TableFiltersProps) {
   return (
     <Menu
@@ -36,9 +42,37 @@ export function TableFilters({
         horizontal: "right",
       }}
     >
-      <Box sx={{ p: 2, width: 300 }}>
+      <Box sx={{ p: 2, width: 350 }}>
         <Typography variant="subtitle1" gutterBottom>
           Filterlar
+        </Typography>
+        {/* Date Range Filter */}
+        <Typography variant="body2" sx={{ mt: 2, mb: 1, fontWeight: 600 }}>
+          Sana bo'yicha
+        </Typography>
+        <TextField
+          fullWidth
+          type="date"
+          label="Boshlanish sanasi"
+          value={dateFilterFrom}
+          onChange={(e) => onDateFilterChange?.("from", e.target.value)}
+          margin="normal"
+          size="small"
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField
+          fullWidth
+          type="date"
+          label="Tugash sanasi"
+          value={dateFilterTo}
+          onChange={(e) => onDateFilterChange?.("to", e.target.value)}
+          margin="normal"
+          size="small"
+          InputLabelProps={{ shrink: true }}
+        />
+        {/* Column Filters */}
+        <Typography variant="body2" sx={{ mt: 2, mb: 1, fontWeight: 600 }}>
+          Ustun bo'yicha
         </Typography>
         {columns
           .filter((column) => column.filterable !== false)

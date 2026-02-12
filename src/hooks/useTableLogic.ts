@@ -18,6 +18,8 @@ export function useTableLogic<T extends Record<string, any>>(
   );
   const [searchText, setSearchText] = useState("");
   const [filterValues, setFilterValues] = useState<Record<string, string>>({});
+  const [dateFilterFrom, setDateFilterFrom] = useState("");
+  const [dateFilterTo, setDateFilterTo] = useState("");
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null);
 
   const filteredData = useMemo(() => {
@@ -82,6 +84,26 @@ export function useTableLogic<T extends Record<string, any>>(
       }
     });
 
+    // Date Filters
+    if (dateFilterFrom || dateFilterTo) {
+      result = result.filter((item) => {
+        const itemDate = item['createdAt'] || item['date'] || item['startDate'];
+        if (!itemDate) return true;
+
+        const itemDateObj = new Date(itemDate);
+        if (dateFilterFrom) {
+          const fromDate = new Date(dateFilterFrom);
+          if (itemDateObj < fromDate) return false;
+        }
+        if (dateFilterTo) {
+          const toDate = new Date(dateFilterTo);
+          toDate.setHours(23, 59, 59, 999);
+          if (itemDateObj > toDate) return false;
+        }
+        return true;
+      });
+    }
+
     // Sorting
     if (sortConfig) {
       result.sort((a, b) => {
@@ -103,7 +125,7 @@ export function useTableLogic<T extends Record<string, any>>(
     }
 
     return result;
-  }, [data, searchText, filterValues, sortConfig]);
+  }, [data, searchText, filterValues, dateFilterFrom, dateFilterTo, sortConfig]);
 
   const handleColumnToggle = (columnId: string) => {
     setSelectedColumns((prev) =>
@@ -128,7 +150,17 @@ export function useTableLogic<T extends Record<string, any>>(
   const handleClearFilters = () => {
     setFilterValues({});
     setSearchText("");
+    setDateFilterFrom("");
+    setDateFilterTo("");
     setSortConfig(null);
+  };
+
+  const handleDateFilterChange = (field: "from" | "to", value: string) => {
+    if (field === "from") {
+      setDateFilterFrom(value);
+    } else {
+      setDateFilterTo(value);
+    }
   };
 
   return {
@@ -143,8 +175,11 @@ export function useTableLogic<T extends Record<string, any>>(
     setSearchText,
     filteredData,
     filterValues,
+    dateFilterFrom,
+    dateFilterTo,
     handleFilterChange,
     handleClearFilters,
+    handleDateFilterChange,
     sortConfig,
     handleSort,
     handleColumnToggle,
