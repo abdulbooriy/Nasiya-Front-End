@@ -87,7 +87,7 @@ export function useTableLogic<T extends Record<string, any>>(
     // Date Filters
     if (dateFilterFrom || dateFilterTo) {
       result = result.filter((item) => {
-        const itemDate = item.createdAt || item.date || item.startDate;
+        const itemDate = item['createdAt'] || item['date'] || item['startDate'];
         if (!itemDate) return true;
 
         const itemDateObj = new Date(itemDate);
