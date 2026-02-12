@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -6,18 +6,18 @@ import { useSelector } from "react-redux";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Box, Paper, Button } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { DashboardContent } from "src/layouts/dashboard";
-import { setContractId } from "src/store/slices/contractSlice";
-import { getSellerContract } from "src/store/actions/contractActions";
+import { DashboardContent } from "@/layouts/dashboard"
+import { setContractId } from "@/store/slices/contractSlice"
+import { getSellerContract } from "@/store/actions/contractActions"
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import CustomerInfo from "src/components/customer-infos/customerInfo";
-import { PaymentSchedule } from "src/components/payment-schedule";
-import PayCommentModal from "src/components/render-payment-history/pay-comment-modal";
-import RenderContractFields from "src/components/render-contract-fields/renderContractFields";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import CustomerInfo from "@/components/customer-infos/customerInfo"
+import { PaymentSchedule } from "@/components/payment-schedule"
+import PayCommentModal from "@/components/render-payment-history/pay-comment-modal"
+import RenderContractFields from "@/components/render-contract-fields/renderContractFields"
 
 const ContractDetails = () => {
   const dispatch = useAppDispatch();

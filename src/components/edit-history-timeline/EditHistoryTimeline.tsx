@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { Box, Card, Chip, Stack, Avatar, Typography } from "@mui/material";
 import {
   Timeline,

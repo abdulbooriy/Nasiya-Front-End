@@ -1,39 +1,24 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
-import {
-  MdCheckCircle,
-  MdWarning,
-  MdTrendingUp,
-  MdAccessTime,
-  MdCancel,
-  MdInfo,
-} from "react-icons/md";
 
 import {
-  Box,
-  Chip,
-  List,
   Stack,
   Button,
   Dialog,
-  Avatar,
   Divider,
-  ListItem,
   Typography,
   DialogTitle,
-  ListItemText,
   DialogActions,
   DialogContent,
   CircularProgress,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import authApi from "src/server/auth";
-import { closeModal } from "src/store/slices/modalSlice";
-import { log } from "console";
+import authApi from "@/server/auth"
+import { closeModal } from "@/store/slices/modalSlice"
 
 const ModalCashInfo = () => {
   const dispatch = useAppDispatch();

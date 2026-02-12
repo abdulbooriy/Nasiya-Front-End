@@ -1,6 +1,7 @@
-import authApi from "src/server/auth";
-import { enqueueSnackbar } from "../slices/snackbar";
-import type { AppThunk } from "../index";
+import authApi from "@/server/auth"
+
+import { enqueueSnackbar } from "@/store/slices/snackbar";
+import type { AppThunk } from "@/store";
 
 interface PaymentData {
   id: string; 

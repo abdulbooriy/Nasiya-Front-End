@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import {
   Box,
   Card,
@@ -15,8 +16,9 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import { MdHistory } from "react-icons/md";
+
 import axios from "axios";
+import { MdHistory } from "react-icons/md";
 
 interface IPrepaidRecord {
   _id: string;
@@ -52,7 +54,7 @@ export function PrepaidHistory({
 
       try {
         const baseUrl =
-          import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+          import.meta.env['VITE_API_BASE_URL'] || "http://localhost:3000";
         const token = localStorage.getItem("accessToken");
 
         let url = `${baseUrl}/api/dashboard/prepaid/history/${customerId}`;

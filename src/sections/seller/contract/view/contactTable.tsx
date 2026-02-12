@@ -1,9 +1,8 @@
-import type { IContract } from "src/types/contract";
-import type { Column } from "src/components/table/types";
+import type { IContract } from "@/types/contract"
+import type { Column } from "@/components/table/types"
 
-import { useTableLogic } from "src/hooks/useTableLogic";
-
-import { GenericTable } from "src/components/table/GnericTable";
+import { useTableLogic } from "@/hooks/useTableLogic"
+import { GenericTable } from "@/components/table/GnericTable"
 
 interface ContractTableProps {
   data: IContract[];
@@ -19,7 +18,7 @@ const ContractTable = ({ data, columns, onRowClick }: ContractTableProps) => {
       data={data}
       columns={columns}
       logic={logic}
-      onRowClick={onRowClick}
+      {...(onRowClick && { onRowClick })}
     />
   );
 };

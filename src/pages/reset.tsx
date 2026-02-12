@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 
-import { CONFIG } from "src/config-global";
+import { CONFIG } from "@/config-global"
 
-import { ResetView } from "src/sections/reset/view";
+import { ResetView } from "@/sections/reset/view"
 
 // ----------------------------------------------------------------------
 

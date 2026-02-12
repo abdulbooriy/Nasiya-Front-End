@@ -1,4 +1,4 @@
-import type { ICustomer } from "src/types/customer";
+import type { ICustomer } from "@/types/customer"
 
 import { useState, useCallback } from "react";
 import { MdDelete, MdWarning, MdRefresh } from "react-icons/md";
@@ -19,15 +19,15 @@ import Popover from "@mui/material/Popover";
 import MenuList from "@mui/material/MenuList";
 import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setModal } from "src/store/slices/modalSlice";
+import { setModal } from "@/store/slices/modalSlice"
 import {
   deleteCustomer,
   restorationCustomer,
-} from "src/store/actions/customerActions";
+} from "@/store/actions/customerActions";
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 
 export default function ActionCustomer({ customer }: { customer: ICustomer }) {
   const dispatch = useAppDispatch();

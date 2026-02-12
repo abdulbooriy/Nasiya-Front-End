@@ -27,9 +27,9 @@ import dayjs, { Dayjs } from "dayjs";
 import { useSelector } from "react-redux";
 import { alpha, useTheme } from "@mui/material/styles";
 
-import { Iconify } from "../iconify";
-import { RootState } from "../../store";
-import authApi from "../../server/auth";
+import { Iconify } from "@/components/iconify";
+import type { RootState } from "@/store";
+import authApi from "@/server/auth";
 
 interface ContractDateEditModalProps {
   open: boolean;
@@ -450,7 +450,7 @@ export default function ContractDateEditModal({
             sx={{ 
               borderRadius: 1,
               px: 4,
-              boxShadow: theme.customShadows?.primary
+              boxShadow: theme.customShadows?.primary ?? {}
             }}
           >
             {loading ? "Saqlanmoqda..." : "Saqlash"}

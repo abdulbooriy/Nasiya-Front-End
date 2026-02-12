@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { IEmployee } from "src/types/employee";
+import type { IEmployee } from "@/types/employee"
 
 import {
   Box,
@@ -13,13 +13,13 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { formatUzbekPhoneNumber } from "src/utils/format-number";
+import { formatUzbekPhoneNumber } from "@/utils/format-number"
 
-import { setModal } from "src/store/slices/modalSlice";
+import { setModal } from "@/store/slices/modalSlice"
 
-import { Iconify } from "../iconify";
+import { Iconify } from "@/components/iconify";
 
 interface IProps {
   employee: IEmployee;

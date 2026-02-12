@@ -1,5 +1,5 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { CurrencyDetails } from "src/types/cash";
+import type { CurrencyDetails } from "@/types/cash"
 
 import { createSlice } from "@reduxjs/toolkit";
 

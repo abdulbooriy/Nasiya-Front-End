@@ -1,6 +1,6 @@
-import authApi from "src/server/auth";
+import authApi from "@/server/auth"
 
-import { enqueueSnackbar } from "../slices/snackbar";
+import { enqueueSnackbar } from "@/store/slices/snackbar";
 import {
   start,
   failure,
@@ -8,10 +8,10 @@ import {
   setCurrency,
   setDashboard,
   setStatistic,
-} from "../slices/dashboardSlice";
+} from "@/store/slices/dashboardSlice";
 
-import type { AppThunk } from "../index";
-import type { IStatistic } from "../slices/dashboardSlice";
+import type { AppThunk } from "@/store";
+import type { IStatistic } from "@/store/slices/dashboardSlice";
 
 export const getDashboard = (): AppThunk => async (dispatch) => {
   dispatch(start());

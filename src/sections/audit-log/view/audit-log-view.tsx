@@ -1,30 +1,28 @@
+import type { RootState } from '@/store'
+
 import { useState, useEffect, useCallback } from 'react';
 import {
   Box,
-  Card,
   Container,
   Typography,
   Stack,
   Alert,
   Button,
 } from '@mui/material';
-import { Iconify } from 'src/components/iconify';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Iconify } from '@/components/iconify'
 import dayjs, { Dayjs } from 'dayjs';
 
-import { useAppDispatch } from 'src/hooks/useAppDispatch';
+import { useAppDispatch } from '@/hooks/useAppDispatch'
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store';
 
 import {
   fetchDailyActivity,
   fetchActivityStats,
-} from 'src/store/actions/auditLogActions';
+} from '@/store/actions/auditLogActions';
 
-import AuditLogTable from '../components/audit-log-table';
-import AuditLogStats from '../components/audit-log-stats';
-import AuditLogFilters from '../components/audit-log-filters';
-import { AuditLogFilters as FilterType } from 'src/types/audit-log';
+import AuditLogTable from "@/sections/audit-log/components/audit-log-table";
+import AuditLogFilters from "@/sections/audit-log/components/audit-log-filters";
+import type { AuditLogFilters as FilterType } from '@/types/audit-log'
 
 // ----------------------------------------------------------------------
 
@@ -60,15 +58,14 @@ export default function AuditLogView() {
   
   const {
     dailyActivity,
-    activityStats,
     loading,
     error,
   } = useSelector((state: RootState) => state.auditLog);
 
-  const [activeTab, setActiveTab] = useState<'logs' | 'stats'>('logs');
-  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+  const [_activeTab, _setActiveTab] = useState<'logs' | 'stats'>('logs');
+  const [_selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [filters, setFilters] = useState<FilterType>(loadFiltersFromStorage);
-  const [limit, setLimit] = useState<number>(filters.limit || 100);
+  const [_limit, setLimit] = useState<number>(filters.limit || 100);
 
   // Dastlabki yuklash
   useEffect(() => {
@@ -117,7 +114,7 @@ export default function AuditLogView() {
   };
 
   // Sana o'zgarganida
-  const handleDateChange = useCallback(
+  useCallback(
     (newDate: Dayjs | null) => {
       if (newDate && newDate.isValid()) {
         setSelectedDate(newDate);
@@ -137,7 +134,7 @@ export default function AuditLogView() {
   );
 
   // Pagination handler
-  const handlePageChange = (event: unknown, newPage: number) => {
+  const handlePageChange = (_event: unknown, newPage: number) => {
     handleFiltersChange({ page: newPage + 1 }); // MUI uses 0-based indexing
   };
 
@@ -192,7 +189,7 @@ export default function AuditLogView() {
           variant="contained"
           startIcon={<Iconify icon="eva:download-fill" />}
           onClick={handleExport}
-          disabled={!dailyActivity?.activities || dailyActivity.activities.length === 0}
+          {...((!dailyActivity?.activities || dailyActivity.activities.length === 0) && { disabled: true })}
         >
           CSV Export
         </Button>

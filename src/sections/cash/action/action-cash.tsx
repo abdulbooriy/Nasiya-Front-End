@@ -1,5 +1,5 @@
-import type { RootState } from "src/store";
-import type { IPayment } from "src/types/cash";
+import type { RootState } from "@/store"
+import type { IPayment } from "@/types/cash"
 
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 import { Stack, IconButton, Tooltip, Button } from "@mui/material";
 import { MdVisibility } from "react-icons/md";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { confirmPayments } from "src/store/actions/cashActions";
-import { setModal } from "src/store/slices/modalSlice";
+import { confirmPayments } from "@/store/actions/cashActions"
+import { setModal } from "@/store/slices/modalSlice"
 
 export default function ActionCash({ cash }: { cash: IPayment }) {
   const dispatch = useAppDispatch();

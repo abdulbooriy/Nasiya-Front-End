@@ -1,19 +1,18 @@
-import type { BoxProps } from '@mui/material/Box';
-
 import { useState, useCallback } from 'react';
+
+import type { BoxProps } from '@mui/material/Box';
 
 import Box from '@mui/material/Box';
 import Slide from '@mui/material/Slide';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
-import { useTheme } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { useTheme } from '@mui/material/styles';
 
-import { bgBlur } from 'src/theme/styles';
-
-import { Iconify } from 'src/components/iconify';
+import { bgBlur } from '@/theme/styles'
+import { Iconify } from '@/components/iconify'
 
 // ----------------------------------------------------------------------
 
@@ -42,9 +41,9 @@ export function Searchbar({ sx, ...other }: BoxProps) {
         <Slide direction="down" in={open} mountOnEnter unmountOnExit>
           <Box
             sx={{
-              ...bgBlur({
+              ...(bgBlur({
                 color: theme.vars.palette.background.default,
-              }),
+              })),
               top: 0,
               left: 0,
               zIndex: 99,
@@ -53,12 +52,12 @@ export function Searchbar({ sx, ...other }: BoxProps) {
               position: 'absolute',
               alignItems: 'center',
               px: { xs: 3, md: 5 },
-              boxShadow: theme.customShadows.z8,
+              ...(theme.customShadows?.z8 && { boxShadow: theme.customShadows.z8 }),
               height: {
                 xs: 'var(--layout-header-mobile-height)',
                 md: 'var(--layout-header-desktop-height)',
               },
-              ...sx,
+              ...(sx),
             }}
             {...other}
           >

@@ -1,12 +1,8 @@
 import { forwardRef } from 'react';
 
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
-
 import { StyledLabel } from './styles';
 import { labelClasses } from './classes';
-import { excelTheme } from 'src/theme/excel-theme';
-
 import type { LabelProps } from './types';
 
 // ----------------------------------------------------------------------
@@ -16,7 +12,6 @@ export const Label = forwardRef<HTMLSpanElement, LabelProps>(
     { children, color = 'default', variant = 'soft', startIcon, endIcon, sx, className, ...other },
     ref
   ) => {
-    const theme = useTheme();
 
     const iconStyles = {
       width: 16,

@@ -1,13 +1,10 @@
-import type { IDebt } from "src/types/debtor";
-import type { Column } from "src/components/table/types";
+import type { IDebt } from "@/types/debtor"
+import type { Column } from "@/components/table/types"
 
-import { useTableLogic } from "src/hooks/useTableLogic";
-import { useAppDispatch } from "src/hooks/useAppDispatch";
-
-import { updateDebCustomerManager } from "src/store/actions/debtorActions";
-
-import { GenericTable } from "src/components/table/GnericTable";
-
+import { useTableLogic } from "@/hooks/useTableLogic"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { updateDebCustomerManager } from "@/store/actions/debtorActions"
+import { GenericTable } from "@/components/table/GnericTable"
 import { ManagerSelectCellDebtor } from "./ManagerSelectCell";
 
 interface DEbtorTableProps {
@@ -66,12 +63,12 @@ const DebtorTable = ({
   return (
     <GenericTable
       data={data}
-      selectable={selectable}
+      selectable={selectable ?? false}
       columns={enhancedColumns}
       logic={logic}
-      onRowClick={onRowClick}
-      setSelectedRows={setSelectedRows}
-      selectedRows={selectedRows}
+      {...(onRowClick && { onRowClick })}
+      {...(setSelectedRows && { setSelectedRows })}
+      {...(selectedRows && { selectedRows })}
       component={component}
       calendar={calendar}
     />

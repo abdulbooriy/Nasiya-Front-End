@@ -1,9 +1,9 @@
-import type { IPayment } from "src/types/cash";
-import type { IDebt } from "src/types/debtor";
-import type { IMeneger } from "src/types/meneger";
-import type { IEmployee } from "src/types/employee";
-import type { ICustomer } from "src/types/customer";
-import type { IContract } from "src/types/contract";
+import type { IPayment } from "@/types/cash"
+import type { IDebt } from "@/types/debtor"
+import type { IMeneger } from "@/types/meneger"
+import type { IEmployee } from "@/types/employee"
+import type { ICustomer } from "@/types/customer"
+import type { IContract } from "@/types/contract"
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
@@ -12,7 +12,7 @@ type ModalType = "add" | "edit" | "info" | "reject" | undefined;
 
 type ModalData<T> = {
   type: ModalType;
-  data?: T;
+  data: T | undefined;
 };
 
 export interface ModalState {

@@ -1,4 +1,4 @@
-import type { Column } from "src/components/table/types";
+import type { Column } from "@/components/table/types"
 import {
   Chip,
   Box,
@@ -6,14 +6,12 @@ import {
   Tooltip,
   Stack,
   Typography,
-  Avatar,
 } from "@mui/material";
 import {
   MdAccessTime,
   MdCheckCircle,
   MdCancel,
   MdWarning,
-  MdPerson,
   MdStickyNote2,
   MdTrendingUp,
   MdContentCopy,

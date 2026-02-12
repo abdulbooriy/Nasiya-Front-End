@@ -1,4 +1,4 @@
-import type { IContract } from "src/types/contract";
+import type { IContract } from "@/types/contract"
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";

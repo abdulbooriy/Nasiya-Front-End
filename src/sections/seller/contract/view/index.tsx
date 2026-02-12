@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 import type { TypedUseSelectorHook } from "react-redux";
 
 import { memo } from "react";
@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 
 import ContractsView from "./contract-view";
 import ContractDetails from "./contract-detail";
-import ModalContract from "../modal/modal-contract";
-import ModalCustomer from "../../customer/modal/modal-customer";
+import ModalContract from "@/sections/seller/contract/modal/modal-contract";
+import ModalCustomer from "@/sections/seller/customer/modal/modal-customer";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

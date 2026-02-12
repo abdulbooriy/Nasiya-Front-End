@@ -57,9 +57,9 @@ export const ERROR_MESSAGES: Record<string, string> = {
 };
 
 // Get error message by code
-export function getErrorMessage(errorCode?: string): string {
-  if (!errorCode) return ERROR_MESSAGES.UNKNOWN_ERROR;
-  return ERROR_MESSAGES[errorCode] || ERROR_MESSAGES.UNKNOWN_ERROR;
+export function getErrorMessage(errorCode?: string) {
+  if (!errorCode) return ERROR_MESSAGES['UNKNOWN_ERROR'];
+  return ERROR_MESSAGES[errorCode] || ERROR_MESSAGES['UNKNOWN_ERROR'];
 }
 
 // Extract error code from error object
@@ -69,7 +69,7 @@ export function extractErrorCode(error: any): string | undefined {
 
 // Get user-friendly error message from error object
 
-export function getUserErrorMessage(error: any): string {
+export function getUserErrorMessage(error: any) {
   const errorCode = extractErrorCode(error);
   return getErrorMessage(errorCode);
 }

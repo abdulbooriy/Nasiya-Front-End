@@ -1,9 +1,9 @@
-import type { ICustomer } from "src/types/customer";
-import type { Column } from "src/components/table/types";
+import type { ICustomer } from "@/types/customer"
+import type { Column } from "@/components/table/types"
 
-import { useTableLogic } from "src/hooks/useTableLogic";
+import { useTableLogic } from "@/hooks/useTableLogic"
 
-import { GenericTable } from "src/components/table/GnericTable";
+import { GenericTable } from "@/components/table/GnericTable"
 
 interface CustomerTableProps {
   data: ICustomer[];
@@ -19,7 +19,7 @@ const CustomerTable = ({ data, columns, onRowClick }: CustomerTableProps) => {
       data={data}
       columns={columns}
       logic={logic}
-      onRowClick={onRowClick}
+      {...(onRowClick && { onRowClick })}
     />
   );
 };

@@ -1,5 +1,5 @@
-import type { RootState } from "src/store";
-import type { ICustomer } from "src/types/customer";
+import type { RootState } from "@/store"
+import type { ICustomer } from "@/types/customer"
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -29,14 +29,14 @@ import {
   DialogContentText,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setModal } from "src/store/slices/modalSlice";
-import { setEmployeeId } from "src/store/slices/employeeSlice";
-import { getManagers } from "src/store/actions/employeeActions";
-import { confirmationCustomer } from "src/store/actions/customerActions";
+import { setModal } from "@/store/slices/modalSlice"
+import { setEmployeeId } from "@/store/slices/employeeSlice"
+import { getManagers } from "@/store/actions/employeeActions"
+import { confirmationCustomer } from "@/store/actions/customerActions"
 
-import { Iconify } from "../iconify";
+import { Iconify } from "@/components/iconify";
 
 interface IProps {
   customer: ICustomer | null;
@@ -129,7 +129,10 @@ const CustomerInfo: FC<IProps> = ({ customer, top = false }) => {
           gap={2}
         >
           <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar sx={{ width: 50, height: 50 }} alt={customer?.fullName} />
+            <Avatar 
+              sx={{ width: 50, height: 50 }} 
+              {...(customer?.fullName && { alt: customer.fullName })}
+            />
             <Typography variant="h6">
               {customer?.fullName || "___"}
             </Typography>
@@ -166,29 +169,39 @@ const CustomerInfo: FC<IProps> = ({ customer, top = false }) => {
               loadingText="Yuklanmoqda..."
               noOptionsText="Menejer topilmadi"
               value={selectedManager}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  fullWidth
-                  label="Menejer"
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        {isLoading ? (
-                          <CircularProgress color="inherit" size={20} />
-                        ) : null}
-                        {params.InputProps.endAdornment}
-                      </>
-                    ),
-                  }}
-                />
-              )}
+              renderInput={(params) => {
+                const { size, InputLabelProps, ...restParams } = params;
+                const { className: labelClassName, style: labelStyle, ...restLabelProps } = InputLabelProps || {};
+                
+                return (
+                  <TextField
+                    {...restParams}
+                    {...(size && { size })}
+                    fullWidth
+                    label="Menejer"
+                    InputLabelProps={{
+                      ...restLabelProps,
+                      ...(labelClassName && { className: labelClassName }),
+                      ...(labelStyle && { style: labelStyle }),
+                    }}
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <>
+                          {isLoading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }}
+                  />
+                );
+              }}
               onChange={(_event, value) => {
                 setSelectedManager(value);
               }}
-              disabled={!canEditManager} // ✅ Manager bo'lsa o'zgartira olmaydi
-              // sx={{ margin: "dense" }}
+              {...(!canEditManager && { disabled: true })}
               sx={{ flex: 1 }}
               // ListboxProps={{
               //   style: {
@@ -199,8 +212,7 @@ const CustomerInfo: FC<IProps> = ({ customer, top = false }) => {
             <Button
               type="submit"
               color={!customer?.isActive ? "success" : "primary"}
-              // disabled={!isFormValid}
-              disabled={!selectedManager && customer?.isActive}
+              {...((!selectedManager && customer?.isActive) && { disabled: true })}
             >
               {!selectedManager ? "Tasdiqlash" : "Saqlash"}
             </Button>
@@ -262,7 +274,7 @@ const CustomerInfo: FC<IProps> = ({ customer, top = false }) => {
                 primary="Mas'ul menejer"
                 secondary={
                   <Chip
-                    avatar={<Avatar src={undefined} />}
+                    avatar={<Avatar />}
                     label={customer?.manager?.fullName || "___"}
                     variant="outlined"
                     sx={{ mt: 1, cursor: "pointer" }}

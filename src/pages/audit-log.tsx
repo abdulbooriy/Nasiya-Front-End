@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import { AuditLogView } from 'src/sections/audit-log/view';
+import { AuditLogView } from '@/sections/audit-log/view'
 
 // ----------------------------------------------------------------------
 

@@ -1,10 +1,10 @@
-import type { RootState } from "src/store";
+import { lazy, Suspense, useEffect, useState } from "react";
 
+import type { RootState } from "@/store"
 import { TbPhoto } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { FaPassport } from "react-icons/fa";
 import { FaRegFileLines } from "react-icons/fa6";
-import { lazy, Suspense, useEffect, useState } from "react";
 
 import Grid from "@mui/material/Unstable_Grid2";
 import {
@@ -28,16 +28,16 @@ import {
 } from "@mui/material";
 import { MdDelete, MdDownload } from "react-icons/md";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { DashboardContent } from "src/layouts/dashboard";
-import { setCustomerId } from "src/store/slices/customerSlice";
-import { getCustomer } from "src/store/actions/customerActions";
+import { DashboardContent } from "@/layouts/dashboard"
+import { setCustomerId } from "@/store/slices/customerSlice"
+import { getCustomer } from "@/store/actions/customerActions"
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import CustomerInfo from "src/components/customer-infos/customerInfo";
-import { EditHistoryTimeline } from "src/components/edit-history-timeline";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import CustomerInfo from "@/components/customer-infos/customerInfo"
+import { EditHistoryTimeline } from "@/components/edit-history-timeline"
 
 import Statistics from "./statistics";
 
@@ -55,7 +55,7 @@ export function CustomerDetails() {
   const [deleteDialog, setDeleteDialog] = useState<{
     open: boolean;
     type: string;
-    fileName: string;
+    fileName: string | undefined;
   }>({
     open: false,
     type: "",
@@ -70,7 +70,7 @@ export function CustomerDetails() {
       if (!filename) return;
 
       const baseUrl =
-        import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+        import.meta.env['VITE_API_BASE_URL'] || "http://localhost:3000";
       const token = localStorage.getItem("accessToken");
 
       const response = await fetch(
@@ -127,7 +127,7 @@ export function CustomerDetails() {
     
     try {
       const baseUrl =
-        import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+        import.meta.env['VITE_API_BASE_URL'] || "http://localhost:3000";
       const token = localStorage.getItem("accessToken");
 
       const response = await fetch(
@@ -205,7 +205,10 @@ export function CustomerDetails() {
 
       <Grid container spacing={3} my={2}>
         <Grid xs={12}>
-          <Statistics customer={customer} contracts={allActiveContracts} />
+          <Statistics 
+            customer={customer} 
+            {...(allActiveContracts && { contracts: allActiveContracts })} 
+          />
         </Grid>
         <Grid xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 2 }}>
@@ -452,16 +455,16 @@ export function CustomerDetails() {
             }
           >
             <CustomerContract
-              customerContracts={customer.contracts}
-              customerId={customerId || undefined}
+              {...(customer.contracts && { customerContracts: customer.contracts })}
+              {...(customerId && { customerId })}
             />
           </Suspense>
         </Grid>
 
-        {customer.editHistory && customer.editHistory.length > 0 && (
+        {customer['editHistory'] && customer['editHistory'].length > 0 && (
           <Grid xs={12}>
             <EditHistoryTimeline
-              history={customer.editHistory}
+              history={customer['editHistory']}
               title="Mijoz Tahrirlash Tarixi"
             />
           </Grid>
@@ -482,14 +485,18 @@ export function CustomerDetails() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDeleteDialog} color="inherit" disabled={isDeleting}>
+          <Button 
+            onClick={closeDeleteDialog} 
+            color="inherit" 
+            {...(isDeleting && { disabled: true })}
+          >
             Bekor qilish
           </Button>
           <Button 
             onClick={confirmDeleteFile} 
             color="error" 
             variant="contained"
-            disabled={isDeleting}
+            {...(isDeleting && { disabled: true })}
           >
             {isDeleting ? "O'chirilmoqda..." : "O'chirish"}
           </Button>

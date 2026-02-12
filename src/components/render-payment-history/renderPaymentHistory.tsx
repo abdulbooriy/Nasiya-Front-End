@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { IPayment } from "src/types/contract";
+import type { IPayment } from "@/types/contract"
 
 import { useState } from "react";
 
@@ -17,7 +17,7 @@ import {
   Chip,
 } from "@mui/material";
 
-import { Iconify } from "../iconify";
+import { Iconify } from "@/components/iconify";
 import PayCommentModal from "./pay-comment-modal";
 
 interface IProps {
@@ -47,7 +47,7 @@ const RenderPaymentHistory: FC<IProps> = ({ payments }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {payments.map((payment, idx) => (
+            {payments.map((payment, _idx) => (
               <TableRow
                 key={payment._id}
                 sx={{
@@ -62,8 +62,8 @@ const RenderPaymentHistory: FC<IProps> = ({ payments }) => {
                     label={
                       payment.paymentType === "initial" 
                         ? "0" 
-                        : payment.targetMonth 
-                          ? `${payment.targetMonth}` 
+                        : (payment as any).targetMonth 
+                          ? `${(payment as any).targetMonth}` 
                           : "—"
                     }
                     size="small"

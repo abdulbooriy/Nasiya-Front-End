@@ -18,8 +18,8 @@ import {
   Paper,
 } from "@mui/material";
 import { Warning, DeleteForever, Refresh } from "@mui/icons-material";
-import authApi from "src/server/auth";
-import type { RootState } from "src/store";
+import authApi from "@/server/auth"
+import type { RootState } from "@/store"
 
 interface ResetStats {
   customers: number;

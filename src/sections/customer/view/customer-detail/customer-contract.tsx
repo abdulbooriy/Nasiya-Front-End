@@ -1,13 +1,11 @@
-import type { IContract } from "src/types/contract";
+import type { IContract } from "@/types/contract"
 
 import React from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { getCustomer } from "@/store/actions/customerActions"
 
-import { getCustomer } from "src/store/actions/customerActions";
-
-import Grid from "@mui/material/Unstable_Grid2";
 import {
   Box,
   Chip,
@@ -20,7 +18,7 @@ import {
   AccordionDetails,
 } from "@mui/material";
 
-import { PaymentSchedule } from "src/components/payment-schedule";
+import { PaymentSchedule } from "@/components/payment-schedule"
 
 interface IProps {
   customerContracts?: IContract[];

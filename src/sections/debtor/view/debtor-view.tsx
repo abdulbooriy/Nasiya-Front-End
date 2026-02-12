@@ -1,12 +1,10 @@
 import "react-datepicker/dist/react-datepicker.css";
 
-import type { RootState } from "src/store";
-import type { IDebt } from "src/types/debtor";
-import type { IContract } from "src/types/contract";
+import type { RootState } from "@/store"
+import type { IDebt } from "@/types/debtor"
 
 import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useRef, useState, useEffect, forwardRef, useCallback } from "react";
 
@@ -14,29 +12,27 @@ import {
   Tab,
   Box,
   Tabs,
-  Card,
-  Stack,
   Badge,
   Button,
   TextField,
   Typography,
   Autocomplete,
   CircularProgress,
+  Stack,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { DashboardContent } from "src/layouts/dashboard";
-import { setCustomerId } from "src/store/slices/customerSlice";
-import { getManagers } from "src/store/actions/employeeActions";
-import { getDebtors, getDebtContract } from "src/store/actions/debtorActions";
+import { DashboardContent } from "@/layouts/dashboard"
+import { getDebtors, getDebtContract } from "@/store/actions/debtorActions"
 
-import Loader from "src/components/loader/Loader";
+import Loader from "@/components/loader/Loader"
 
 import DebtorTable from "./debtorTable";
 import { columnsDebtor, columnsContract } from "./columns";
-import { DebtorDetailModal } from "../modal/debtor-detail-modal";
-import { ContractDetailModal } from "../modal/contract-detail-modal";
+import { DebtorDetailModal } from "@/sections/debtor/modal/debtor-detail-modal";
+import { ContractDetailModal } from "@/sections/debtor/modal/contract-detail-modal";
+import { getManagers } from "@/store/actions/employeeActions";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -69,7 +65,6 @@ function a11yProps(index: number) {
 
 export function DebtorView() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const dataEmployee = useSelector((state: RootState) => state.employee);
   const { isLoading, debtors, debtContracts } = useSelector(
@@ -109,7 +104,7 @@ export function DebtorView() {
 
   const [tab, setTab] = useState(0);
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
@@ -134,9 +129,9 @@ export function DebtorView() {
     <Autocomplete
       onFocus={handleCustomerFocus}
       options={dataEmployee.managers}
-      getOptionLabel={(option) => option.fullName}
+      getOptionLabel={(option) => `${option.firstName} ${option.lastName}`}
       isOptionEqualToValue={(option, value) =>
-        option.fullName === value.fullName
+        `${option.firstName} ${option.lastName}` === `${value.firstName} ${value.lastName}`
       }
       loading={dataEmployee.isLoading}
       loadingText="Yuklanmoqda..."
@@ -146,6 +141,11 @@ export function DebtorView() {
           {...params}
           size="small"
           label="Menejer bo'yicha filter"
+          InputLabelProps={{
+            ...params.InputLabelProps,
+            className: params.InputLabelProps?.className ?? "",
+            style: params.InputLabelProps?.style ?? {},
+          }}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
@@ -280,7 +280,7 @@ const CustomDateInput = forwardRef<
     value?: string;
     onClick?: () => void;
   }
->(({ value, onClick }, ref) => (
+>(({ onClick }, ref) => (
   <Button
     ref={ref}
     onClick={onClick}

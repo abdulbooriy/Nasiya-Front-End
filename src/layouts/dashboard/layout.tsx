@@ -9,11 +9,11 @@ import { useTheme } from "@mui/material/styles";
 
 import { Main } from "./main";
 import { NavMobile } from "./nav";
-import { layoutClasses } from "../classes";
-import { MenuButton } from "../components/menu-button";
-import { LayoutSection } from "../core/layout-section";
-import { HeaderSection } from "../core/header-section";
-import { AccountPopover } from "../components/account-popover";
+import { layoutClasses } from "@/layouts/classes";
+import { MenuButton } from "@/layouts/components/menu-button";
+import { LayoutSection } from "@/layouts/core/layout-section";
+import { HeaderSection } from "@/layouts/core/header-section";
+import { AccountPopover } from "@/layouts/components/account-popover";
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ export function DashboardLayout({
               sx: { px: { [layoutQuery]: 5 } },
             },
           }}
-          sx={header?.sx}
+          sx={header?.sx ?? {}}
           slots={{
             topArea: (
               <Alert severity="info" sx={{ display: "none", borderRadius: 0 }}>

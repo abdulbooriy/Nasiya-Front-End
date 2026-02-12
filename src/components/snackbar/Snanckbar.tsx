@@ -3,10 +3,8 @@ import type { TypedUseSelectorHook } from "react-redux";
 import { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
-
-import { removeSnackbar } from "src/store/slices/snackbar";
-
-import type { RootState } from "../../store/index";
+import { removeSnackbar } from "@/store/slices/snackbar"
+import type { RootState } from "@/store/index";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -16,7 +14,7 @@ const Snackbar: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    if (messages.length > 0) {
+    if (messages.length > 0 && messages[0]) {
       const { message, options } = messages[0];
       if (message) {
         enqueueSnackbar(message, options);

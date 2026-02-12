@@ -10,9 +10,9 @@ import { RiImageAddLine, RiDeleteBin6Line } from "react-icons/ri";
 
 import { Box, CircularProgress } from "@mui/material";
 
-import { ImageUrl } from "src/utils/image-url";
+import { ImageUrl } from "@/utils/image-url"
 
-import authApi from "src/server/auth";
+import authApi from "@/server/auth"
 
 interface UploadedImage {
   file?: File;
@@ -34,7 +34,7 @@ const Uploader: React.FC<Iprops> = ({
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [indexImage, setIndexImage] = useState(0);
-  const urlImage: string = import.meta.env.VITE_SERVER_URL;
+  const urlImage: string = import.meta.env['VITE_SERVER_URL'];
 
   useEffect(() => {
     if (defaultImages.length > 0) {
@@ -127,7 +127,7 @@ const Uploader: React.FC<Iprops> = ({
                     {imageList.map((image, index) => (
                       <div key={index} className="upload__image-item">
                         <img
-                          src={ImageUrl(image.data_url)}
+                          src={ImageUrl(image['data_url'])}
                           alt={`Uploaded ${index}`}
                         />
                         <button

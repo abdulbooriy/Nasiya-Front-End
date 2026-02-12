@@ -1,9 +1,9 @@
-import type { ILoginFormValues } from "src/types/login";
+// import type { ILoginFormValues } from "@/types/login";
 
-import authApi from "src/server/auth";
-import axiosInstance from "src/server/api";
+// import authApi from "@/server/auth";
+// import axiosInstance from "@/server/api";
 
-import { enqueueSnackbar } from "../slices/snackbar";
+import { enqueueSnackbar } from "@/store/slices/snackbar";
 import {
   loginStart,
   logoutUser,
@@ -12,9 +12,13 @@ import {
   loginFailure,
   refreshFailure,
   refreshSuccess,
-} from "../slices/authSlice";
+} from "@/store/slices/authSlice";
 
-import type { AppThunk } from "../index";
+import type { AppThunk } from "@/store";
+
+import authApi from "@/server/auth";
+import type { ILoginFormValues } from "@/types/login";
+import axiosInstance from "@/server/api";
 
 export const refreshProfile = (): AppThunk => async (dispatch) => {
   dispatch(refreshStart());
@@ -27,7 +31,7 @@ export const refreshProfile = (): AppThunk => async (dispatch) => {
       try {
         const profile = JSON.parse(savedProfile);
         dispatch(refreshSuccess({ profile, accessToken: token }));
-        return; 
+        return;
       } catch (parseError) {
         // Parse error - continue to API call
       }
@@ -48,14 +52,13 @@ export const refreshProfile = (): AppThunk => async (dispatch) => {
       try {
         const profile = JSON.parse(savedProfile);
         dispatch(refreshSuccess({ profile, accessToken: token }));
-        return; 
+        return;
       } catch (parseError) {
         // Parse error - continue to failure
       }
     }
 
     dispatch(refreshFailure(errorMessage));
-
   }
 };
 
@@ -74,7 +77,7 @@ export const login =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
       dispatch(loginFailure(errorMessage));
     }

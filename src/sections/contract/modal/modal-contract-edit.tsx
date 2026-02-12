@@ -1,5 +1,5 @@
-import type { RootState } from "src/store";
-import type { IContract } from "src/types/contract";
+import type { RootState } from "@/store"
+import type { IContract } from "@/types/contract"
 
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback, useMemo } from "react";
@@ -18,21 +18,20 @@ import {
   DialogContent,
   useMediaQuery,
   CircularProgress,
-  Divider,
   Chip,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
-import { formatNumber } from "src/utils/format-number";
-import { closeModal } from "src/store/slices/modalSlice";
-import authApi from "src/server/auth";
-import { enqueueSnackbar } from "src/store/slices/snackbar";
-import { getContract } from "src/store/actions/contractActions";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { formatNumber } from "@/utils/format-number"
+import { closeModal } from "@/store/slices/modalSlice"
+import authApi from "@/server/auth"
+import { enqueueSnackbar } from "@/store/slices/snackbar"
+import { getContract } from "@/store/actions/contractActions"
 
-import { ImpactSummary } from "src/components/impact-summary";
-import type { ImpactSummaryData } from "src/components/impact-summary";
-import ContractDateEditModal from "src/components/contract-date-edit-modal/ContractDateEditModal";
-import { Iconify } from "src/components/iconify";
+import { ImpactSummary } from "@/components/impact-summary"
+import type { ImpactSummaryData } from "@/components/impact-summary"
+import ContractDateEditModal from "@/components/contract-date-edit-modal/ContractDateEditModal"
+import { Iconify } from "@/components/iconify"
 
 interface IForm {
   monthlyPayment: number;

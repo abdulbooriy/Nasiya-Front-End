@@ -1,7 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 
-import { varAlpha } from 'src/theme/styles';
-
+import { varAlpha } from '@/theme/styles'
 import type { ChartOptions } from './types';
 
 
@@ -13,14 +12,14 @@ export function useChart(options?: ChartOptions): ChartOptions {
     label: 'Total',
     color: theme.vars.palette.text.secondary,
     fontSize: theme.typography.subtitle2.fontSize as string,
-    fontWeight: theme.typography.subtitle2.fontWeight,
+    ...(theme.typography.subtitle2.fontWeight && { fontWeight: theme.typography.subtitle2.fontWeight }),
   };
 
   const LABEL_VALUE = {
     offsetY: 8,
     color: theme.vars.palette.text.primary,
     fontSize: theme.typography.h4.fontSize as string,
-    fontWeight: theme.typography.h4.fontWeight,
+    ...(theme.typography.h4.fontWeight && { fontWeight: theme.typography.h4.fontWeight }),
   };
 
   const RESPONSIVE = [
@@ -62,7 +61,7 @@ export function useChart(options?: ChartOptions): ChartOptions {
         enabled: false,
       },
       parentHeightOffset: 0,
-      fontFamily: theme.typography.fontFamily,
+      ...(theme.typography.fontFamily && { fontFamily: theme.typography.fontFamily }),
       foreColor: theme.vars.palette.text.disabled,
       ...options?.chart,
       animations: {

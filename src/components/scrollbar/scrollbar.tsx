@@ -1,10 +1,8 @@
 import { forwardRef } from 'react';
+
 import SimpleBar from 'simplebar-react';
-
 import Box from '@mui/material/Box';
-
 import { scrollbarClasses } from './classes';
-
 import type { ScrollbarProps } from './types';
 
 // ----------------------------------------------------------------------
@@ -22,8 +20,8 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>(
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
-        '& .simplebar-wrapper': slotProps?.wrapper as React.CSSProperties,
-        '& .simplebar-content-wrapper': slotProps?.contentWrapper as React.CSSProperties,
+        ...(slotProps?.wrapper && { '& .simplebar-wrapper': slotProps.wrapper as React.CSSProperties }),
+        ...(slotProps?.contentWrapper && { '& .simplebar-content-wrapper': slotProps.contentWrapper as React.CSSProperties }),
         '& .simplebar-content': {
           ...(fillContent && {
             minHeight: 1,

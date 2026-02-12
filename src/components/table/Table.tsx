@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  Box,
   Table,
   Checkbox,
   TableRow,
@@ -12,7 +11,7 @@ import {
   TablePagination,
 } from "@mui/material";
 
-import { Scrollbar } from "../scrollbar";
+import { Scrollbar } from "@/components/scrollbar";
 import { TableNoData } from "./TableNoData";
 import {
   excelHeaderCellStyle,
@@ -78,7 +77,7 @@ export function TableComponent<T extends Record<string, any>>({
   // Barcha qatorlarni tanlash/olib tashlash
   const handleSelectAllRows = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = filteredData.map((row) => row._id || row.id);
+      const newSelected = filteredData.map((row) => row['_id'] || row['id']);
       setSelectedRows(newSelected);
       onSelectedRowsChange?.(newSelected);
     } else {
@@ -108,7 +107,7 @@ export function TableComponent<T extends Record<string, any>>({
     }
   }, [selectedRowss]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -242,11 +241,11 @@ export function TableComponent<T extends Record<string, any>>({
               {filteredData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const rowId = row._id || row.id || index.toString();
+                  const rowId = row['_id'] || row['id'] || index.toString();
                   const isSelected = selectedRows.includes(rowId);
 
                   // ✅ Muddati o'tgan eslatmani tekshirish
-                  const isExpiredReminder = row.isReminderNotification && row.date && new Date(row.date) < new Date();
+                  const isExpiredReminder = row['isReminderNotification'] && row['date'] && new Date(row['date']) < new Date();
                   
                   return (
                     <TableRow
@@ -256,7 +255,7 @@ export function TableComponent<T extends Record<string, any>>({
                       sx={{
                         ...excelRowStyle,
                         cursor: onRowClick ? "pointer" : "default",
-                        ...(row.isDeleted && {
+                        ...(row['isDeleted'] && {
                           backgroundColor: "rgba(239, 68, 68, 0.1) !important",
                           "&:hover": {
                             backgroundColor: "rgba(239, 68, 68, 0.2) !important",
@@ -268,7 +267,7 @@ export function TableComponent<T extends Record<string, any>>({
                             backgroundColor: "rgba(244, 67, 54, 0.15) !important",
                           },
                         }),
-                        ...(row.isReminderNotification && !isExpiredReminder && {
+                        ...(row['isReminderNotification'] && !isExpiredReminder && {
                           backgroundColor: "rgba(255, 193, 7, 0.08) !important",
                           "&:hover": {
                             backgroundColor: "rgba(255, 193, 7, 0.15) !important",
@@ -286,7 +285,7 @@ export function TableComponent<T extends Record<string, any>>({
                             ...(isExpiredReminder && {
                               backgroundColor: "rgba(244, 67, 54, 0.08)",
                             }),
-                            ...(row.isReminderNotification && !isExpiredReminder && {
+                            ...(row['isReminderNotification'] && !isExpiredReminder && {
                               backgroundColor: "rgba(255, 193, 7, 0.08)",
                             }),
                           }}
@@ -307,8 +306,8 @@ export function TableComponent<T extends Record<string, any>>({
                             onClick={() => onRowClick?.(row)}
                             sx={{
                               ...excelBodyCellStyle,
-                              minWidth: { xs: "auto", sm: column.minWidth || column.width || 100 },
-                              width: column.width ? `${column.width}px` : "auto",
+                              minWidth: { xs: "auto", sm: column.minWidth || column['width'] || 100 },
+                              width: column['width'] ? `${column['width']}px` : "auto",
                               ...(column.sticky && {
                                 ...(column.sticky === "left" 
                                   ? excelStickyLeftStyle(column.stickyOffset || 0)
@@ -318,7 +317,7 @@ export function TableComponent<T extends Record<string, any>>({
                                 ...(isExpiredReminder && {
                                   backgroundColor: "rgba(244, 67, 54, 0.08)",
                                 }),
-                                ...(row.isReminderNotification && !isExpiredReminder && {
+                                ...(row['isReminderNotification'] && !isExpiredReminder && {
                                   backgroundColor: "rgba(255, 193, 7, 0.08)",
                                 }),
                               }),

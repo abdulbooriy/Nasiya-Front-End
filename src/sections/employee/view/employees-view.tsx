@@ -1,26 +1,26 @@
-import type { RootState } from "src/store";
-import type { IEmployee } from "src/types/employee";
-import type { Column } from "src/components/table/types";
+import type { RootState } from "@/store"
+import type { IEmployee } from "@/types/employee"
+import type { Column } from "@/components/table/types"
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { Box, Stack, Button, Typography } from "@mui/material";
 
-import { useTableLogic } from "src/hooks/useTableLogic";
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useTableLogic } from "@/hooks/useTableLogic"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setModal } from "src/store/slices/modalSlice";
-import { DashboardContent } from "src/layouts/dashboard";
-import { getEmployees } from "src/store/actions/employeeActions";
+import { setModal } from "@/store/slices/modalSlice"
+import { DashboardContent } from "@/layouts/dashboard"
+import { getEmployees } from "@/store/actions/employeeActions"
 
-import { setEmployeeId } from "src/store/slices/employeeSlice";
+import { setEmployeeId } from "@/store/slices/employeeSlice"
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import { GenericTable } from "src/components/table/GnericTable";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import { GenericTable } from "@/components/table/GnericTable"
 
-import ActionEmployee from "../action/action-meneger";
+import ActionEmployee from "@/sections/employee/action/action-meneger";
 
 const columns: Column[] = [
   { id: "firstName", label: "Ism", sortable: true },

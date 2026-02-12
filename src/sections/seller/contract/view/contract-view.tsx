@@ -1,27 +1,27 @@
-import type { RootState } from "src/store";
-import type { Column } from "src/components/table/types";
+import type { RootState } from "@/store"
+import type { Column } from "@/components/table/types"
 
 import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Box, Button, Tooltip, Typography, Tab, Tabs, IconButton } from "@mui/material";
+import { Box, Button, Tooltip, Typography, Tab, Tabs } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setModal } from "src/store/slices/modalSlice";
-import { DashboardContent } from "src/layouts/dashboard";
-import { setContractId } from "src/store/slices/contractSlice";
+import { setModal } from "@/store/slices/modalSlice"
+import { DashboardContent } from "@/layouts/dashboard"
+import { setContractId } from "@/store/slices/contractSlice"
 import {
   getSellerActiveContracts,
   getSellerNewContracts,
   getSellerCompletedContracts,
-} from "src/store/actions/contractActions";
+} from "@/store/actions/contractActions";
 
 import { enqueueSnackbar } from "notistack";
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import { exportContractsToCSV } from "src/utils/export-csv";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import { exportContractsToCSV } from "@/utils/export-csv"
 
 import ContractTable from "./contactTable";
 
@@ -59,7 +59,7 @@ const ContractsView = () => {
     dispatch(getSellerCompletedContracts());
   }, [dispatch]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   };
 
