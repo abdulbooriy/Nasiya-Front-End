@@ -16,12 +16,8 @@ import { ThemeProvider } from "@/theme/theme-provider";
 
 dayjs.locale("en");
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
-);
-
-root.render(
-  <HelmetProvider>
+ReactDOM.createRoot(document.getElementById("root")!).render(
+    <HelmetProvider>
     <BrowserRouter>
       <Provider store={store}>
         <SnackbarProvider
@@ -39,3 +35,4 @@ root.render(
     </BrowserRouter>
   </HelmetProvider>
 );
+
