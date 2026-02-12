@@ -37,5 +37,5 @@ root.render(
         </SnackbarProvider>
       </Provider>
     </BrowserRouter>
-  </HelmetProvider>,
+  </HelmetProvider>
 );
