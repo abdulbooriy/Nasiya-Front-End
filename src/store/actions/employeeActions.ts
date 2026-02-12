@@ -1,9 +1,9 @@
-import type { CurrencyDetails } from "src/types/cash";
-import type { IAddEmployee, IEditEmployee } from "src/types/employee";
+import type { CurrencyDetails } from "@/types/cash"
+import type { IAddEmployee, IEditEmployee } from "@/types/employee"
 
-import authApi from "src/server/auth";
+import authApi from "@/server/auth"
 
-import { enqueueSnackbar } from "../slices/snackbar";
+import { enqueueSnackbar } from "@/store/slices/snackbar";
 import {
   start,
   failure,
@@ -14,9 +14,9 @@ import {
   setExpenses,
   startExpenses,
   failureExpenses,
-} from "../slices/employeeSlice";
+} from "@/store/slices/employeeSlice";
 
-import type { AppThunk } from "../index";
+import type { AppThunk } from "@/store";
 
 export const getEmployees = (): AppThunk => async (dispatch) => {
   dispatch(start());

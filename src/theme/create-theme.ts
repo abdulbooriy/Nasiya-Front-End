@@ -32,8 +32,7 @@ export function createTheme(): Theme {
 // ----------------------------------------------------------------------
 
 function shouldSkipGeneratingVar(
-  keys: string[],
-  value: string | number,
+  keys: string[]
 ): boolean {
   const skipGlobalKeys = [
     "mixins",
@@ -58,7 +57,7 @@ function shouldSkipGeneratingVar(
 
   if (isPaletteKey) {
     const paletteType = keys[1];
-    const skipKeys = skipPaletteKeys[paletteType] || skipPaletteKeys.global;
+    const skipKeys = (paletteType && skipPaletteKeys[paletteType]) || skipPaletteKeys['global'];
 
     return keys.some((key) => skipKeys?.includes(key));
   }

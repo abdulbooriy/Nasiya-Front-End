@@ -1,14 +1,13 @@
 import type { CardProps } from "@mui/material/Card";
-import type { ChartOptions } from "src/components/chart";
+import type { ChartOptions } from "@/components/chart"
 
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import { useTheme } from "@mui/material/styles";
 import CardHeader from "@mui/material/CardHeader";
 
-import { fNumber } from "src/utils/format-number";
-
-import { Chart, useChart, ChartLegends } from "src/components/chart";
+import { fNumber } from "@/utils/format-number"
+import { Chart, useChart, ChartLegends } from "@/components/chart"
 
 
 type Props = CardProps & {
@@ -73,8 +72,8 @@ export function AnalyticsCurrentVisits({
       <Divider sx={{ borderStyle: "dashed" }} />
 
       <ChartLegends
-        labels={chartOptions?.labels}
-        colors={chartOptions?.colors}
+        {...(chartOptions?.labels && { labels: chartOptions.labels })}
+        {...(chartOptions?.colors && { colors: chartOptions.colors })}
         sx={{ p: 3, justifyContent: "center" }}
       />
     </Card>

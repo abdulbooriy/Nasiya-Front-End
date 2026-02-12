@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Card, CardHeader, CardContent, Typography } from "@mui/material";
-import { ContractEditAlert } from "src/components/contract-edit-alert";
-import { Iconify } from "src/components/iconify";
+import { ContractEditAlert } from "@/components/contract-edit-alert"
+import { Iconify } from "@/components/iconify"
 import { useNavigate } from "react-router-dom";
 
 interface ContractEditNotification {

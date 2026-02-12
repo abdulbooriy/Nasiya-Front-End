@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 
-import { CONFIG } from "src/config-global";
+import { CONFIG } from "@/config-global"
 
-import { CashesView } from "src/sections/cash/view";
+import { CashesView } from "@/sections/cash/view"
 
 // ----------------------------------------------------------------------
 

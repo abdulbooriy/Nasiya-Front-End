@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { TbPhoto } from "react-icons/tb";
 import { useSelector } from "react-redux";
@@ -22,22 +22,22 @@ import {
 } from "@mui/material";
 import { MdDownload } from "react-icons/md";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import authApi from "src/server/auth";
-import { setModal } from "src/store/slices/modalSlice";
-import { DashboardContent } from "src/layouts/dashboard";
+import authApi from "@/server/auth"
+import { setModal } from "@/store/slices/modalSlice"
+import { DashboardContent } from "@/layouts/dashboard"
 import {
   start,
   failure,
   success,
   setCustomerId,
   setCustomer,
-} from "src/store/slices/customerSlice";
+} from "@/store/slices/customerSlice";
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import CustomerInfo from "src/components/customer-infos/customerInfo";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import CustomerInfo from "@/components/customer-infos/customerInfo"
 
 export function CustomerDetails() {
   const dispatch = useAppDispatch();
@@ -51,7 +51,7 @@ export function CustomerDetails() {
       if (!filename) return;
 
       const baseUrl =
-        import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+        import.meta.env['VITE_API_BASE_URL'] || "http://localhost:3000";
       const token = localStorage.getItem("accessToken");
 
       const response = await fetch(

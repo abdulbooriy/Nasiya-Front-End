@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 import type { SelectChangeEvent } from "@mui/material";
 
 import React from "react";
@@ -13,7 +13,7 @@ interface ManagerSelectCellProps {
 }
 
 export const ManagerSelectCellDebtor = React.memo(
-  ({ row, value, onManagerChange }: ManagerSelectCellProps) => {
+  ({ row, onManagerChange }: ManagerSelectCellProps) => {
     const { managers } = useSelector((state: RootState) => state.employee);
     
     const { profile } = useSelector((state: RootState) => state.auth);

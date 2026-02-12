@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Card,
   CardHeader,
@@ -19,9 +20,9 @@ import {
   Tooltip,
 } from "@mui/material";
 import { format } from "date-fns";
-import { getPaymentHistory } from "src/store/actions/paymentActions";
-import { useAppDispatch } from "src/hooks/useAppDispatch";
-import { Iconify } from "src/components/iconify";
+import { getPaymentHistory } from "@/store/actions/paymentActions"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { Iconify } from "@/components/iconify"
 
 interface PaymentHistoryProps {
   customerId?: string;
@@ -258,15 +259,9 @@ const PaymentHistory: React.FC<PaymentHistoryProps> = ({
                         label={getStatusLabel(payment.status)}
                         size="small"
                         color={getStatusColor(payment.status)}
-                        icon={
-                          payment.status === "PAID" ? (
-                            <Iconify icon="mdi:check-circle" />
-                          ) : payment.status === "UNDERPAID" ? (
-                            <Iconify icon="mdi:alert-circle" />
-                          ) : payment.status === "OVERPAID" ? (
-                            <Iconify icon="mdi:check-circle" />
-                          ) : undefined
-                        }
+                        {...(payment.status === "PAID" && { icon: <Iconify icon="mdi:check-circle" /> })}
+                        {...(payment.status === "UNDERPAID" && { icon: <Iconify icon="mdi:alert-circle" /> })}
+                        {...(payment.status === "OVERPAID" && { icon: <Iconify icon="mdi:check-circle" /> })}
                       />
                     </TableCell>
                     <TableCell>

@@ -1,4 +1,4 @@
-import type { RootState, AppDispatch } from "src/store";
+import type { RootState, AppDispatch } from "@/store"
 import type { IconButtonProps } from "@mui/material/IconButton";
 
 import { useState, useCallback } from "react";
@@ -15,9 +15,9 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 // import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
 
-// import { useRouter, usePathname } from "src/routes/hooks";
+// import { useRouter, usePathname } from "@/routes/hooks";
 
-import { logout } from "src/store/actions/authActions";
+import { logout } from "@/store/actions/authActions"
 
 // ----------------------------------------------------------------------
 

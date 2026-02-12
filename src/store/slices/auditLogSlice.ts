@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import {
   fetchTodaySummary,
   fetchDailyActivity,
@@ -7,8 +7,8 @@ import {
   fetchEntityHistory,
   fetchUserActivity,
   exportAuditLog,
-} from "../actions/auditLogActions";
-import { IAuditLog, AuditLogFilters } from "../../types/audit-log";
+} from "@/store/actions/auditLogActions";
+import type { IAuditLog, AuditLogFilters } from "@/types/audit-log";
 
 interface AuditLogState {
   todaySummary: {

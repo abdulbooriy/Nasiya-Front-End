@@ -19,9 +19,9 @@ import {
   MenuItem,
 } from "@mui/material";
 
-import authApi from "src/server/auth";
-import { useAppDispatch } from "src/hooks/useAppDispatch";
-import { enqueueSnackbar } from "src/store/slices/snackbar";
+import authApi from "@/server/auth"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { enqueueSnackbar } from "@/store/slices/snackbar"
 
 interface PaymentModalProps {
   open: boolean;
@@ -83,7 +83,6 @@ const PaymentModal: FC<PaymentModalProps> = ({
       } catch (error) {
         console.error("Error fetching currency course:", error);
         const course = 12500;
-        const dollarValue = amount;
 
         setCurrencyCourse(course);
         setDollarAmount(0);
@@ -108,12 +107,12 @@ const PaymentModal: FC<PaymentModalProps> = ({
   const [dollarInput, setDollarInput] = useState(""); // Bo'sh boshlanadi
   const [sumInput, setSumInput] = useState(""); // So'm input bo'sh boshlanadi
 
-  const formatNumber = (num: number): string => {
-    return new Intl.NumberFormat("en-US", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }).format(num);
-  };
+  // const formatNumber = (num: number): string => {
+  //   return new Intl.NumberFormat("en-US", {
+  //     minimumFractionDigits: 0,
+  //     maximumFractionDigits: 2,
+  //   }).format(num);
+  // };
 
   const parseInputNumber = (str: string): number => {
     const cleaned = str.replace(/[^\d.,]/g, "");

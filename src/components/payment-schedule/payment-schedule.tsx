@@ -4,7 +4,6 @@ import React, { useState } from "react";
 
 import {
   Box,
-  Chip,
   Paper,
   Table,
   Button,
@@ -21,12 +20,10 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { format, addMonths } from "date-fns";
-import { uz } from "date-fns/locale";
 
-import { Iconify } from "../iconify";
-import { PaymentModal } from "../payment-modal";
-import { StatusBadge } from "./StatusBadge";
+import { format, addMonths } from "date-fns";
+import { Iconify } from "@/components/iconify";
+import { PaymentModal } from "@/components/payment-modal";
 
 interface PaymentScheduleItem {
   month: number;
@@ -86,8 +83,6 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
   }>({
     open: false,
     amount: 0,
-    isPayAll: false,
-    paymentId: undefined,
   });
 
   const [noteDialog, setNoteDialog] = useState<{
@@ -173,8 +168,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
   const today = new Date();
 
   const handlePayment = (amount: number, paymentId?: string) => {
-  
-    setPaymentModal({ open: true, amount, paymentId });
+    if (paymentId) {
+      setPaymentModal({ open: true, amount, paymentId });
+    } else {
+      setPaymentModal({ open: true, amount });
+    }
   };
 
   const handlePayAll = () => {
@@ -185,8 +183,6 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     setPaymentModal({
       open: false,
       amount: 0,
-      isPayAll: false,
-      paymentId: undefined,
     });
     if (onPaymentSuccess) {
       onPaymentSuccess();
@@ -397,7 +393,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
 
                 let previousExcess = 0;
 
-                return schedule.map((item, index) => {
+                return schedule.map((item, _index) => {
                   const isPast = new Date(item.date) < today;
 
                   let actualPayment;
@@ -411,7 +407,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                   }
 
                   // Ortiqcha va kam to'langan summalarni tekshirish
-                  const hasExcess = false; // Disabled for now
+                  
                   let remainingAmountToShow = 0;
                   let hasShortage = false;
 
@@ -477,8 +473,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     actualPaidAmount = actualPayment.actualAmount || actualPayment.amount || 0;
                   }
 
-                  const expectedAmount =
-                    actualPayment?.expectedAmount || item.amount;
+                  // const expectedAmount =
+                  //   actualPayment?.expectedAmount || item.amount;
 
                   // ✅ TUZATILDI: Kechikish kunlarini to'g'ri hisoblash
                   let delayDays = 0;
@@ -515,11 +511,10 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
 
                   // Ortiqcha/Kam summani hisoblash
                   let toNextMonth = 0;
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   let shortage = 0;
 
                   if (item.isPaid && actualPayment) {
-                    // Serverdan kelgan ma'lumotlarni ishlatish
-                    // Excess amount calculation disabled for now
                     if (
                       actualPayment.remainingAmount &&
                       actualPayment.remainingAmount > 0.01
@@ -948,14 +943,12 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
           open={paymentModal.open}
           amount={paymentModal.amount}
           contractId={contractId}
-          isPayAll={paymentModal.isPayAll}
-          paymentId={paymentModal.paymentId} // ✅ Qolgan qarzni to'lash uchun
+          {...(paymentModal.isPayAll !== undefined && { isPayAll: paymentModal.isPayAll })}
+          {...(paymentModal.paymentId && { paymentId: paymentModal.paymentId })}
           onClose={() =>
             setPaymentModal({
               open: false,
               amount: 0,
-              isPayAll: false,
-              paymentId: undefined,
             })
           }
           onSuccess={handlePaymentSuccess}

@@ -1,4 +1,4 @@
-import type { IDebt } from "src/types/debtor";
+import type { IDebt } from "@/types/debtor"
 
 import {
   Box,
@@ -53,7 +53,7 @@ export function DebtorDetailModal({
   if (!debtor) return null;
 
   const contracts: ContractInfo[] = (debtor as any).contracts || [];
-  const totalDelayDays = Math.max(...contracts.map(c => c.delayDays || 0));
+  // const totalDelayDays = Math.max(...contracts.map(c => c.delayDays || 0));
 
   // Qaysi oy to'lovi kechikkanini hisoblash
   const getOverdueMonthInfo = (contract: ContractInfo) => {

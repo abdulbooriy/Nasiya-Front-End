@@ -1,6 +1,6 @@
 import { Box, LinearProgress, linearProgressClasses } from "@mui/material";
 
-import { varAlpha } from "../../theme/styles";
+import { varAlpha } from "@/theme/styles";
 
 const Loader = () => (
   <Box

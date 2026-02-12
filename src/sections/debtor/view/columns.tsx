@@ -1,4 +1,4 @@
-import type { Column } from "src/components/table/types";
+import type { Column } from "@/components/table/types"
 import dayjs from "dayjs";
 
 export const columnsDebtor: Column[] = [

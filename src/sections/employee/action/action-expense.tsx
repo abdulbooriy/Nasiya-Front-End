@@ -5,11 +5,11 @@ import Popover from "@mui/material/Popover";
 import MenuList from "@mui/material/MenuList";
 import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { closeExpense } from "src/store/actions/employeeActions";
+import { closeExpense } from "@/store/actions/employeeActions"
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 
 export default function ActionExpense({
   id,

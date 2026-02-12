@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { IRole } from "../../types/role";
-import { RootState } from "../../store";
+import type { IRole } from "@/types/role";
+import type { RootState } from "@/store";
 
 export type ProtectedRouteProps = {
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-import type { Column } from "../../../components/table/types";
+import type { Column } from "@/components/table/types";
 import { Chip, Stack, Tooltip, Box, IconButton } from "@mui/material";
 import { MdContentCopy } from "react-icons/md";
 import { enqueueSnackbar } from "notistack";

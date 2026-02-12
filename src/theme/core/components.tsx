@@ -2,8 +2,7 @@ import type { Theme, Components } from '@mui/material/styles';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
-import { varAlpha } from '../styles';
-import { excelTheme } from '../excel-theme';
+import { varAlpha } from '@/theme/styles';
 
 
 const MuiBackdrop: Components<Theme>['MuiBackdrop'] = {
@@ -38,7 +37,7 @@ const MuiButton: Components<Theme>['MuiButton'] = {
 
 const MuiCard: Components<Theme>['MuiCard'] = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({}) => ({
       zIndex: 0,
       position: 'relative',
       boxShadow: 'none',
@@ -79,7 +78,7 @@ const MuiPaper: Components<Theme>['MuiPaper'] = {
       border: '1px solid #D4D4D4',
       borderRadius: 0,
     },
-    outlined: ({ theme }) => ({
+    outlined: ({}) => ({
       borderColor: '#D4D4D4',
     }),
   },
@@ -98,7 +97,7 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
         borderRight: 'none',
       },
     },
-    head: ({ theme }) => ({
+    head: ({}) => ({
       fontSize: '11px !important',
       color: '#FFFFFF !important', // Oq text - MUHIM!
       fontWeight: '700 !important',

@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useSelector } from "react-redux";
 import { useState, useCallback } from "react";
@@ -15,10 +15,10 @@ import {
   DialogContent,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { closeModal } from "src/store/slices/modalSlice";
-import { changeCurrency } from "src/store/actions/dashboardActions";
+import { closeModal } from "@/store/slices/modalSlice"
+import { changeCurrency } from "@/store/actions/dashboardActions"
 
 const ModalCurrency = () => {
   const dispatch = useAppDispatch();

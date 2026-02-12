@@ -1,7 +1,7 @@
 import type { ColorSystemOptions } from '@mui/material/styles';
 
 import COLORS from './colors.json';
-import { varAlpha, createPaletteChannel } from '../styles';
+import { varAlpha, createPaletteChannel } from '@/theme/styles';
 
 
 declare module '@mui/material/styles/createPalette' {
@@ -80,9 +80,9 @@ export const common = createPaletteChannel(COLORS.common);
 // Text
 export const text = {
   light: createPaletteChannel({
-    primary: grey[800],
-    secondary: grey[600],
-    disabled: grey[500],
+    primary: grey[800] ?? '#212B36',
+    secondary: grey[600] ?? '#637381',
+    disabled: grey[500] ?? '#919EAB',
   }),
 };
 
@@ -90,24 +90,24 @@ export const text = {
 export const background = {
   light: createPaletteChannel({
     paper: '#FFFFFF',
-    default: grey[100],
-    neutral: grey[200],
+    default: grey[100] ?? '#F9FAFB',
+    neutral: grey[200] ?? '#F4F6F8',
   }),
 };
 
 // Action
 export const baseAction = {
-  hover: varAlpha(grey['500Channel'], 0.08),
-  selected: varAlpha(grey['500Channel'], 0.16),
-  focus: varAlpha(grey['500Channel'], 0.24),
-  disabled: varAlpha(grey['500Channel'], 0.8),
-  disabledBackground: varAlpha(grey['500Channel'], 0.24),
+  hover: varAlpha(grey['500Channel'] ?? '158 158 158', 0.08),
+  selected: varAlpha(grey['500Channel'] ?? '158 158 158', 0.16),
+  focus: varAlpha(grey['500Channel'] ?? '158 158 158', 0.24),
+  disabled: varAlpha(grey['500Channel'] ?? '158 158 158', 0.8),
+  disabledBackground: varAlpha(grey['500Channel'] ?? '158 158 158', 0.24),
   hoverOpacity: 0.08,
   disabledOpacity: 0.48,
 };
 
 export const action = {
-  light: { ...baseAction, active: grey[600] },
+  light: { ...baseAction, active: grey[600] ?? '#637381' },
 };
 
 
@@ -120,7 +120,7 @@ export const basePalette = {
   error,
   grey,
   common,
-  divider: varAlpha(grey['500Channel'], 0.2),
+  divider: varAlpha(grey['500Channel'] ?? '158 158 158', 0.2),
   action,
 };
 

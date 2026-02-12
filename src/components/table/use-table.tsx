@@ -42,7 +42,7 @@ export function useTable() {
     setPage(0);
   }, []);
 
-  const onChangePage = useCallback((event: unknown, newPage: number) => {
+  const onChangePage = useCallback((_event: unknown, newPage: number) => {
     setPage(newPage);
   }, []);
 

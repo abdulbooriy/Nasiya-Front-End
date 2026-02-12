@@ -1,6 +1,4 @@
-import React from "react";
-
-import ModalCurrency from "../modal/modal-currency";
+import ModalCurrency from "@/sections/overview/modal/modal-currency";
 import { OverviewAnalyticsView } from "./overview-analytics-view";
 
 const DashboardView = () => (

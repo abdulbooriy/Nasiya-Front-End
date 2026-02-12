@@ -10,12 +10,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Drawer, { drawerClasses } from "@mui/material/Drawer";
 
-import { navData } from "../config-nav-dashboard";
-import { RootState } from "../../store";
-import { usePathname } from "../../routes/hooks";
-import { Logo } from "../../components/logo";
-import { Scrollbar } from "../../components/scrollbar";
-import { RouterLink } from "../../routes/components";
+import { navData } from "@/layouts/config-nav-dashboard";
+import type { RootState } from "@/store";
+import { usePathname } from "@/routes/hooks";
+import { Logo } from "@/components/logo";
+import { Scrollbar } from "@/components/scrollbar";
+import { RouterLink } from "@/routes/components";
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ export function NavMobile({
           ...sx,
         },
       }}>
-      <NavContent slots={slots} />
+      <NavContent slots={slots ?? {}} />
     </Drawer>
   );
 }
@@ -81,7 +81,7 @@ export function NavContent({ slots, sx }: NavContentProps) {
           display="flex"
           flex="1 1 auto"
           flexDirection="column"
-          sx={sx}>
+          sx={sx ?? {}}>
           <Box component="ul" gap={0.5} display="flex" flexDirection="column">
             {roleNavItems.map((item) => {
               const isActived = item.path === pathname;

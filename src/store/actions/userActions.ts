@@ -2,9 +2,9 @@ import type {
   IUserApproved,
   IUserAddCourse,
   IUserAddTutorial,
-} from "src/types/user";
+} from "@/types/user";
 
-import authApi from "src/server/auth";
+import authApi from "@/server/auth"
 
 import {
   start,
@@ -13,9 +13,9 @@ import {
   startApproved,
   failureApproved,
   successApproved,
-} from "../slices/userSlice";
+} from "@/store/slices/userSlice";
 
-import type { AppThunk } from "../index";
+import type { AppThunk } from "@/store";
 
 export const getUsers = (): AppThunk => async (dispatch) => {
   dispatch(start());

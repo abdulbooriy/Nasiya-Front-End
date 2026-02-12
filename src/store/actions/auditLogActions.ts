@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../server/api";
-import {
+import api from "@/server/api";
+import type {
   AuditLogDailyResponse,
   AuditLogStatsResponse,
   AuditLogFilterResponse,
   AuditLogSummaryResponse,
   AuditLogFilters,
-} from "../../types/audit-log";
+} from "@/types/audit-log";
 
 export const fetchTodaySummary = createAsyncThunk(
   "auditLog/fetchTodaySummary",

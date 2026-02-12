@@ -1,4 +1,4 @@
-import type { IContract } from "src/types/contract";
+import type { IContract } from "@/types/contract"
 
 import React, { useMemo } from "react";
 import { FaChevronDown } from "react-icons/fa";
@@ -18,16 +18,16 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { formatNumber } from "src/utils/format-number";
+import { formatNumber } from "@/utils/format-number"
 
-import { grey } from "src/theme/core";
-import { setModal } from "src/store/slices/modalSlice";
+import { grey } from "@/theme/core"
+import { setModal } from "@/store/slices/modalSlice"
 
-import { Iconify } from "../iconify";
+import { Iconify } from "@/components/iconify";
 import { useSelector } from "react-redux";
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 interface IReadOnlyTextFieldProps {
   value: string | number;

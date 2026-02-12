@@ -1,24 +1,24 @@
-import type { RootState } from "src/store";
-
 import { useState, useEffect } from "react";
+
+import type { RootState } from "@/store"
 import { useSelector } from "react-redux";
 
 import Grid from "@mui/material/Unstable_Grid2";
-import { Box, Paper, Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Paper, Button } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { DashboardContent } from "src/layouts/dashboard";
-import { setContractId } from "src/store/slices/contractSlice";
-import { getContract } from "src/store/actions/contractActions";
+import { DashboardContent } from "@/layouts/dashboard"
+import { setContractId } from "@/store/slices/contractSlice"
+import { getContract } from "@/store/actions/contractActions"
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import CustomerInfo from "src/components/customer-infos/customerInfo";
-import { PaymentSchedule } from "src/components/payment-schedule";
-import PayCommentModal from "src/components/render-payment-history/pay-comment-modal";
-import { EditHistory } from "src/components/edit-history";
-import ContractDateEditModal from "src/components/contract-date-edit-modal/ContractDateEditModal";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import CustomerInfo from "@/components/customer-infos/customerInfo"
+import { PaymentSchedule } from "@/components/payment-schedule"
+import PayCommentModal from "@/components/render-payment-history/pay-comment-modal"
+import { EditHistory } from "@/components/edit-history"
+import ContractDateEditModal from "@/components/contract-date-edit-modal/ContractDateEditModal"
 
 import Calculate from "./calculate";
 
@@ -34,7 +34,7 @@ const ContractDetails = () => {
   
   // Check if user is admin or moderator
   const userRole = (typeof profile?.role === 'string' ? profile.role : (profile?.role as any)?.name)?.toLowerCase();
-  const canEditDate = userRole === "admin" || userRole === "moderator";
+  userRole === "admin" || userRole === "moderator";
 
   useEffect(() => {
     if (contractId) {

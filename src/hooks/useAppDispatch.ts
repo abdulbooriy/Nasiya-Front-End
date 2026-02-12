@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
+import type { AppDispatch } from "@/store";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;

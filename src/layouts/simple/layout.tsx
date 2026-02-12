@@ -1,6 +1,6 @@
 import type { Theme, SxProps, Breakpoint } from "@mui/material/styles";
 import { Main, CompactContent } from "./main";
-import { LayoutSection } from "../core/layout-section";
+import { LayoutSection } from "@/layouts/core/layout-section";
 
 export type SimpleLayoutProps = {
   sx?: SxProps<Theme>;
@@ -16,7 +16,6 @@ export type SimpleLayoutProps = {
 export function SimpleLayout({
   sx,
   children,
-  header,
   content,
 }: SimpleLayoutProps) {
   const layoutQuery: Breakpoint = "md";
@@ -28,7 +27,7 @@ export function SimpleLayout({
       cssVars={{
         "--layout-simple-content-compact-width": "448px",
       }}
-      sx={sx}
+      sx={sx ?? {}}
     >
       <Main>
         {content?.compact ? (

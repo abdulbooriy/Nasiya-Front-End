@@ -17,8 +17,8 @@ import {
 } from "@mui/material";
 import { format } from "date-fns";
 import { uz } from "date-fns/locale";
-import { Iconify } from "src/components/iconify";
-import type { IContractEdit } from "src/types/contract";
+import { Iconify } from "@/components/iconify"
+import type { IContractEdit } from "@/types/contract"
 
 interface EditHistoryProps {
   editHistory: IContractEdit[];

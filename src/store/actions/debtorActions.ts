@@ -1,15 +1,15 @@
-import authApi from "src/server/auth";
+import authApi from "@/server/auth"
 
-import { enqueueSnackbar } from "../slices/snackbar";
+import { enqueueSnackbar } from "@/store/slices/snackbar";
 import {
   start,
   success,
   failure,
   setDebtors,
   setDebtContract,
-} from "../slices/debtorSlice";
+} from "@/store/slices/debtorSlice";
 
-import type { AppThunk } from "../index";
+import type { AppThunk } from "@/store";
 
 export const getDebtors = (): AppThunk => async (dispatch) => {
   dispatch(start());

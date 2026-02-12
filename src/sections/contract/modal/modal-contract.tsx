@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { RootState } from "src/store";
-import type { ICustomer } from "src/types/customer";
-import type { IAddContract, IEditContract } from "src/types/contract";
+import type { RootState } from "@/store"
+import type { ICustomer } from "@/types/customer"
+import type { IAddContract, IEditContract } from "@/types/contract"
 
 import { useSelector } from "react-redux";
 import { FaChevronDown } from "react-icons/fa";
@@ -39,17 +39,17 @@ import {
   createFilterOptions,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { formatNumber } from "src/utils/format-number";
+import { formatNumber } from "@/utils/format-number"
 
-import { grey } from "src/theme/core";
-import { setCustomer } from "src/store/slices/customerSlice";
-import { setModal, closeModal } from "src/store/slices/modalSlice";
-import { getSelectCustomers } from "src/store/actions/customerActions";
-import { addContract, updateContract } from "src/store/actions/contractActions";
+import { grey } from "@/theme/core"
+import { setCustomer } from "@/store/slices/customerSlice"
+import { setModal, closeModal } from "@/store/slices/modalSlice"
+import { getSelectCustomers } from "@/store/actions/customerActions"
+import { addContract, updateContract } from "@/store/actions/contractActions"
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 
 interface IPayment {
   date: string;
@@ -112,7 +112,7 @@ const ModalContract = () => {
     initialPayment: 0,
     percentage: 30,
     period: 12,
-    initialPaymentDueDate: defaultInitialDate.toISOString().split("T")[0],
+    initialPaymentDueDate: defaultInitialDate.toISOString().split("T")[0]!,
     monthlyPayment: 0,
     notes: "",
     box: false,
@@ -122,8 +122,8 @@ const ModalContract = () => {
     totalPrice: 0,
     remainingAmount: 0,
     profitPrice: 0,
-    startDate: now.toISOString().split("T")[0],
-    paymentDeadline: defaultEndDate.toISOString().split("T")[0],
+    startDate: now.toISOString().split("T")[0]!,
+    paymentDeadline: defaultEndDate.toISOString().split("T")[0]!,
     payments: [],
   };
 
@@ -241,15 +241,16 @@ const ModalContract = () => {
     if (contractModal?.type === "edit" && contract) {
       dispatch(setCustomer(contract.data?.customer || null));
 
+      const customerId = contract.data?.customer?._id;
       setFormValues({
-        customer: contract.data?.customer?._id,
+        ...(customerId && { customer: customerId }),
         customId: contract.data?.customId || "", // ✅ YANGI: customId yuklanadi
         productName: contract.data?.productName || "",
         originalPrice: contract.data?.originalPrice || 0,
         price: contract.data?.price || 0,
         initialPayment: contract.data?.initialPayment || 0,
         percentage:
-          contract.data?.percentage || contract.data?.customer?.percent || 30,
+          contract.data?.percentage || contract.data?.customer?.['percent'] || 30,
         period: contract.data?.period || 12,
         initialPaymentDueDate:
           contract.data?.initialPaymentDueDate.split("T")[0] || "",
@@ -275,17 +276,20 @@ const ModalContract = () => {
     baseDate.setMonth(baseDate.getMonth() + formValues.period - 1);
     setFormValues((prev) => ({
       ...prev,
-      paymentDeadline: baseDate.toISOString().split("T")[0],
+      paymentDeadline: baseDate.toISOString().split("T")[0]!,
     }));
   }, [formValues.period, formValues.initialPaymentDueDate]);
 
   useEffect(() => {
     if (selectCustomer === null) return;
     dispatch(setCustomer(selectCustomer));
-    setFormValues((prev) => ({
-      ...prev,
-      customer: selectCustomer?._id,
-    }));
+    setFormValues((prev) => {
+      const customerId = selectCustomer?._id;
+      return {
+        ...prev,
+        ...(customerId && { customer: customerId }),
+      };
+    });
   }, [selectCustomer]);
 
   useEffect(() => {
@@ -298,7 +302,7 @@ const ModalContract = () => {
   }, [totalPrice, remainingAmount, profitPrice]);
 
   useEffect(() => {
-    const percentage = customer?.percent || 30;
+    const percentage = customer?.['percent'] || 30;
     setFormValues((prev) => ({
       ...prev,
       percentage,
@@ -340,29 +344,43 @@ const ModalContract = () => {
                 loading={isLoading}
                 loadingText="Yuklanmoqda..."
                 noOptionsText="Mijozlar topilmadi"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Foydalanuvchini tanlang"
-                    InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                        <>
-                          {isLoading ? (
-                            <CircularProgress color="inherit" size={20} />
-                          ) : null}
-                          {params.InputProps.endAdornment}
-                        </>
-                      ),
-                    }}
-                  />
-                )}
+                renderInput={(params) => {
+                  const { size, InputLabelProps, ...restParams } = params;
+                  const { className: labelClassName, style: labelStyle, ...restLabelProps } = InputLabelProps || {};
+                  
+                  return (
+                    <TextField
+                      {...restParams}
+                      {...(size && { size })}
+                      label="Foydalanuvchini tanlang"
+                      InputLabelProps={{
+                        ...restLabelProps,
+                        ...(labelClassName && { className: labelClassName }),
+                        ...(labelStyle && { style: labelStyle }),
+                      }}
+                      InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                          <>
+                            {isLoading ? (
+                              <CircularProgress color="inherit" size={20} />
+                            ) : null}
+                            {params.InputProps.endAdornment}
+                          </>
+                        ),
+                      }}
+                    />
+                  );
+                }}
                 onChange={(_event, value) => {
                   dispatch(setCustomer(value));
-                  setFormValues((prev) => ({
-                    ...prev,
-                    customer: value?._id,
-                  }));
+                  setFormValues((prev) => {
+                    const customerId = value?._id;
+                    return {
+                      ...prev,
+                      ...(customerId && { customer: customerId }),
+                    };
+                  });
                 }}
                 value={customer}
               />
@@ -398,7 +416,7 @@ const ModalContract = () => {
                   <Stack direction="row" spacing={2} alignItems="center">
                     <Avatar
                       sx={{ width: 50, height: 50 }}
-                      alt={customer?.fullName}
+                      {...(customer?.fullName && { alt: customer.fullName })}
                     />
                     <Typography variant="h6" sx={{ cursor: "pointer" }}>
                       {customer?.fullName}
@@ -478,8 +496,8 @@ const ModalContract = () => {
                         primary="Mas'ul menejer"
                         secondary={
                           <Chip
-                            avatar={<Avatar src={undefined} />}
-                            label={customer?.manager?.fullName || `${customer?.manager?.firstName || "___"} ${customer?.manager?.lastName || "___"}`}
+                            avatar={<Avatar />}
+                            label={customer?.manager?.fullName || "___"}
                             variant="outlined"
                             sx={{ mt: 1 }}
                           />
@@ -802,9 +820,7 @@ const ModalContract = () => {
                         shrink: true,
                       }}
                       aria-readonly
-                      disabled={
-                        !(formValues.payments && formValues.payments.length > 0)
-                      }
+                      {...(!(formValues.payments && formValues.payments.length > 0) && { disabled: true })}
                     />
                   </Grid>
                   <Grid xs={6}>
@@ -841,7 +857,9 @@ const ModalContract = () => {
                         value={payment.date}
                         onChange={(e) => {
                           const payments = [...(formValues.payments || [])];
-                          payments[idx].date = e.target.value;
+                          if (payments[idx]) {
+                            payments[idx].date = e.target.value;
+                          }
                           setFormValues((prev) => ({ ...prev, payments }));
                         }}
                         fullWidth
@@ -858,7 +876,9 @@ const ModalContract = () => {
                           const numValue =
                             value === "" ? 0 : Number(value.replace(/\D/g, ""));
                           const payments = [...(formValues.payments || [])];
-                          payments[idx].amount = numValue;
+                          if (payments[idx]) {
+                            payments[idx].amount = numValue;
+                          }
                           setFormValues((prev) => ({ ...prev, payments }));
                         }}
                         fullWidth
@@ -871,7 +891,9 @@ const ModalContract = () => {
                         value={payment.note}
                         onChange={(e) => {
                           const payments = [...(formValues.payments || [])];
-                          payments[idx].note = e.target.value;
+                          if (payments[idx]) {
+                            payments[idx].note = e.target.value;
+                          }
                           setFormValues((prev) => ({ ...prev, payments }));
                         }}
                         fullWidth
@@ -905,12 +927,15 @@ const ModalContract = () => {
           <Button
             color="success"
             type="submit"
-            disabled={!isFormValid && customer?.isActive}
+            {...((!isFormValid && customer?.isActive) && { disabled: true })}
           >
             Tasdiqlash
           </Button>
         ) : (
-          <Button type="submit" disabled={!isFormValid}>
+          <Button 
+            type="submit" 
+            {...(!isFormValid && { disabled: true })}
+          >
             Saqlash
           </Button>
         )}

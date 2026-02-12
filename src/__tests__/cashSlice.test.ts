@@ -3,11 +3,10 @@ import cashReducer, {
   setError,
   start,
   success,
-  failure,
-  CashState,
-} from "../store/slices/cashSlice";
-import type { IPayment } from "../types/cash";
-import { PaymentType, PaymentStatus } from "../types/cash";
+  type CashState,
+} from "@/store/slices/cashSlice";
+import type { IPayment } from "@/types/cash";
+import { PaymentType, PaymentStatus } from "@/types/cash";
 
 // Mock payment data
 const mockPayment: IPayment = {
@@ -75,7 +74,7 @@ function testSetPayments() {
       throw new Error("payments should have 1 item");
     }
 
-    if (state.payments[0]._id !== mockPayment._id) {
+    if (state.payments[0]?._id !== mockPayment._id) {
       throw new Error("payment ID should match");
     }
 

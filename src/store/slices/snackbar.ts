@@ -26,10 +26,13 @@ const snackbarSlice = createSlice({
         options?: WritableDraft<OptionsObject>;
       }>
     ) => {
-      state.messages.push({
+      const newMessage: { message: SnackbarMessage; options?: OptionsObject } = {
         message: action.payload.message,
-        options: action.payload.options,
-      });
+      };
+      if (action.payload.options) {
+        newMessage.options = action.payload.options as OptionsObject;
+      }
+      state.messages.push(newMessage as WritableDraft<typeof newMessage>);
     },
     removeSnackbar: (state) => {
       state.messages.shift();

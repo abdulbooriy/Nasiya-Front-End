@@ -10,9 +10,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 
-import App from "./app";
-import { store } from "./store";
-import { ThemeProvider } from "./theme/theme-provider";
+import App from "@/app";
+import { store } from "@/store";
+import { ThemeProvider } from "@/theme/theme-provider";
 
 dayjs.locale("en");
 

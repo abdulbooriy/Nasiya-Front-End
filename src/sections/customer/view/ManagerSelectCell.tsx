@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 import type { SelectChangeEvent } from "@mui/material";
 
 import React from "react";

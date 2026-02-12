@@ -5,11 +5,9 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 
-import { fShortenNumber } from 'src/utils/format-number';
-
-import { varAlpha } from 'src/theme/styles';
-
-import { Iconify } from 'src/components/iconify';
+import { fShortenNumber } from '@/utils/format-number'
+import { varAlpha } from '@/theme/styles'
+import { Iconify } from '@/components/iconify'
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +19,7 @@ type Props = CardProps & {
 
 export function AnalyticsTrafficBySite({ title, subheader, list, sx, ...other }: Props) {
   return (
-    <Card sx={sx} {...other}>
+    <Card sx={sx ?? {}} {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Box display="grid" gap={2} gridTemplateColumns="repeat(2, 1fr)" sx={{ p: 3 }}>

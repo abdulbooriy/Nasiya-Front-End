@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 
 export function MenuButton({ sx, ...other }: IconButtonProps) {
   return (
-    <IconButton sx={sx} {...other}>
+    <IconButton sx={sx ?? {}} {...other}>
       <SvgIcon>
         <path
           opacity="0.32"

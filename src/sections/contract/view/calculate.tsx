@@ -1,9 +1,9 @@
-import type { IContract } from "src/types/contract";
+import type { IContract } from "@/types/contract"
 
 import { Paper } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
-import RenderContractFields from "src/components/render-contract-fields/renderContractFields";
+import RenderContractFields from "@/components/render-contract-fields/renderContractFields"
 
 const Calculate = ({ 
   contract, 
@@ -20,7 +20,7 @@ const Calculate = ({
       <RenderContractFields 
         contract={contract} 
         showName 
-        onEditDate={onEditDate}
+        {...(onEditDate && { onEditDate })}
       />
     </Grid>
   </Paper>
