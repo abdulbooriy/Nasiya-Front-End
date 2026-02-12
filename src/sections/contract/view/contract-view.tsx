@@ -329,11 +329,12 @@ export function ContractsView() {
         </CustomTabPanel>
 
         <CustomTabPanel value={tab} index={2}>
-          {(completedContracts.length === 0 ?
+          {completedContracts.length === 0 ? (
             <Box width="100%" height="100px" display="flex" alignItems="center">
               <Loader />
             </Box>
-          : <ContractTable
+          ) : (
+            <ContractTable
               data={completedContracts}
               columns={columnsPageContract}
               onRowClick={(row) => {
@@ -342,7 +343,7 @@ export function ContractsView() {
               }}
               onCustomerClick={handleCustomerClick}
               // selectable={isAdmin}
-              // setSelectedRows={setSelectedRows} // completedContracts tab'ında seçim yapılmaz, bu yüzden boş bir fonksiyon geçiyoruz
+              // setSelectedRows={setSelectedRows}
             />
           )}
         </CustomTabPanel>
