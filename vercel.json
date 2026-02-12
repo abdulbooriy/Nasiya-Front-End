@@ -43,5 +43,15 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "routes": [
+  {
+    "src": "/",
+    "dest": "/"
+  },
+  {
+    "src": "/admin",
+    "dest": "/"
+  }
+ ]
 }
