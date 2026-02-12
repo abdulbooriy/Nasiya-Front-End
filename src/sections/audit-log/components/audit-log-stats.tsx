@@ -14,8 +14,8 @@ import { useState } from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 
-import { Iconify } from 'src/components/iconify';
-import { AUDIT_ACTION_LABELS, AUDIT_ENTITY_LABELS } from 'src/types/audit-log';
+import { Iconify } from '@/components/iconify'
+import { AUDIT_ACTION_LABELS, AUDIT_ENTITY_LABELS } from '@/types/audit-log'
 
 
 interface StatsData {

@@ -1,9 +1,9 @@
-import type { IAddContract, IEditContract } from "src/types/contract";
+import type { IAddContract, IEditContract } from "@/types/contract"
 
-import authApi from "src/server/auth";
+import authApi from "@/server/auth"
 
-import { enqueueSnackbar } from "../slices/snackbar";
-import { setCustomer } from "../slices/customerSlice";
+import { enqueueSnackbar } from "@/store/slices/snackbar";
+import { setCustomer } from "@/store/slices/customerSlice";
 import {
   start,
   failure,
@@ -12,9 +12,9 @@ import {
   setContracts,
   setNewContracts,
   setCompletedContracts,
-} from "../slices/contractSlice";
+} from "@/store/slices/contractSlice";
 
-import type { AppThunk } from "../index";
+import type { AppThunk } from "@/store";
 
 export const getContracts = (): AppThunk => async (dispatch) => {
   dispatch(start());

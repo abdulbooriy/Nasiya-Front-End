@@ -1,6 +1,6 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 import type { SelectChangeEvent } from "@mui/material";
-import type { ChartOptions } from "src/components/chart";
+import type { ChartOptions } from "@/components/chart"
 
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
@@ -10,12 +10,12 @@ import CardHeader from "@mui/material/CardHeader";
 import { Select, MenuItem, FormControl } from "@mui/material";
 import { useTheme, alpha as hexAlpha } from "@mui/material/styles";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setGranularity } from "src/store/slices/dashboardSlice";
-import { getStatistic } from "src/store/actions/dashboardActions";
+import { setGranularity } from "@/store/slices/dashboardSlice"
+import { getStatistic } from "@/store/actions/dashboardActions"
 
-import { Chart, useChart } from "src/components/chart";
+import { Chart, useChart } from "@/components/chart"
 
 
 type ChartType = {

@@ -1,17 +1,17 @@
-import "src/global.css";
+import "@/global.css"
 
 import { useEffect } from "react";
 import type { TypedUseSelectorHook } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Router } from "src/routes/sections";
-import { useScrollToTop } from "src/hooks/use-scroll-to-top";
+import Loader from "@/components/loader/Loader";
+import Snackbar from "@/components/snackbar/Snanckbar";
 
-import Loader from "./components/loader/Loader";
-import Snackbar from "./components/snackbar/Snankbar";
+import { refreshProfile } from "@/store/actions/authActions";
+import type { RootState, AppDispatch } from "@/store";
 
-import { refreshProfile } from "./store/actions/authActions";
-import type { RootState, AppDispatch } from "./store";
+import { Router } from "@/routes/sections";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

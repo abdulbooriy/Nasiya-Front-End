@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import {
-  Box,
   Card,
   Table,
   TableRow,
@@ -12,7 +11,7 @@ import {
   TablePagination,
 } from "@mui/material";
 
-import { Scrollbar } from "../scrollbar";
+import { Scrollbar } from "@/components/scrollbar";
 import { TableNoData } from "./TableNoData";
 import {
   excelHeaderCellStyle,
@@ -47,7 +46,7 @@ export function TableComponent<T extends TableData>({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 

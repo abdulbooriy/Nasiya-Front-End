@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Unstable_Grid2";
 import { Card, Typography } from "@mui/material";
 
-import { Label } from "../label";
+import { Label } from "@/components/label";
 
 interface StatCardProps {
   title: string;
@@ -14,7 +14,6 @@ interface StatCardProps {
 const StatCard = ({
   title,
   value,
-  lastMonthValue,
   isCurrency = false,
   changeText,
 }: StatCardProps) => {

@@ -1,8 +1,8 @@
-import type { IAddCustomer, IEditCustomer } from "src/types/customer";
+import type { IAddCustomer, IEditCustomer } from "@/types/customer"
 
-import authApi from "src/server/auth";
+import authApi from "@/server/auth"
 
-import { enqueueSnackbar } from "../slices/snackbar";
+import { enqueueSnackbar } from "@/store/slices/snackbar";
 import {
   start,
   failure,
@@ -12,9 +12,9 @@ import {
   setNewCustomers,
   setSelectCustomer,
   setSelectCustomers,
-} from "../slices/customerSlice";
+} from "@/store/slices/customerSlice";
 
-import type { AppThunk } from "../index";
+import type { AppThunk } from "@/store";
 
 export const getSelectCustomers = (): AppThunk => async (dispatch) => {
   dispatch(start());

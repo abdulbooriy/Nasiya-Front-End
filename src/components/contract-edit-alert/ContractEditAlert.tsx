@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { format } from "date-fns";
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 
 interface ContractEditNotification {
   _id: string;

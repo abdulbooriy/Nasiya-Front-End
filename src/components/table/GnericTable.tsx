@@ -1,5 +1,5 @@
 // src/components/table/GenericTable.tsx
-import type { useTableLogic } from "src/hooks/useTableLogic";
+import type { useTableLogic } from "@/hooks/useTableLogic"
 
 import { Card } from "@mui/material";
 
@@ -28,7 +28,7 @@ interface GenericTableProps<T extends Record<string, any>> {
 }
 
 export function GenericTable<T extends Record<string, any>>({
-  data,
+
   selectable = false,
   columns,
   renderActions,
@@ -106,13 +106,13 @@ export function GenericTable<T extends Record<string, any>>({
           columns={columns}
           data={filteredData}
           selectedColumns={selectedColumns}
-          onRowClick={onRowClick}
-          onCustomerClick={onCustomerClick}
-          onNotesClick={onNotesClick}
-          renderActions={renderActions}
-          selectable={selectable}
-          onSelectedRowsChange={setSelectedRows}
-          selectedRowss={selectedRows}
+          {...(onRowClick && { onRowClick })}
+          {...(onCustomerClick && { onCustomerClick })}
+          {...(onNotesClick && { onNotesClick })}
+          {...(renderActions && { renderActions })}
+          {...(selectable && { selectable })}
+          {...(setSelectedRows && { onSelectedRowsChange: setSelectedRows })}
+          {...(selectedRows && { selectedRowss: selectedRows })}
         />
       </Card>
     </>

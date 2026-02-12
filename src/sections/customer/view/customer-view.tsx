@@ -1,6 +1,7 @@
-import { useSelector } from "react-redux";
-import { RiUploadCloud2Fill } from "react-icons/ri";
 import { memo, useRef, useState, useEffect } from "react";
+import { RiUploadCloud2Fill } from "react-icons/ri";
+
+import { useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
 import {
@@ -17,21 +18,22 @@ import {
 
 import CustomerTable from "./customerTable";
 import { columnsPageCustomers, columnsNewPageCustomers } from "./columns";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { RootState } from "../../../store";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import type { RootState } from "@/store";
 
 import {
   getCustomers,
   getNewCustomers,
-} from "../../../store/actions/customerActions";
+} from "@/store/actions/customerActions";
 
-import authApi from "../../../server/auth";
-import Loader from "../../../components/loader/Loader";
-import { DashboardContent } from "../../../layouts/dashboard";
-import { Iconify } from "../../../components/iconify";
-import { exportCustomersToCSV } from "../../../utils/export-csv";
-import { setModal } from "../../../store/slices/modalSlice";
-import { setCustomerId } from "../../../store/slices/customerSlice";
+import authApi from "@/server/auth";
+import Loader from "@/components/loader/Loader";
+
+import { DashboardContent } from "@/layouts/dashboard";
+import { Iconify } from "@/components/iconify";
+import { exportCustomersToCSV } from "@/utils/export-csv";
+import { setModal } from "@/store/slices/modalSlice";
+import { setCustomerId } from "@/store/slices/customerSlice";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -83,7 +85,7 @@ const CustomerView = () => {
   // const selectedCustomersData= customers.filter((customer) => selectedRows.includes(customer._id));
   // console.log("Selected Customers Data:", selectedCustomersData); // ✅ DEBUG: selectedRows ile eşleşen müşteri verilerini kontrol et
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 

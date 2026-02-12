@@ -1,11 +1,11 @@
-import authApi from "src/server/auth";
-import logger from "src/utils/logger";
+import authApi from "@/server/auth"
+import logger from "@/utils/logger"
 
-import { start, success, setPayments, setError } from "../slices/cashSlice";
-import { enqueueSnackbar } from "../slices/snackbar";
+import { start, success, setPayments, setError } from "@/store/slices/cashSlice";
+import { enqueueSnackbar } from "@/store/slices/snackbar";
 
-import type { AppThunk } from "../index";
-import type { IPayment } from "src/types/cash";
+import type { AppThunk } from "@/store";
+import type { IPayment } from "@/types/cash"
 
 export const getPendingPayments = (): AppThunk => async (dispatch) => {
   dispatch(start());
@@ -47,7 +47,7 @@ export const confirmPayments =
   async (dispatch) => {
     dispatch(start());
     try {
-      const res = await authApi.post("/cash/confirm-payments", { paymentIds });
+      await authApi.post("/cash/confirm-payments", { paymentIds });
 
       dispatch(success());
       dispatch(
@@ -77,7 +77,7 @@ export const rejectPayment =
   async (dispatch) => {
     dispatch(start());
     try {
-      const res = await authApi.post("/cash/reject-payment", {
+      await authApi.post("/cash/reject-payment", {
         paymentId,
         reason,
       });

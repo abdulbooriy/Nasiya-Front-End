@@ -1,3 +1,8 @@
+import type {
+  AuditLogFilters as FilterType,
+  AuditAction,
+} from "@/types/audit-log";
+
 import {
   Card,
   CardContent,
@@ -10,7 +15,6 @@ import {
   Stack,
   Chip,
   Box,
-  Typography,
   TextField,
   InputAdornment,
 } from "@mui/material";
@@ -19,13 +23,11 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 import {
-  AuditLogFilters as FilterType,
-  AuditAction,
   AUDIT_ACTION_LABELS,
-} from "src/types/audit-log";
-import axiosInstance from "src/server/api";
+} from "@/types/audit-log";
+import axiosInstance from "@/server/api"
 
 // Manager interface
 interface Manager {
@@ -263,7 +265,7 @@ export default function AuditLogFilters({
                   size="small"
                   startIcon={<Iconify icon="eva:search-fill" />}
                   onClick={handleApplyFilters}
-                  disabled={loading}
+                  {...(loading && { disabled: true })}
                 >
                   Qidirish
                 </Button>

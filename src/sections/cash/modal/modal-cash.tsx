@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
@@ -17,12 +17,12 @@ import {
   DialogContent,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { formatNumber } from "src/utils/format-number";
+import { formatNumber } from "@/utils/format-number"
 
-import { closeModal } from "src/store/slices/modalSlice";
-import { getCurrencyCourse } from "src/store/actions/dashboardActions";
+import { closeModal } from "@/store/slices/modalSlice"
+import { getCurrencyCourse } from "@/store/actions/dashboardActions"
 
 interface IForm {
   currencyDetails: {

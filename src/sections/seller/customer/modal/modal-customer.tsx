@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { FC } from "react";
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
@@ -23,14 +23,14 @@ import { FaRegFileLines } from "react-icons/fa6";
 import { TbPhoto } from "react-icons/tb";
 import { MdDelete, MdUpload } from "react-icons/md";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import authApi from "src/server/auth";
-import { closeModal } from "src/store/slices/modalSlice";
+import authApi from "@/server/auth"
+import { closeModal } from "@/store/slices/modalSlice"
 import {
   addCustomerSeller,
   updateCustomerSeller,
-} from "src/store/actions/customerActions";
+} from "@/store/actions/customerActions";
 
 interface IForm {
   fullName: string;

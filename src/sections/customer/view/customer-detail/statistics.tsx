@@ -1,5 +1,5 @@
-import type { ICustomer } from "src/types/customer";
-import type { IContract } from "src/types/contract";
+import type { ICustomer } from "@/types/customer"
+import type { IContract } from "@/types/contract"
 
 import {
   FaWallet,
@@ -17,7 +17,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 
-import { formatNumber } from "src/utils/format-number";
+import { formatNumber } from "@/utils/format-number"
 
 const Statistics = ({
   customer,

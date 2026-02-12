@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { FC } from "react";
-import type { RootState } from "src/store";
-import type { IAddCustomer, IEditCustomer } from "src/types/customer";
+import type { RootState } from "@/store"
 
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
@@ -26,12 +25,12 @@ import { FaRegFileLines } from "react-icons/fa6";
 import { TbPhoto } from "react-icons/tb";
 import { MdDelete, MdUpload } from "react-icons/md";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import authApi from "src/server/auth";
-import { closeModal } from "src/store/slices/modalSlice";
-import { getManagers } from "src/store/actions/employeeActions";
-import { addCustomer, updateCustomer } from "src/store/actions/customerActions";
+import authApi from "@/server/auth"
+import { closeModal } from "@/store/slices/modalSlice"
+import { getManagers } from "@/store/actions/employeeActions"
+import { addCustomer, updateCustomer } from "@/store/actions/customerActions"
 
 
 interface IForm {
@@ -381,28 +380,39 @@ const ModalCustomer: FC<IProps> = ({ show = false }) => {
                   onFocus={handleCustomerFocus}
                   options={managers}
                   getOptionLabel={(option) =>
-                    option.fullName
+                    option.fullName || ""
                   }
                   loading={isLoading}
                   loadingText="Yuklanmoqda..."
                   noOptionsText="Menejer topilmadi"
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Foydalanuvchini tanlang"
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {isLoading ? (
-                              <CircularProgress color="inherit" size={20} />
-                            ) : null}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
-                      }}
-                    />
-                  )}
+                  renderInput={(params) => {
+                    const { size, InputLabelProps, ...restParams } = params;
+                    const { className: labelClassName, style: labelStyle, ...restLabelProps } = InputLabelProps || {};
+                    
+                    return (
+                      <TextField
+                        {...restParams}
+                        {...(size && { size })}
+                        label="Foydalanuvchini tanlang"
+                        InputLabelProps={{
+                          ...restLabelProps,
+                          ...(labelClassName && { className: labelClassName }),
+                          ...(labelStyle && { style: labelStyle }),
+                        }}
+                        InputProps={{
+                          ...params.InputProps,
+                          endAdornment: (
+                            <>
+                              {isLoading ? (
+                                <CircularProgress color="inherit" size={20} />
+                              ) : null}
+                              {params.InputProps.endAdornment}
+                            </>
+                          ),
+                        }}
+                      />
+                    );
+                  }}
                   onChange={(_event, value) => {
                     setFormValues((prev) => ({
                       ...prev,
@@ -633,14 +643,14 @@ const ModalCustomer: FC<IProps> = ({ show = false }) => {
             <Button color="error" onClick={handleClose}>
               Bekor qilish
             </Button>
-            <Button
+            <Button 
               type="submit"
               color={
                 customerModal?.type === "edit" && !customerModal.data?.isActive
                   ? "success"
                   : "primary"
               }
-              disabled={!isFormValid}
+              {...(!isFormValid && { disabled: true })}
             >
               {customerModal?.type === "edit" && !customerModal.data?.isActive
                 ? "Tasdiqlash"

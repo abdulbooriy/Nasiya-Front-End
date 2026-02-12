@@ -1,13 +1,13 @@
-import type { Theme, SxProps, Breakpoint } from "@mui/material/styles";
-
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { LayoutSection } from "../core/layout-section";
-import Loader from "../../components/loader/Loader";
-import { stylesMode } from "../../theme/styles";
-import { RootState } from "../../store";
+import { useSelector } from "react-redux";
+import type { Theme, SxProps, Breakpoint } from "@mui/material/styles";
+
+import { LayoutSection } from "@/layouts/core/layout-section";
+import Loader from "@/components/loader/Loader";
+import { stylesMode } from "@/theme/styles";
+import type { RootState } from "@/store";
 import { Main } from "./main";
 
 // ----------------------------------------------------------------------

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 import type { SelectChangeEvent } from "@mui/material";
-import type { IAddEmployee, IEditEmployee } from "src/types/employee";
+import type { IAddEmployee, IEditEmployee } from "@/types/employee"
 
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
@@ -23,11 +23,11 @@ import {
   InputAdornment,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { closeModal } from "src/store/slices/modalSlice";
-import { enqueueSnackbar } from "src/store/slices/snackbar";
-import { addEmployee, updateEmployee } from "src/store/actions/employeeActions";
+import { closeModal } from "@/store/slices/modalSlice"
+import { enqueueSnackbar } from "@/store/slices/snackbar"
+import { addEmployee, updateEmployee } from "@/store/actions/employeeActions"
 
 interface IForm {
   firstName: string;

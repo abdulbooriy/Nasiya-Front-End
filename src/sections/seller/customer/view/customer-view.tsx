@@ -1,5 +1,5 @@
-import type { RootState } from "src/store";
-import type { Column } from "src/components/table/types";
+import type { RootState } from "@/store"
+import type { Column } from "@/components/table/types"
 
 import { useSelector } from "react-redux";
 import { memo, useState, useEffect } from "react";
@@ -15,22 +15,22 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import authApi from "src/server/auth";
-import { setModal } from "src/store/slices/modalSlice";
-import { DashboardContent } from "src/layouts/dashboard";
+import authApi from "@/server/auth"
+import { setModal } from "@/store/slices/modalSlice"
+import { DashboardContent } from "@/layouts/dashboard"
 import {
   setCustomers,
   setNewCustomers,
   setCustomerId,
-} from "src/store/slices/customerSlice";
+} from "@/store/slices/customerSlice";
 
 import { enqueueSnackbar } from "notistack";
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import { exportCustomersToCSV } from "src/utils/export-csv";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import { exportCustomersToCSV } from "@/utils/export-csv"
 
 import CustomerTable from "./customerTable";
 
@@ -131,7 +131,7 @@ const CustomerView = () => {
 
   const [tab, setTab] = useState(0);
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 

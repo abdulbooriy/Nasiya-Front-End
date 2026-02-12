@@ -1,5 +1,5 @@
-import type { RootState, AppDispatch } from "src/store";
-import type { ILoginFormValues } from "src/types/login";
+import type { RootState, AppDispatch } from "@/store"
+import type { ILoginFormValues } from "@/types/login"
 
 import { useDispatch, useSelector } from "react-redux";
 import React, { memo, useState, useEffect, useCallback } from "react";
@@ -11,10 +11,10 @@ import Typography from "@mui/material/Typography";
 import { Button, CircularProgress } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 
-import { login } from "src/store/actions/authActions";
-import { enqueueSnackbar } from "src/store/slices/snackbar";
+import { login } from "@/store/actions/authActions"
+import { enqueueSnackbar } from "@/store/slices/snackbar"
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 
 const SignInView = () => {
   const dispatch = useDispatch<AppDispatch>();

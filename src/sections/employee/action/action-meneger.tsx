@@ -1,4 +1,4 @@
-import type { IEmployee } from "src/types/employee";
+import type { IEmployee } from "@/types/employee"
 
 import { useState, useCallback } from "react";
 import { MdDelete, MdWarning } from "react-icons/md";
@@ -16,12 +16,12 @@ import {
   DialogContentText,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setModal } from "src/store/slices/modalSlice";
-import { deleteEmployes } from "src/store/actions/employeeActions";
+import { setModal } from "@/store/slices/modalSlice"
+import { deleteEmployes } from "@/store/actions/employeeActions"
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 
 export default function ActionEmployee({ employee }: { employee: IEmployee }) {
   const dispatch = useAppDispatch();

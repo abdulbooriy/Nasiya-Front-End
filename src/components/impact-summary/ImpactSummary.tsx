@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, Box, Stack, Typography, Chip } from "@mui/material";
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 
 export interface ImpactSummaryData {
   underpaidCount: number;

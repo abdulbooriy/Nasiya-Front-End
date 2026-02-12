@@ -1,3 +1,9 @@
+import React, { useState } from "react";
+
+import type {
+  IAuditLog,
+} from "@/types/audit-log";
+
 import {
   Card,
   CardHeader,
@@ -10,28 +16,25 @@ import {
   TableRow,
   TablePagination,
   Chip,
-  Avatar,
   Stack,
   Typography,
   Box,
   Skeleton,
   Collapse,
   IconButton,
-  Tooltip,
   Paper,
 } from "@mui/material";
-import React, { useState } from "react";
+
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/uz-latn";
 
-import { Iconify } from "src/components/iconify";
+import { Iconify } from "@/components/iconify"
 import {
-  IAuditLog,
   AUDIT_ACTION_LABELS,
   AUDIT_ENTITY_LABELS,
   AUDIT_ACTION_COLORS,
-} from "src/types/audit-log";
+} from "@/types/audit-log";
 
 dayjs.extend(relativeTime);
 dayjs.locale("uz-latn");
@@ -376,7 +379,6 @@ export default function AuditLogTable({
   data,
   loading,
   title = "Audit Log",
-  subtitle,
   page = 1,
   limit = 100,
   total = 0,
@@ -396,7 +398,7 @@ export default function AuditLogTable({
     setExpandedRows(newExpanded);
   };
 
-  const getActionIcon = (action: string, entity: string) => {
+  const getActionIcon = (action: string, _entity: string) => {
     switch (action) {
       case "CREATE":
         return "eva:plus-circle-fill";
@@ -421,150 +423,152 @@ export default function AuditLogTable({
     }
   };
 
-  const formatEntityName = (log: IAuditLog) => {
-    // To'lov uchun - mijoz ismi (qisqartirilgan)
-    if (log.entity === "payment" && log.metadata?.customerName) {
-      const name = log.metadata.customerName;
-      // Agar 10 belgidan uzun bo'lsa, qisqartirish
-      return name.length > 10 ? name.substring(0, 10) + "..." : name;
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const formatEntityName = (log: IAuditLog) => {
+  //   // To'lov uchun - mijoz ismi (qisqartirilgan)
+  //   if (log.entity === "payment" && log.metadata?.customerName) {
+  //     const name = log.metadata.customerName;
+  //     // Agar 10 belgidan uzun bo'lsa, qisqartirish
+  //     return name.length > 10 ? name.substring(0, 10) + "..." : name;
+  //   }
 
-    // affectedEntities'dan olish (qisqartirilgan)
-    if (
-      log.metadata?.affectedEntities &&
-      log.metadata.affectedEntities.length > 0
-    ) {
-      const entityName = log.metadata.affectedEntities[0].entityName || "-";
-      // Agar 10 belgidan uzun bo'lsa, qisqartirish
-      return entityName.length > 10
-        ? entityName.substring(0, 10) + "..."
-        : entityName;
-    }
+  //   // affectedEntities'dan olish (qisqartirilgan)
+  //   if (
+  //     log.metadata?.affectedEntities &&
+  //     log.metadata.affectedEntities.length > 0
+  //   ) {
+  //     const entityName = log.metadata.affectedEntities[0]?.entityName || "-";
+  //     // Agar 10 belgidan uzun bo'lsa, qisqartirish
+  //     return entityName.length > 10
+  //       ? entityName.substring(0, 10) + "..."
+  //       : entityName;
+  //   }
 
-    // ObjectId'ni ko'rsatmaslik
-    if (log.entityId && log.entityId.match(/^[0-9a-fA-F]{24}$/)) {
-      return "-";
-    }
+  //   // ObjectId'ni ko'rsatmaslik
+  //   if (log.entityId && log.entityId.match(/^[0-9a-fA-F]{24}$/)) {
+  //     return "-";
+  //   }
 
-    return log.entityId || "-";
-  };
+  //   return log.entityId || "-";
+  // };
 
-  const formatAmountInfo = (log: IAuditLog) => {
-    if (log.entity === "payment" && log.metadata?.amount) {
-      const paidAmount = log.metadata.amount;
-      const status = log.metadata.paymentStatus;
-      const targetMonth = log.metadata.targetMonth;
-      let statusText = "";
-      let statusColor: "success" | "warning" | "error" | "info" = "info";
-      let amountColor = "success.main";
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const formatAmountInfo = (log: IAuditLog) => {
+  //   if (log.entity === "payment" && log.metadata?.amount) {
+  //     const paidAmount = log.metadata.amount;
+  //     const status = log.metadata.paymentStatus;
+  //     const targetMonth = log.metadata.targetMonth;
+  //     let statusText = "";
+  //     let statusColor: "success" | "warning" | "error" | "info" = "info";
+  //     let amountColor = "success.main";
 
-      if (status === "UNDERPAID") {
-        statusText = "Kam to'lov";
-        statusColor = "warning";
-        amountColor = "warning.main";
-      } else if (status === "OVERPAID") {
-        statusText = "Ortiqcha to'lov";
-        statusColor = "info";
-        amountColor = "info.main";
-      } else if (status === "PAID") {
-        statusText = "To'liq to'lov";
-        statusColor = "success";
-        amountColor = "success.main";
-      } else if (status === "REJECTED") {
-        statusText = "Rad etilgan";
-        statusColor = "error";
-        amountColor = "error.main";
-      } else if (status === "PENDING") {
-        statusText = "Kutilmoqda";
-        statusColor = "warning";
-        amountColor = "warning.main";
-      } else {
-        statusText = "To'lov";
-        statusColor = "info";
-      }
+  //     if (status === "UNDERPAID") {
+  //       statusText = "Kam to'lov";
+  //       statusColor = "warning";
+  //       amountColor = "warning.main";
+  //     } else if (status === "OVERPAID") {
+  //       statusText = "Ortiqcha to'lov";
+  //       statusColor = "info";
+  //       amountColor = "info.main";
+  //     } else if (status === "PAID") {
+  //       statusText = "To'liq to'lov";
+  //       statusColor = "success";
+  //       amountColor = "success.main";
+  //     } else if (status === "REJECTED") {
+  //       statusText = "Rad etilgan";
+  //       statusColor = "error";
+  //       amountColor = "error.main";
+  //     } else if (status === "PENDING") {
+  //       statusText = "Kutilmoqda";
+  //       statusColor = "warning";
+  //       amountColor = "warning.main";
+  //     } else {
+  //       statusText = "To'lov";
+  //       statusColor = "info";
+  //     }
 
-      return (
-        <Stack spacing={0.5}>
-          <Typography
-            variant="subtitle2"
-            color={amountColor}
-            sx={{ fontWeight: 600 }}
-          >
-            ${paidAmount}
-          </Typography>
-          {targetMonth && (
-            <Typography variant="caption" color="text.secondary">
-              {targetMonth}-oy uchun
-            </Typography>
-          )}
-          {/* Faqat muhim statuslar uchun chip ko'rsatamiz */}
-          {(status === "UNDERPAID" ||
-            status === "OVERPAID" ||
-            status === "REJECTED") && (
-            <Chip
-              size="small"
-              label={statusText}
-              color={statusColor}
-              variant="filled"
-              sx={{
-                fontSize: "0.7rem",
-                height: 20,
-                fontWeight: 500,
-              }}
-            />
-          )}
-        </Stack>
-      );
-    }
+  //     return (
+  //       <Stack spacing={0.5}>
+  //         <Typography
+  //           variant="subtitle2"
+  //           color={amountColor}
+  //           sx={{ fontWeight: 600 }}
+  //         >
+  //           ${paidAmount}
+  //         </Typography>
+  //         {targetMonth && (
+  //           <Typography variant="caption" color="text.secondary">
+  //             {targetMonth}-oy uchun
+  //           </Typography>
+  //         )}
+  //         {/* Faqat muhim statuslar uchun chip ko'rsatamiz */}
+  //         {(status === "UNDERPAID" ||
+  //           status === "OVERPAID" ||
+  //           status === "REJECTED") && (
+  //           <Chip
+  //             size="small"
+  //             label={statusText}
+  //             color={statusColor}
+  //             variant="filled"
+  //             sx={{
+  //               fontSize: "0.7rem",
+  //               height: 20,
+  //               fontWeight: 500,
+  //             }}
+  //           />
+  //         )}
+  //       </Stack>
+  //     );
+  //   }
 
-    // Excel import uchun
-    if (log.action === "BULK_IMPORT" && log.metadata?.totalRows) {
-      return (
-        <Stack spacing={0.5}>
-          <Typography variant="subtitle2" color="primary.main">
-            {log.metadata.successfulRows}/{log.metadata.totalRows}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Muvaffaqiyatli
-          </Typography>
-        </Stack>
-      );
-    }
+  //   // Excel import uchun
+  //   if (log.action === "BULK_IMPORT" && log.metadata?.totalRows) {
+  //     return (
+  //       <Stack spacing={0.5}>
+  //         <Typography variant="subtitle2" color="primary.main">
+  //           {log.metadata.successfulRows}/{log.metadata.totalRows}
+  //         </Typography>
+  //         <Typography variant="caption" color="text.secondary">
+  //           Muvaffaqiyatli
+  //         </Typography>
+  //       </Stack>
+  //     );
+  //   }
 
-    // Contract uchun
-    if (log.entity === "contract" && log.metadata?.totalPrice) {
-      return (
-        <Stack spacing={0.5}>
-          <Typography variant="subtitle2" color="warning.main">
-            ${log.metadata.totalPrice}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Shartnoma
-          </Typography>
-        </Stack>
-      );
-    }
+  //   // Contract uchun
+  //   if (log.entity === "contract" && log.metadata?.totalPrice) {
+  //     return (
+  //       <Stack spacing={0.5}>
+  //         <Typography variant="subtitle2" color="warning.main">
+  //           ${log.metadata.totalPrice}
+  //         </Typography>
+  //         <Typography variant="caption" color="text.secondary">
+  //           Shartnoma
+  //         </Typography>
+  //       </Stack>
+  //     );
+  //   }
 
-    // Changes count for updates
-    if (log.changes && log.changes.length > 0) {
-      return (
-        <Stack spacing={0.5}>
-          <Typography variant="subtitle2" color="info.main">
-            {log.changes.length}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            O'zgarish
-          </Typography>
-        </Stack>
-      );
-    }
+  //   // Changes count for updates
+  //   if (log.changes && log.changes.length > 0) {
+  //     return (
+  //       <Stack spacing={0.5}>
+  //         <Typography variant="subtitle2" color="info.main">
+  //           {log.changes.length}
+  //         </Typography>
+  //         <Typography variant="caption" color="text.secondary">
+  //           O'zgarish
+  //         </Typography>
+  //       </Stack>
+  //     );
+  //   }
 
-    return (
-      <Typography variant="body2" color="text.secondary">
-        -
-      </Typography>
-    );
-  };
+  //   return (
+  //     <Typography variant="body2" color="text.secondary">
+  //       -
+  //     </Typography>
+  //   );
+  // };
 
   return (
     <Card sx={{ boxShadow: 1 }}>

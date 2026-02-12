@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -11,19 +11,19 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { DashboardContent } from "src/layouts/dashboard";
-import { setEmployeeId } from "src/store/slices/employeeSlice";
-import { getEmployee } from "src/store/actions/employeeActions";
-import { getCurrencyCourse } from "src/store/actions/dashboardActions";
+import { DashboardContent } from "@/layouts/dashboard"
+import { setEmployeeId } from "@/store/slices/employeeSlice"
+import { getEmployee } from "@/store/actions/employeeActions"
+import { getCurrencyCourse } from "@/store/actions/dashboardActions"
 
-import { Iconify } from "src/components/iconify";
-import Loader from "src/components/loader/Loader";
-import { Balance } from "src/components/balance-card/BalannceCard";
-import EmployeeInfo from "src/components/employee-infos/employeeInfo";
-import { EmployeeExpensesTable } from "src/components/employee-expenses-form/EmployeeExpensesForm";
-import WithdrawAllBalanceCard from "src/components/with-draw-all-balance-card/WithDrawAll-Card-Modal";
+import { Iconify } from "@/components/iconify"
+import Loader from "@/components/loader/Loader"
+import { Balance } from "@/components/balance-card/BalannceCard"
+import EmployeeInfo from "@/components/employee-infos/employeeInfo"
+import { EmployeeExpensesTable } from "@/components/employee-expenses-form/EmployeeExpensesForm"
+import WithdrawAllBalanceCard from "@/components/with-draw-all-balance-card/WithDrawAll-Card-Modal"
 
 const EmployeeDetails = () => {
   const dispatch = useAppDispatch();

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Box, Menu, MenuItem, Typography } from "@mui/material";
 
 import type { Column, SortConfig } from "./types";

@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 import type { Breakpoint } from "@mui/material/styles";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { AppBarProps } from "@mui/material/AppBar";
@@ -14,13 +14,13 @@ import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
 import { ListItem, ListItemButton } from "@mui/material";
 
-import { usePathname } from "src/routes/hooks";
-import { RouterLink } from "src/routes/components";
+import { usePathname } from "@/routes/hooks"
+import { RouterLink } from "@/routes/components"
 
-import { bgBlur, varAlpha } from "src/theme/styles";
+import { bgBlur, varAlpha } from "@/theme/styles"
 
-import { layoutClasses } from "../classes";
-import { navData } from "../config-nav-dashboard";
+import { layoutClasses } from "@/layouts/classes";
+import { navData } from "@/layouts/config-nav-dashboard";
 
 // ----------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ export function HeaderSection({
       sx={{
         boxShadow: "none",
         zIndex: "var(--layout-header-zIndex)",
-        ...sx,
+        ...(sx ?? {}),
       }}
       {...other}
     >
@@ -97,8 +97,8 @@ export function HeaderSection({
         disableGutters
         {...slotProps?.toolbar}
         sx={{
-          ...toolbarStyles.default,
-          ...slotProps?.toolbar?.sx,
+          ...toolbarStyles?.default,
+          ...(slotProps?.toolbar?.sx ?? {}),
         }}
       >
         <Container
@@ -107,7 +107,7 @@ export function HeaderSection({
             height: 1,
             display: "flex",
             alignItems: "center",
-            ...slotProps?.container?.sx,
+            ...(slotProps?.container?.sx ?? {}),
           }}
         >
           {slots?.leftArea}

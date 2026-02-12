@@ -1,20 +1,17 @@
 import type { CardProps } from "@mui/material/Card";
-import type { ColorType } from "src/theme/core/palette";
+import type { ColorType } from "@/theme/core/palette"
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import { useTheme } from "@mui/material/styles";
 import { Stack, IconButton } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
-
-import { formatNumber } from "src/utils/format-number";
-
-import { setModal } from "src/store/slices/modalSlice";
-import { varAlpha, bgGradient } from "src/theme/styles";
-
-import { Iconify } from "src/components/iconify";
-import { SvgColor } from "src/components/svg-color";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { formatNumber } from "@/utils/format-number"
+import { setModal } from "@/store/slices/modalSlice"
+import { varAlpha, bgGradient } from "@/theme/styles"
+import { Iconify } from "@/components/iconify"
+import { SvgColor } from "@/components/svg-color"
 
 
 type Props = CardProps & {
@@ -52,7 +49,7 @@ export function AnalyticsWidgetSummary({
         position: "relative",
         color: `${color}.darker`,
         backgroundColor: "common.white",
-        ...sx,
+        ...sx
       }}
       {...other}
     >

@@ -1,8 +1,7 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useSelector } from "react-redux";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   MdCheckCircle,
   MdPerson,
@@ -34,27 +33,25 @@ import {
   DialogContentText,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setModal } from "src/store/slices/modalSlice";
-import { setContractId } from "src/store/slices/contractSlice";
-import { DashboardContent } from "src/layouts/dashboard";
-import { getManagers } from "src/store/actions/employeeActions";
+import { setModal } from "@/store/slices/modalSlice"
+import { DashboardContent } from "@/layouts/dashboard"
+import { getManagers } from "@/store/actions/employeeActions"
 import {
   getPendingPayments,
   confirmPayments,
-} from "src/store/actions/cashActions";
+} from "@/store/actions/cashActions";
 
-import Loader from "src/components/loader/Loader";
+import Loader from "@/components/loader/Loader"
 
 import ChashTable from "./cashTable";
 import { columnsCash } from "./column";
-import ActionCash from "../action/action-cash";
-import NotesModal from "../modal/modal-notes";
+import ActionCash from "@/sections/cash/action/action-cash";
+import NotesModal from "@/sections/cash/modal/modal-notes";
 
 export function CashView() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const dataEmployee = useSelector((state: RootState) => state.employee);
   const { profile } = useSelector((state: RootState) => state.auth);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
@@ -186,6 +183,11 @@ export function CashView() {
           {...params}
           size="small"
           label="Menejer bo'yicha filter"
+          InputLabelProps={{
+            ...params.InputLabelProps,
+            className: params.InputLabelProps?.className ?? "",
+            style: params.InputLabelProps?.style ?? {},
+          }}
           InputProps={{
             ...params.InputProps,
             endAdornment: (

@@ -1,4 +1,4 @@
-import type { IContract } from "src/types/contract";
+import type { IContract } from "@/types/contract"
 
 import {
   Box,
@@ -46,9 +46,9 @@ export function ContractDetailModal({
     ? Math.floor((contract.totalPaid - contract.initialPayment) / contract.monthlyPayment)
     : 0;
 
-  const progressPercent = contract.period 
-    ? Math.min((paidMonths / contract.period) * 100, 100)
-    : 0;
+  // const progressPercent = contract.period 
+  //   ? Math.min((paidMonths / contract.period) * 100, 100)
+  //   : 0;
 
   // Qaysi oy to'lovi kechikkanini aniqlash
   const getOverdueMonthInfo = () => {

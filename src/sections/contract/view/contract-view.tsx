@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
 import React, { useRef, useState, useEffect } from "react";
+
+import { useSelector } from "react-redux";
 import {
   MdCheckCircle,
   MdPerson,
@@ -30,27 +31,27 @@ import {
 } from "@mui/material";
 
 import ContractTable from "./contactTable";
-import ActionContract from "../action/action-contract";
+import ActionContract from "@/sections/contract/action/action-contract";
 import { columnsPageContract, columnsPageNewContract } from "./columns-fixed";
 
-import { RootState } from "../../../store";
-import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 import {
   approveContract,
   getCompletedContracts,
   getContract,
   getContracts,
   getNewContracts,
-} from "../../../store/actions/contractActions";
+} from "@/store/actions/contractActions";
 
-import Loader from "src/components/loader/Loader";
 
-import { DashboardContent } from "../../../layouts/dashboard";
-import { Iconify } from "../../../components/iconify";
-import { exportContractsToCSV } from "../../../utils/export-csv";
-import { setCustomer } from "../../../store/slices/customerSlice";
-import { setModal } from "../../../store/slices/modalSlice";
-import { setContractId } from "../../../store/slices/contractSlice";
+import Loader from "@/components/loader/Loader";
+import { DashboardContent } from "@/layouts/dashboard";
+import { Iconify } from "@/components/iconify";
+import { exportContractsToCSV } from "@/utils/export-csv";
+import { setCustomer } from "@/store/slices/customerSlice";
+import { setModal } from "@/store/slices/modalSlice";
+import { setContractId } from "@/store/slices/contractSlice";
+import type { RootState } from "@/store";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -112,15 +113,15 @@ export function ContractsView() {
     customer: null,
   });
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImportClick = () => {
-    fileInputRef.current?.click();
-  };
+  // const handleImportClick = () => {
+  //   fileInputRef.current?.click();
+  // };
 
   const handleOpenConfirmDialog = (contract: any) => {
     setConfirmDialog({
@@ -328,7 +329,7 @@ export function ContractsView() {
         </CustomTabPanel>
 
         <CustomTabPanel value={tab} index={2}>
-          {completedContracts.length === 0 ?
+          {(completedContracts.length === 0 ?
             <Box width="100%" height="100px" display="flex" alignItems="center">
               <Loader />
             </Box>

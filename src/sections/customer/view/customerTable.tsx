@@ -1,14 +1,11 @@
-import type { ICustomer } from "src/types/customer";
-import type { Column } from "src/components/table/types";
+import type { ICustomer } from "@/types/customer"
+import type { Column } from "@/components/table/types"
 
-import { useTableLogic } from "src/hooks/useTableLogic";
-import { useAppDispatch } from "src/hooks/useAppDispatch";
-
-import { updateCustomerManager } from "src/store/actions/customerActions";
-
-import { GenericTable } from "src/components/table/GnericTable";
-
-import ActionCustomer from "../action/action-curtomer";
+import { useTableLogic } from "@/hooks/useTableLogic"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { updateCustomerManager } from "@/store/actions/customerActions"
+import { GenericTable } from "@/components/table/GnericTable"
+import ActionCustomer from "@/sections/customer/action/action-curtomer";
 import { ManagerSelectCell } from "./ManagerSelectCell";
 
 interface CustomerTableProps {
@@ -52,12 +49,11 @@ const CustomerTable = ({
   return (
     <GenericTable
       data={data}
-      selectable={selectable}
+      selectable={selectable ?? false}
       columns={enhancedColumns}
       logic={logic}
       onRowClick={onRowClick}
-      // onCustomerClick={onRowClick}
-      setSelectedRows={setSelectedRows}
+      {...(setSelectedRows && { setSelectedRows })}
       renderActions={(row) => <ActionCustomer customer={row} />}
     />
   );

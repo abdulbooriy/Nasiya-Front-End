@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Column, SortConfig } from "../components/table/types";
+
+import type { Column, SortConfig } from "@/components/table/types";
 
 export function useTableLogic<T extends Record<string, any>>(
   data: T[],

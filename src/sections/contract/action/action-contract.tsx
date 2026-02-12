@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+
 import { MdDelete } from "react-icons/md";
 import {
   Box,
@@ -16,15 +17,15 @@ import {
   menuItemClasses,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 import { useSelector } from "react-redux";
-import { setModal } from "src/store/slices/modalSlice";
+import { setModal } from "@/store/slices/modalSlice"
 
-import type { IContract } from "src/types/contract";
-import type { RootState } from "src/store";
+import type { IContract } from "@/types/contract"
+import type { RootState } from "@/store"
 
-import { Iconify } from "src/components/iconify";
-import { getContract, deleteContract } from "src/store/actions/contractActions";
+import { Iconify } from "@/components/iconify"
+import { getContract, deleteContract } from "@/store/actions/contractActions"
 
 export default function ActionContract({ contract }: { contract: IContract }) {
   const dispatch = useAppDispatch();
@@ -60,7 +61,7 @@ export default function ActionContract({ contract }: { contract: IContract }) {
     handleClosePopover();
   }, [dispatch, contract._id, handleClosePopover]);
 
-  const isActive = contract.status === "active";
+  contract.status === "active";
   const isAdmin = profile?.role === "admin";
   const isModerator = profile?.role === "moderator";
   const canDelete = isAdmin || isModerator; // Admin va Moderator o'chira oladi

@@ -1,6 +1,6 @@
 // Excel-style status badge component
 import { Box } from '@mui/material';
-import { excelTheme } from 'src/theme/excel-theme';
+import { excelTheme } from '@/theme/excel-theme'
 
 interface ExcelStatusBadgeProps {
   status: 'PAID' | 'PENDING' | 'UNDERPAID' | 'OVERPAID' | 'REJECTED' | 'active' | 'completed' | 'cancelled';

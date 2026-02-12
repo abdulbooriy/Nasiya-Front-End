@@ -3,7 +3,7 @@ import {
   getPendingPayments,
   confirmPayments,
   rejectPayment,
-} from "../store/actions/cashActions";
+} from "@/store/actions/cashActions";
 
 
 function testGetPendingPaymentsExists() {

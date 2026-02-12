@@ -1,4 +1,4 @@
-import type { RootState } from "src/store";
+import type { RootState } from "@/store"
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -7,21 +7,21 @@ import { Skeleton, Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { formatNumber } from "src/utils/format-number";
+import { formatNumber } from "@/utils/format-number"
 
-import { DashboardContent } from "src/layouts/dashboard";
+import { DashboardContent } from "@/layouts/dashboard"
 import {
   getDashboard,
   getCurrencyCourse,
-} from "src/store/actions/dashboardActions";
+} from "@/store/actions/dashboardActions";
 
-import Loader from "src/components/loader/Loader";
+import Loader from "@/components/loader/Loader"
 
-import { AnalyticsCurrentVisits } from "../analytics-current-visits";
-import { AnalyticsWebsiteVisits } from "../analytics-website-visits";
-import { AnalyticsWidgetSummary } from "../analytics-widget-summary";
+import { AnalyticsCurrentVisits } from "@/sections/overview/analytics-current-visits";
+import { AnalyticsWebsiteVisits } from "@/sections/overview/analytics-website-visits";
+import { AnalyticsWidgetSummary } from "@/sections/overview/analytics-widget-summary";
 
 export function OverviewAnalyticsView() {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
-import type { IMeta } from "src/types/meta";
-import type { IExpense } from "src/types/expense";
-import type { IEmployee } from "src/types/employee";
+import type { IMeta } from "@/types/meta"
+import type { IExpense } from "@/types/expense"
+import type { IEmployee } from "@/types/employee"
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";

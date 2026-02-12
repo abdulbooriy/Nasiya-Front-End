@@ -1,27 +1,25 @@
 import { lazy, Suspense } from "react";
 import { Outlet, Navigate, useRoutes } from "react-router-dom";
 
-import { AuthLayout } from "src/layouts/auth";
-import AccessDenied from "src/pages/AccessDenied";
-import { DashboardLayout } from "src/layouts/dashboard";
-import { ProtectedRoute } from "src/layouts/permission/layout";
+import { AuthLayout } from "@/layouts/auth";
+import { DashboardLayout } from "@/layouts/dashboard";
+import { ProtectedRoute } from "@/layouts/permission/layout";
 
-import Loader from "src/components/loader/Loader";
-export const SellerCustomer = lazy(() => import("src/pages/seller/user"));
-export const SellerContract = lazy(() => import("src/pages/seller/contract"));
+import Loader from "@/components/loader/Loader";
 
-export const HomePage = lazy(() => import("src/pages/home"));
-export const EmployeePage = lazy(() => import("src/pages/employee"));
-export const UserPage = lazy(() => import("src/pages/user"));
-export const CreditsPage = lazy(() => import("src/pages/contract"));
-export const DebtorsPage = lazy(() => import("src/pages/debtors"));
-export const CashPage = lazy(() => import("src/pages/cash"));
-export const ResetPage = lazy(() => import("src/pages/reset"));
-export const AuditLogPage = lazy(() => import("src/pages/audit-log"));
-export const SignInPage = lazy(() => import("src/pages/sign-in"));
-export const Page404 = lazy(() => import("src/pages/page-not-found"));
+export const SellerCustomer = lazy(() => import("@/pages/seller/user"));
+export const SellerContract = lazy(() => import("@/pages/seller/contract"));
 
-// ----------------------------------------------------------------------
+export const HomePage = lazy(() => import("@/pages/home"));
+export const EmployeePage = lazy(() => import("@/pages/employee"));
+export const UserPage = lazy(() => import("@/pages/user"));
+export const CreditsPage = lazy(() => import("@/pages/contract"));
+export const DebtorsPage = lazy(() => import("@/pages/debtors"));
+export const CashPage = lazy(() => import("@/pages/cash"));
+export const ResetPage = lazy(() => import("@/pages/reset"));
+export const AuditLogPage = lazy(() => import("@/pages/audit-log"));
+export const SignInPage = lazy(() => import("@/pages/sign-in"));
+export const Page404 = lazy(() => import("@/pages/page-not-found"));
 
 const renderFallback = <Loader />;
 
@@ -45,7 +43,7 @@ export function Router() {
         { path: "contract", element: <CreditsPage /> },
         { path: "debtors", element: <DebtorsPage /> },
         { path: "cash", element: <CashPage /> },
-        { path: "reset", element: <ResetPage /> }, 
+        { path: "reset", element: <ResetPage /> },
         { path: "audit-log", element: <AuditLogPage /> },
       ],
     },

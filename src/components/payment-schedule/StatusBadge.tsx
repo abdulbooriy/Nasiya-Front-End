@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { excelTheme } from "src/theme/excel-theme";
-import { Iconify } from "../iconify";
+import { excelTheme } from "@/theme/excel-theme"
+import { Iconify } from "@/components/iconify";
 
 interface StatusBadgeProps {
   status: string;

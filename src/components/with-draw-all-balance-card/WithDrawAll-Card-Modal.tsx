@@ -1,9 +1,9 @@
 import type { FC } from "react";
-import type { IEmployee } from "src/types/employee";
-import type { CurrencyDetails } from "src/types/cash";
-import type { RootState } from "src/store";
+import type { IEmployee } from "@/types/employee"
+import type { CurrencyDetails } from "@/types/cash"
+import type { RootState } from "@/store"
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import {
@@ -20,12 +20,12 @@ import {
   CardContent,
 } from "@mui/material";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { formatNumber } from "src/utils/format-number";
+import { formatNumber } from "@/utils/format-number"
 
-import { enqueueSnackbar } from "src/store/slices/snackbar";
-import { withdrawFromBalance } from "src/store/actions/employeeActions";
+import { enqueueSnackbar } from "@/store/slices/snackbar"
+import { withdrawFromBalance } from "@/store/actions/employeeActions"
 
 type CurrencyKey = "sum" | "dollar";
 

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
 
-import { setCustomerId } from "src/store/slices/customerSlice";
-import { getManagers } from "src/store/actions/employeeActions";
+import { setCustomerId } from "@/store/slices/customerSlice"
+import { getManagers } from "@/store/actions/employeeActions"
 
 import { DebtorView } from "./debtor-view";
 

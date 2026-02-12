@@ -1,15 +1,14 @@
-import type { RootState } from "src/store";
-import type { TypedUseSelectorHook } from "react-redux";
-
 import { memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { useAppDispatch } from "src/hooks/useAppDispatch";
+import type { RootState } from "@/store"
+import type { TypedUseSelectorHook } from "react-redux";
 
-import { setCustomer, setCustomerId } from "src/store/slices/customerSlice";
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { setCustomer, setCustomerId } from "@/store/slices/customerSlice"
 
 import CustomerView from "./customer-view";
-import ModalCustomer from "../modal/modal-customer";
+import ModalCustomer from "@/sections/seller/customer/modal/modal-customer";
 import { CustomerDetails } from "./customer-detail";
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

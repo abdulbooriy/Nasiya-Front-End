@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 
-import { baseVars } from '../config-vars';
-import { layoutClasses } from '../classes';
+import { baseVars } from "@/layouts/config-vars";
+import { layoutClasses } from "@/layouts/classes";
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ export function LayoutSection({
     <>
       {inputGlobalStyles}
 
-      <Box id="root__layout" className={layoutClasses.root} sx={sx}>
+      <Box id="root__layout" className={layoutClasses.root} sx={sx ?? {}}>
         {sidebarSection}
         <Box
           display="flex"

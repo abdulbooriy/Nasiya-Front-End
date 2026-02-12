@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import type { RootState, AppDispatch } from "src/store";
+import type { RootState, AppDispatch } from "@/store"
 
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,9 +20,9 @@ import {
   TablePagination,
 } from "@mui/material";
 
-import { getExpenses } from "src/store/actions/employeeActions";
+import { getExpenses } from "@/store/actions/employeeActions"
 
-import ActionExpense from "src/sections/employee/action/action-expense";
+import ActionExpense from "@/sections/employee/action/action-expense"
 
 export const EmployeeExpensesTable = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -1,7 +1,7 @@
 import { Grid, Card, CardContent, Typography, Stack, Box, Skeleton } from '@mui/material';
 import { Dayjs } from 'dayjs';
 
-import { Iconify } from 'src/components/iconify';
+import { Iconify } from '@/components/iconify'
 
 // ----------------------------------------------------------------------
 

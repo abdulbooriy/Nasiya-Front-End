@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { IconType } from "react-icons";
-import type { IEmployee } from "src/types/employee";
+import type { IEmployee } from "@/types/employee"
 
 import { BsCash } from "react-icons/bs";
 

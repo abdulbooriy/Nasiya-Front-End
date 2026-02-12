@@ -100,13 +100,13 @@ export const exportContractsToCSV = (contracts: any[]) => {
 
     const paidMonths = paidPayments
       .filter((p: any) => p.paymentType === "monthly")
-      .map((p: any, i: number) => `${i + 1}-oy`)
+      .map((i: number) => `${i + 1}-oy`)
       .join(", ");
 
     const unpaidMonths = pendingPayments
       .filter((p: any) => p.paymentType === "monthly")
       .map(
-        (p: any, i: number) =>
+        ( i: number) =>
           `${paidPayments.filter((pp: any) => pp.paymentType === "monthly").length + i + 1}-oy`,
       )
       .join(", ");
@@ -118,7 +118,7 @@ export const exportContractsToCSV = (contracts: any[]) => {
 
     const contractNumber =
       contract.createdAt ?
-        `SH-${new Date(contract.createdAt).toISOString().split("T")[0].replace(/-/g, "")}-${String(index + 1).padStart(4, "0")}`
+        `SH-${new Date(contract.createdAt).toISOString().split("T")[0]?.replace(/-/g, "") || ""}-${String(index + 1).padStart(4, "0")}`
       : `SH-${String(index + 1).padStart(4, "0")}`;
 
     return {
