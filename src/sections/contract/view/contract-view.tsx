@@ -333,7 +333,7 @@ export function ContractsView() {
             <Box width="100%" height="100px" display="flex" alignItems="center">
               <Loader />
             </Box>
-          : <ContractTable
+          : (<ContractTable
               data={completedContracts}
               columns={columnsPageContract}
               onRowClick={(row) => {
