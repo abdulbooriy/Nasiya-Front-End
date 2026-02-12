@@ -53,8 +53,11 @@ export function GenericTable<T extends Record<string, any>>({
     setSearchText,
     filteredData,
     filterValues,
+    dateFilterFrom,
+    dateFilterTo,
     handleFilterChange,
     handleClearFilters,
+    handleDateFilterChange,
     sortConfig,
     handleSort,
     handleColumnToggle,
@@ -71,6 +74,9 @@ export function GenericTable<T extends Record<string, any>>({
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
         onApplyFilters={() => setFilterAnchorEl(null)}
+        dateFilterFrom={dateFilterFrom}
+        dateFilterTo={dateFilterTo}
+        onDateFilterChange={handleDateFilterChange}
       />
       <TableSort
         anchorEl={sortAnchorEl}
