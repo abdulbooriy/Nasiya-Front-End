@@ -41,6 +41,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "ignoreDeprecations": "6.0",
 
     // Additional Options
     "allowJs": false,
