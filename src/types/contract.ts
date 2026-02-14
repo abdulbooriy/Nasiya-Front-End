@@ -80,6 +80,7 @@ export interface IContract {
   payments: IPayment[] | [];
   info: IContractInfo;
   prepaidBalance?: number;
+  currency?: "USD" | "UZS"; // ✅ YANGI: Pul birligi
   editHistory?: IContractEdit[];
 }
 
@@ -100,6 +101,7 @@ export interface IAddContract {
   receipt: boolean;
   iCloud: boolean;
   totalPrice: number;
+  currency?: "USD" | "UZS"; // ✅ YANGI: Pul birligi
 }
 
 export interface IEditContract extends IAddContract {

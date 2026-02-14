@@ -36,6 +36,8 @@ import {
   AccordionDetails,
   FormControlLabel,
   createFilterOptions,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch"
@@ -80,6 +82,7 @@ interface IForm {
   startDate: string;
   paymentDeadline?: string;
   payments?: IPayment[];
+  currency: "USD" | "UZS"; // ✅ YANGI: Pul birligi
 }
 
 const ModalContract = () => {
@@ -125,6 +128,7 @@ const ModalContract = () => {
     startDate: now.toISOString().split("T")[0]!,
     paymentDeadline: defaultEndDate.toISOString().split("T")[0]!,
     payments: [],
+    currency: "USD", // ✅ YANGI: Default pul birligi
   };
 
   const [formValues, setFormValues] = useState<IForm>(defaultFormValues);
@@ -165,6 +169,7 @@ const ModalContract = () => {
           contractData.startDate?.split("T")[0]! ||
           now.toISOString().split("T")[0]!,
         paymentDeadline: defaultEndDate.toISOString().split("T")[0]!,
+        currency: (contractData.currency as "USD" | "UZS") || "USD",
       });
       setIsTouched(false);
     }
@@ -520,7 +525,7 @@ const ModalContract = () => {
             <Box p={2}>
               {customer && (
                 <Grid container spacing={1}>
-                  <Grid xs={12}>
+                  <Grid xs={12} md={10}>
                     <TextField
                       value={formValues.productName}
                       onChange={handleChange}
@@ -532,6 +537,29 @@ const ModalContract = () => {
                       label="Mahsulot nomi"
                       fullWidth
                     />
+                  </Grid>
+                  <Grid xs={12} md={2}>
+                    <Box sx={{ mt: 1, mb: 0.5 }}>
+                      <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5, display: "block" }}>
+                        Pul birligi
+                      </Typography>
+                      <ToggleButtonGroup
+                        value={formValues.currency}
+                        exclusive
+                        onChange={(_e, val) => {
+                          if (val) setFormValues((prev) => ({ ...prev, currency: val }));
+                        }}
+                        size="small"
+                        fullWidth
+                      >
+                        <ToggleButton value="USD" sx={{ fontWeight: 700, fontSize: "0.75rem" }}>
+                          $ USD
+                        </ToggleButton>
+                        <ToggleButton value="UZS" sx={{ fontWeight: 700, fontSize: "0.75rem" }}>
+                          UZS
+                        </ToggleButton>
+                      </ToggleButtonGroup>
+                    </Box>
                   </Grid>
                   <Grid xs={6} md={4}>
                     <TextField
