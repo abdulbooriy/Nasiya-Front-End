@@ -11,8 +11,13 @@ import {
   Stack,
   Badge,
   Button,
+  Dialog,
   Tooltip,
   Typography,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   CircularProgress,
 } from "@mui/material";
 
@@ -24,6 +29,7 @@ import type { RootState } from "@/store";
 import {
   getCustomers,
   getNewCustomers,
+  bulkDeleteCustomers,
 } from "@/store/actions/customerActions";
 
 import authApi from "@/server/auth";
@@ -72,7 +78,13 @@ const CustomerView = () => {
   const { profile } = useSelector((state: RootState) => state.auth);
   const isAdmin = profile?.role === "admin";
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  console.log("Selected Rows IDs:", selectedRows); // ✅ DEBUG: selectedRows içeriğini kontrol et
+  const [bulkDeleteDialog, setBulkDeleteDialog] = useState(false);
+
+  const handleBulkDelete = () => {
+    dispatch(bulkDeleteCustomers(selectedRows));
+    setBulkDeleteDialog(false);
+    setSelectedRows([]);
+  };
 
   useEffect(() => {
     dispatch(getCustomers());
@@ -279,6 +291,38 @@ const CustomerView = () => {
           </Tabs>
         </Box>
 
+        {selectedRows.length > 0 && (
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={2}
+            px={2}
+            py={1}
+            sx={{ bgcolor: "error.lighter", borderRadius: 1 }}
+          >
+            <Typography variant="body1" color="error.dark" fontWeight={600}>
+              {selectedRows.length} ta tanlangan
+            </Typography>
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              startIcon={<Iconify icon="mingcute:delete-2-line" />}
+              onClick={() => setBulkDeleteDialog(true)}
+            >
+              O'chirish
+            </Button>
+            <Button
+              variant="outlined"
+              color="inherit"
+              size="small"
+              onClick={() => setSelectedRows([])}
+            >
+              Bekor qilish
+            </Button>
+          </Box>
+        )}
+
         <CustomTabPanel value={tab} index={0}>
           <CustomerTable
             data={customers}
@@ -303,6 +347,37 @@ const CustomerView = () => {
           />
         </CustomTabPanel>
       </Stack>
+
+      {/* Bulk delete tasdiqlash dialogi */}
+      <Dialog
+        open={bulkDeleteDialog}
+        onClose={() => setBulkDeleteDialog(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle sx={{ color: "error.main" }}>
+          {selectedRows.length} ta mijozni o'chirish
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Tanlangan <b>{selectedRows.length}</b> ta mijoz va ularning barcha
+            shartnoma, to'lov ma'lumotlari bazadan{" "}
+            <b>butunlay o'chiriladi</b>. Bu amalni qaytarib bo'lmaydi!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button
+            onClick={() => setBulkDeleteDialog(false)}
+            variant="outlined"
+            color="inherit"
+          >
+            Bekor qilish
+          </Button>
+          <Button onClick={handleBulkDelete} variant="contained" color="error">
+            Ha, o'chirilsin
+          </Button>
+        </DialogActions>
+      </Dialog>
     </DashboardContent>
   );
 };

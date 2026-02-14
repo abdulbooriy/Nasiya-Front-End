@@ -1,6 +1,6 @@
-import type { IAddCustomer, IEditCustomer } from "@/types/customer"
+import type { IAddCustomer, IEditCustomer } from "@/types/customer";
 
-import authApi from "@/server/auth"
+import authApi from "@/server/auth";
 
 import { enqueueSnackbar } from "@/store/slices/snackbar";
 import {
@@ -71,9 +71,9 @@ export const addCustomer =
       const res = await authApi.post("/customer", data, {
         headers: {
           "Content-Type":
-            data instanceof FormData
-              ? "multipart/form-data"
-              : "application/json",
+            data instanceof FormData ?
+              "multipart/form-data"
+            : "application/json",
         },
       });
       dispatch(getCustomers());
@@ -83,7 +83,7 @@ export const addCustomer =
         enqueueSnackbar({
           message: res.data.message,
           options: { variant: "success" },
-        })
+        }),
       );
       if (show) {
         dispatch(setSelectCustomer(res.data.customer));
@@ -97,7 +97,7 @@ export const addCustomer =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
       if (Array.isArray(errorMessages)) {
         errorMessages.forEach((err) => {
@@ -105,7 +105,7 @@ export const addCustomer =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
@@ -120,9 +120,9 @@ export const updateCustomer =
       const res = await authApi.put("/customer", data, {
         headers: {
           "Content-Type":
-            data instanceof FormData
-              ? "multipart/form-data"
-              : "application/json",
+            data instanceof FormData ?
+              "multipart/form-data"
+            : "application/json",
         },
       });
       dispatch(getCustomers());
@@ -137,7 +137,7 @@ export const updateCustomer =
         enqueueSnackbar({
           message: res.data.message,
           options: { variant: "success" },
-        })
+        }),
       );
     } catch (error: any) {
       dispatch(failure());
@@ -149,7 +149,7 @@ export const updateCustomer =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
 
       if (Array.isArray(errorMessages)) {
@@ -158,7 +158,7 @@ export const updateCustomer =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
@@ -179,7 +179,7 @@ export const deleteCustomer =
         enqueueSnackbar({
           message: res.data.message,
           options: { variant: "success" },
-        })
+        }),
       );
     } catch (error: any) {
       dispatch(failure());
@@ -191,7 +191,7 @@ export const deleteCustomer =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
 
       if (Array.isArray(errorMessages)) {
@@ -200,7 +200,7 @@ export const deleteCustomer =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
@@ -221,7 +221,7 @@ export const restorationCustomer =
         enqueueSnackbar({
           message: res.data.message,
           options: { variant: "success" },
-        })
+        }),
       );
     } catch (error: any) {
       dispatch(failure());
@@ -233,7 +233,7 @@ export const restorationCustomer =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
 
       if (Array.isArray(errorMessages)) {
@@ -242,7 +242,7 @@ export const restorationCustomer =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
@@ -266,14 +266,14 @@ export const updateCustomerManager =
           enqueueSnackbar({
             message: res.data.message,
             options: { variant: "success" },
-          })
+          }),
         );
       } else {
         dispatch(
           enqueueSnackbar({
             message: res.data.message,
             options: { variant: "success" },
-          })
+          }),
         );
       }
     } catch (error: any) {
@@ -286,7 +286,7 @@ export const updateCustomerManager =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
 
       if (Array.isArray(errorMessages)) {
@@ -295,7 +295,7 @@ export const updateCustomerManager =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
@@ -325,14 +325,14 @@ export const confirmationCustomer =
           enqueueSnackbar({
             message: res.data.message,
             options: { variant: "success" },
-          })
+          }),
         );
       } else {
         dispatch(
           enqueueSnackbar({
             message: res.data.message,
             options: { variant: "success" },
-          })
+          }),
         );
       }
     } catch (error: any) {
@@ -345,7 +345,7 @@ export const confirmationCustomer =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
 
       if (Array.isArray(errorMessages)) {
@@ -354,10 +354,43 @@ export const confirmationCustomer =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
+    }
+  };
+
+// Ko'plab mijozlarni o'chirish (Bulk Hard Delete)
+export const bulkDeleteCustomers =
+  (customerIds: string[]): AppThunk =>
+  async (dispatch) => {
+    dispatch(start());
+    try {
+      const res = await authApi.delete(`/customer/bulk-hard-delete`, {
+        data: { customerIds },
+      });
+
+      dispatch(getCustomers());
+      dispatch(getNewCustomers());
+      dispatch(success());
+      dispatch(
+        enqueueSnackbar({
+          message:
+            res.data.message || `${customerIds.length} ta mijoz o'chirildi`,
+          options: { variant: "success" },
+        }),
+      );
+    } catch (error: any) {
+      dispatch(failure());
+      const errorMessage =
+        error.response?.data?.message || "Mijozlarni o'chirishda xatolik";
+      dispatch(
+        enqueueSnackbar({
+          message: errorMessage,
+          options: { variant: "error" },
+        }),
+      );
     }
   };
 
@@ -370,9 +403,9 @@ export const addCustomerSeller =
       const res = await authApi.post("/customer/seller", data, {
         headers: {
           "Content-Type":
-            data instanceof FormData
-              ? "multipart/form-data"
-              : "application/json",
+            data instanceof FormData ?
+              "multipart/form-data"
+            : "application/json",
         },
       });
       dispatch(getNewCustomers());
@@ -381,7 +414,7 @@ export const addCustomerSeller =
         enqueueSnackbar({
           message: res.data.message,
           options: { variant: "success" },
-        })
+        }),
       );
       if (show) {
         dispatch(setSelectCustomer(res.data.customer));
@@ -395,7 +428,7 @@ export const addCustomerSeller =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
       if (Array.isArray(errorMessages)) {
         errorMessages.forEach((err) => {
@@ -403,7 +436,7 @@ export const addCustomerSeller =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
@@ -418,9 +451,9 @@ export const updateCustomerSeller =
       const res = await authApi.put(`/seller/customer/${id}`, data, {
         headers: {
           "Content-Type":
-            data instanceof FormData
-              ? "multipart/form-data"
-              : "application/json",
+            data instanceof FormData ?
+              "multipart/form-data"
+            : "application/json",
         },
       });
       // Seller uchun customer ma'lumotlarini qayta yuklash
@@ -431,7 +464,7 @@ export const updateCustomerSeller =
         enqueueSnackbar({
           message: res.data.message,
           options: { variant: "success" },
-        })
+        }),
       );
     } catch (error: any) {
       dispatch(failure());
@@ -442,7 +475,7 @@ export const updateCustomerSeller =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
       if (Array.isArray(errorMessages)) {
         errorMessages.forEach((err) => {
@@ -450,7 +483,7 @@ export const updateCustomerSeller =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
