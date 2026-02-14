@@ -328,3 +328,33 @@ export const deleteContract =
       }
     };
 
+// Ko'plab shartnomalarni o'chirish (Bulk Hard Delete)
+export const bulkDeleteContracts =
+  (contractIds: string[]): AppThunk =>
+    async (dispatch) => {
+      dispatch(start());
+      try {
+        const res = await authApi.delete(`/contract/bulk-hard-delete`, {
+          data: { contractIds },
+        });
+        dispatch(getContracts());
+        dispatch(getCompletedContracts());
+        dispatch(success());
+        dispatch(
+          enqueueSnackbar({
+            message: res.data.message || `${contractIds.length} ta shartnoma o'chirildi`,
+            options: { variant: "success" },
+          })
+        );
+      } catch (error: any) {
+        dispatch(failure());
+        const errorMessage = error.response?.data?.message;
+        dispatch(
+          enqueueSnackbar({
+            message: errorMessage || "Shartnomalarni o'chirishda xatolik",
+            options: { variant: "error" },
+          })
+        );
+      }
+    };
+

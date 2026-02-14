@@ -4,23 +4,23 @@
     "target": "ES2020",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
-    
+
     // Modules
     "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    
+
     // Emit
     "noEmit": true,
     "sourceMap": true,
-    
+
     // Interop Constraints
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
-    
+
     // Type Checking - Strict Mode
     "strict": true,
     "noUnusedLocals": true,
@@ -32,16 +32,16 @@
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "exactOptionalPropertyTypes": true,
-    
+
     // Completeness
     "skipLibCheck": true,
-    
+
     // Path Mapping
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    
+
     // Additional Options
     "allowJs": false,
     "checkJs": false
@@ -50,7 +50,7 @@
   "exclude": ["node_modules", "dist", "build"],
   "references": [
     // {
-    //   "path": "./tsconfig.node.json",
+    //   "path": "./tsconfig.node.json"
     // }
   ]
 }
