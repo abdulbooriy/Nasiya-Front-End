@@ -69,24 +69,61 @@ function getUserDisplayName(userId: string, allLogs: IAuditLog[]): string {
 
 function getFieldLabel(field: string): string {
   const fieldLabels: Record<string, string> = {
+    // To'lov maydonlari
     status: "Holat",
     isPaid: "To'langan",
-    confirmedBy: "Tasdiqlagan",
-    confirmedAt: "Tasdiqlangan vaqt",
-    rejectedBy: "Rad etgan",
-    rejectedAt: "Rad etilgan vaqt",
     amount: "Summa",
+    actualAmount: "Haqiqiy to'lov summasi",
+    expectedAmount: "Kutilgan summa",
+    remainingAmount: "Qolgan qarz",
+    excessAmount: "Ortiqcha summa",
+    prepaidBalance: "Oldindan to'langan (zapas)",
     paymentDate: "To'lov sanasi",
-    targetMonth: "Maqsadli oy",
+    targetMonth: "Necha-oylik to'lov",
+    paymentStatus: "To'lov holati",
+    paymentMethod: "To'lov usuli",
+    paymentType: "To'lov turi",
+    // Tasdiqlash / Rad etish
+    confirmedBy: "Tasdiqlagan xodim",
+    confirmedAt: "Tasdiqlangan vaqt",
+    rejectedBy: "Rad etgan xodim",
+    rejectedAt: "Rad etilgan vaqt",
+    // Foydalanuvchi maydonlari
     firstName: "Ism",
     lastName: "Familiya",
     phone: "Telefon",
+    phoneNumber: "Telefon raqami",
+    email: "Elektron pochta",
+    address: "Manzil",
+    role: "Lavozim",
+    password: "Parol",
+    isDeleted: "O'chirilgan",
+    // Shartnoma maydonlari
     totalPrice: "Umumiy summa",
     monthlyPayment: "Oylik to'lov",
     contractDate: "Shartnoma sanasi",
+    startDate: "Boshlanish sanasi",
+    endDate: "Tugash sanasi",
+    period: "Muddat (oy)",
+    productName: "Mahsulot nomi",
+    initialPayment: "Boshlang'ich to'lov",
+    contractStatus: "Shartnoma holati",
+    notes: "Izoh",
+    // Vaqt maydonlari
+    createdAt: "Yaratilgan vaqt",
+    updatedAt: "Yangilangan vaqt",
+    // Holat qiymatlari
     PENDING: "Kutilmoqda",
-    PAID: "To'langan",
+    PAID: "To'liq to'langan",
     REJECTED: "Rad etilgan",
+    UNDERPAID: "Kam to'langan",
+    OVERPAID: "Ortiqcha to'langan",
+    COMPLETED: "Tugallangan",
+    ACTIVE: "Faol",
+    // To'lov turi qiymatlari
+    monthly: "Oylik",
+    initial: "Boshlang'ich",
+    // Mantiqiy qiymatlar
     true: "Ha",
     false: "Yo'q",
   };
@@ -102,9 +139,25 @@ function formatFieldValue(
   if (value === null || value === undefined) return "-";
   if (value === true) return "Ha";
   if (value === false) return "Yo'q";
+
+  // To'lov holati qiymatlari
   if (value === "PENDING") return "Kutilmoqda";
-  if (value === "PAID") return "To'langan";
+  if (value === "PAID") return "To'liq to'langan";
+  if (value === "UNDERPAID") return "Kam to'langan";
+  if (value === "OVERPAID") return "Ortiqcha to'langan";
   if (value === "REJECTED") return "Rad etilgan";
+  if (value === "COMPLETED") return "Tugallangan";
+  if (value === "ACTIVE") return "Faol";
+
+  // To'lov turi qiymatlari
+  if (value === "monthly") return "Oylik";
+  if (value === "initial") return "Boshlang'ich";
+
+  // To'lov usuli qiymatlari
+  if (value === "som_cash") return "So'm naqd";
+  if (value === "som_card") return "So'm karta";
+  if (value === "dollar_cash") return "Dollar naqd";
+  if (value === "dollar_card_visa") return "Dollar karta (Visa)";
 
   if (
     typeof value === "object" &&
@@ -574,7 +627,7 @@ export default function AuditLogTable({
     <Card sx={{ boxShadow: 1 }}>
       {title && (
         <CardHeader
-          sx={{ py: 0.5, px: 1 }}
+          sx={{ py: 0.5, px: 2 }}
           title={title}
           titleTypographyProps={{
             variant: "body2",
@@ -585,8 +638,9 @@ export default function AuditLogTable({
             !loading && (
               <Typography
                 variant="caption"
-                color="text.secondary"
-                fontSize="0.65rem"
+                color="text.primary"
+                fontSize="0.875rem"
+                fontWeight={700}
               >
                 {total || data.length}
               </Typography>
@@ -624,9 +678,9 @@ export default function AuditLogTable({
             <TableHead>
               <TableRow>
                 <TableCell width={25}></TableCell>
-                <TableCell>Tasdiqlagan</TableCell>
+                <TableCell>Xodim</TableCell>
                 <TableCell>Harakat</TableCell>
-                <TableCell>Entity</TableCell>
+                <TableCell>Bo'lim</TableCell>
                 <TableCell>Shartnoma ID</TableCell>
                 {/* <TableCell>Obyekt</TableCell> */}
                 <TableCell>Mijoz</TableCell>

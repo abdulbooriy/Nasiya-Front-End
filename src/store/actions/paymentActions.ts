@@ -1,10 +1,10 @@
-import authApi from "@/server/auth"
+import authApi from "@/server/auth";
 
 import { enqueueSnackbar } from "@/store/slices/snackbar";
 import type { AppThunk } from "@/store";
 
 interface PaymentData {
-  id: string; 
+  id: string;
   amount: number;
   notes?: string;
   currencyDetails: {
@@ -24,7 +24,7 @@ export const makePayment =
         enqueueSnackbar({
           message: res.data.message || "To'lov muvaffaqiyatli amalga oshirildi",
           options: { variant: "success" },
-        })
+        }),
       );
 
       if (onSuccess) {
@@ -39,7 +39,7 @@ export const makePayment =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
 
       if (Array.isArray(errorMessages)) {
@@ -48,10 +48,41 @@ export const makePayment =
             enqueueSnackbar({
               message: err,
               options: { variant: "error" },
-            })
+            }),
           );
         });
       }
+    }
+  };
+
+export const editPaymentAmount =
+  (
+    paymentId: string,
+    newActualAmount: number,
+    onSuccess?: () => void,
+  ): AppThunk =>
+  async (dispatch) => {
+    try {
+      const res = await authApi.patch("/payment/edit-amount", {
+        paymentId,
+        newActualAmount,
+      });
+      dispatch(
+        enqueueSnackbar({
+          message: res.data.message || "To'lov summasi yangilandi",
+          options: { variant: "success" },
+        }),
+      );
+      if (onSuccess) onSuccess();
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || "To'lov summasini yangilashda xatolik";
+      dispatch(
+        enqueueSnackbar({
+          message: errorMessage,
+          options: { variant: "error" },
+        }),
+      );
     }
   };
 
@@ -73,7 +104,7 @@ export const getPaymentHistory =
         enqueueSnackbar({
           message: errorMessage,
           options: { variant: "error" },
-        })
+        }),
       );
       return [];
     }

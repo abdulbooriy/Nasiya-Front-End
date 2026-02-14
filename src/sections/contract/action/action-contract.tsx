@@ -68,8 +68,8 @@ export default function ActionContract({ contract }: { contract: IContract }) {
 
   return (
     <>
-      <IconButton onClick={handleOpenPopover}>
-        <Iconify icon="eva:more-vertical-fill" />
+      <IconButton onClick={handleOpenPopover} sx={{ color: "black" }}>
+        <Iconify icon="eva:more-vertical-fill" width={22} />
       </IconButton>
 
       <Popover
