@@ -37,12 +37,12 @@ import { columnsPageContract, columnsPageNewContract } from "./columns-fixed";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import {
   approveContract,
+  bulkDeleteContracts,
   getCompletedContracts,
   getContract,
   getContracts,
   getNewContracts,
 } from "@/store/actions/contractActions";
-
 
 import Loader from "@/components/loader/Loader";
 import { DashboardContent } from "@/layouts/dashboard";
@@ -88,8 +88,7 @@ export function ContractsView() {
     useSelector((state: RootState) => state.contract);
 
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  console.log("selected customers",selectedRows);
-  
+  const [bulkDeleteDialog, setBulkDeleteDialog] = useState(false);
 
   const { profile } = useSelector((state: RootState) => state.auth);
   const isAdmin = profile?.role === "admin";
@@ -160,6 +159,12 @@ export function ContractsView() {
     });
   };
 
+  const handleBulkDelete = () => {
+    dispatch(bulkDeleteContracts(selectedRows));
+    setBulkDeleteDialog(false);
+    setSelectedRows([]);
+  };
+
   useEffect(() => {
     dispatch(getContracts());
     dispatch(getNewContracts());
@@ -183,8 +188,7 @@ export function ContractsView() {
           alignItems="center"
           justifyContent="end"
           gap={3}
-          mb={2}
-        >
+          mb={2}>
           <input
             type="file"
             ref={fileInputRef}
@@ -235,8 +239,11 @@ export function ContractsView() {
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
                 <Box
-                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
-                >
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%",
+                  }}>
                   <Typography variant="subtitle1" fontWeight={700}>
                     Faol shartnomalar
                   </Typography>
@@ -248,8 +255,11 @@ export function ContractsView() {
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
                 <Box
-                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
-                >
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%",
+                  }}>
                   <Badge
                     color="error"
                     badgeContent={newContracts.length}
@@ -258,8 +268,7 @@ export function ContractsView() {
                         top: 4,
                         right: -10,
                       },
-                    }}
-                  >
+                    }}>
                     <Typography variant="subtitle1" fontWeight={700}>
                       Yangi shartnomalar
                     </Typography>
@@ -272,8 +281,11 @@ export function ContractsView() {
               sx={{ minHeight: 48, py: 0, px: 3 }}
               label={
                 <Box
-                  sx={{ display: "flex", alignItems: "center", height: "100%" }}
-                >
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "100%",
+                  }}>
                   <Typography variant="subtitle1" fontWeight={700}>
                     Tugatilgan
                   </Typography>
@@ -283,6 +295,35 @@ export function ContractsView() {
             />
           </Tabs>
         </Box>
+
+        {selectedRows.length > 0 && (
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={2}
+            px={2}
+            py={1}
+            sx={{ bgcolor: "error.lighter", borderRadius: 1 }}>
+            <Typography variant="body1" color="error.dark" fontWeight={700}>
+              {selectedRows.length} ta tanlangan
+            </Typography>
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              startIcon={<Iconify icon="mingcute:delete-2-line" />}
+              onClick={() => setBulkDeleteDialog(true)}>
+              O'chirish
+            </Button>
+            <Button
+              variant="outlined"
+              color="inherit"
+              size="small"
+              onClick={() => setSelectedRows([])}>
+              Bekor qilish
+            </Button>
+          </Box>
+        )}
 
         <CustomTabPanel value={tab} index={0}>
           <ContractTable
@@ -329,12 +370,11 @@ export function ContractsView() {
         </CustomTabPanel>
 
         <CustomTabPanel value={tab} index={2}>
-          {completedContracts.length === 0 ? (
+          {completedContracts.length === 0 ?
             <Box width="100%" height="100px" display="flex" alignItems="center">
               <Loader />
             </Box>
-          ) : (
-            <ContractTable
+          : <ContractTable
               data={completedContracts}
               columns={columnsPageContract}
               onRowClick={(row) => {
@@ -345,9 +385,37 @@ export function ContractsView() {
               // selectable={isAdmin}
               // setSelectedRows={setSelectedRows}
             />
-          )}
+          }
         </CustomTabPanel>
       </Stack>
+
+      {/* Bulk delete tasdiqlash dialogi */}
+      <Dialog
+        open={bulkDeleteDialog}
+        onClose={() => setBulkDeleteDialog(false)}
+        maxWidth="xs"
+        fullWidth>
+        <DialogTitle sx={{ color: "error.main" }}>
+          {selectedRows.length} ta shartnomani o'chirish
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Tanlangan <b>{selectedRows.length}</b> ta shartnoma bazadan{" "}
+            <b>butunlay o'chiriladi</b>. Bu amalni qaytarib bo'lmaydi!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button
+            onClick={() => setBulkDeleteDialog(false)}
+            variant="outlined"
+            color="inherit">
+            Bekor qilish
+          </Button>
+          <Button onClick={handleBulkDelete} variant="contained" color="error">
+            Ha, o'chirilsin
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Mijoz ma'lumotlari Dialog */}
       <Dialog
@@ -435,11 +503,11 @@ export function ContractsView() {
                   <ListItemText
                     primary="Tug'ilgan sana"
                     secondary={
-                      customerInfoDialog.customer.birthDate
-                        ? new Date(
-                            customerInfoDialog.customer.birthDate,
-                          ).toLocaleDateString("uz-UZ")
-                        : "—"
+                      customerInfoDialog.customer.birthDate ?
+                        new Date(
+                          customerInfoDialog.customer.birthDate,
+                        ).toLocaleDateString("uz-UZ")
+                      : "—"
                     }
                   />
                 </ListItem>
