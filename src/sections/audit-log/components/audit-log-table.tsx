@@ -624,7 +624,7 @@ export default function AuditLogTable({
   // };
 
   return (
-    <Card sx={{ boxShadow: 1 }}>
+    <Card sx={{ boxShadow: 1, margin: 2 }}>
       {title && (
         <CardHeader
           sx={{ py: 0.5, px: 2 }}

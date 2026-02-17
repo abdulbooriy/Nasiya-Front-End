@@ -108,6 +108,7 @@ const ContractDetails = () => {
               onPaymentSuccess={() => {
                 dispatch(getContract(contract._id));
               }}
+              customId={contract.customId}
             />
           )}
         </Grid>
