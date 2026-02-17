@@ -26,10 +26,12 @@ import {
 } from "@mui/material";
 
 import { format, addMonths } from "date-fns";
+import { MdContentCopy } from "react-icons/md";
 import { Iconify } from "@/components/iconify";
 import { PaymentModal } from "@/components/payment-modal";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { editPaymentAmount } from "@/store/actions/paymentActions";
+import { enqueueSnackbar } from "notistack";
 
 interface PaymentScheduleItem {
   month: number;
@@ -65,6 +67,7 @@ interface PaymentScheduleProps {
     notes?: string | { text?: string };
   }>;
   onPaymentSuccess?: () => void;
+  customId?: string | undefined;
 }
 
 const PaymentSchedule: FC<PaymentScheduleProps> = ({
@@ -80,6 +83,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
   prepaidBalance = 0,
   payments = [],
   onPaymentSuccess,
+  customId,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -183,6 +187,17 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     );
   };
 
+  const handleCopyCustomIdToClipboard = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    if (customId) {
+      navigator.clipboard.writeText(customId);
+      enqueueSnackbar(`${customId} nusxa olindi`, {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+    }
+  };
+
   React.useEffect(() => {}, [payments]);
 
   const generateSchedule = (): PaymentScheduleItem[] => {
@@ -216,10 +231,12 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     const monthlyPayments = payments
       .filter((p) => p.paymentType !== "initial" && p.isPaid)
       .sort((a, b) => {
-        const dateA =
-          a.confirmedAt ? new Date(a.confirmedAt) : new Date(a.date);
-        const dateB =
-          b.confirmedAt ? new Date(b.confirmedAt) : new Date(b.date);
+        const dateA = a.confirmedAt
+          ? new Date(a.confirmedAt)
+          : new Date(a.date);
+        const dateB = b.confirmedAt
+          ? new Date(b.confirmedAt)
+          : new Date(b.date);
 
         if (dateA.getTime() === dateB.getTime()) {
           return new Date(a.date).getTime() - new Date(b.date).getTime();
@@ -230,9 +247,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
 
     // ✅ TUZATILDI: Oylik to'lovlar uchun initialPaymentDueDate ishlatish
     // Bu har oy to'lanadigan kun (masalan: 10)
-    const monthlyPaymentStartDate =
-      initialPaymentDueDate ?
-        new Date(initialPaymentDueDate)
+    const monthlyPaymentStartDate = initialPaymentDueDate
+      ? new Date(initialPaymentDueDate)
       : addMonths(start, 1); // Fallback: startDate + 1 oy
 
     for (let i = 1; i <= period; i++) {
@@ -283,53 +299,84 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     <>
       <Paper
         elevation={0}
-        sx={{ p: { xs: 1, sm: 1.5 }, border: 1, borderColor: "divider" }}>
+        sx={{ p: { xs: 1, sm: 1.5 }, border: 1, borderColor: "divider" }}
+      >
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
           mb={1.5}
           flexWrap="wrap"
-          gap={1}>
-          <Box>
-            <Typography variant="subtitle1" fontWeight="600">
-              To'lov jadvali
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              {period || 0} oylik •{" "}
-              {schedule?.filter((s) => s.isPaid).length || 0}/
-              {schedule?.length || 0} to'langan
-            </Typography>
-            {prepaidBalance > 0 && (
-              <Box
-                display="flex"
-                alignItems="center"
-                gap={0.5}
-                sx={{
-                  mt: 0.5,
-                  px: 1,
-                  py: 0.5,
-                  bgcolor: "success.lighter",
-                  borderRadius: 0,
-                  border: "1px solid",
-                  borderColor: "success.main",
-                }}>
-                <Iconify icon="mdi:check-circle" width={16} color="green" />
-                <Typography
-                  variant="caption"
-                  fontWeight={600}
-                  color="success.main">
-                  Oldindan: ${prepaidBalance.toFixed(2)}
+          gap={1}
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box>
+              <Typography variant="subtitle1" fontWeight="600">
+                To'lov jadvali
+              </Typography>
+
+              <Typography variant="caption" color="text.secondary">
+                {period || 0} oylik •{" "}
+                {schedule?.filter((s) => s.isPaid).length || 0}/
+                {schedule?.length || 0} to'langan
+              </Typography>
+            </Box>
+
+            {customId && (
+              <Box ml={2}>
+                <Typography variant="subtitle2" fontWeight="600">
+                  Shartnoma ID
                 </Typography>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  gap={0.5}
+                  onClick={handleCopyCustomIdToClipboard}
+                  sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}
+                >
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      fontSize: "1rem",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {customId}
+                  </Typography>
+
+                  <Tooltip title="Nusxa olish" arrow>
+                    <IconButton
+                      size="small"
+                      onClick={handleCopyCustomIdToClipboard}
+                      sx={{
+                        p: 0.25,
+                        "&:hover": {
+                          bgcolor: "primary.lighter",
+                          color: "primary.main",
+                        },
+                      }}
+                    >
+                      <MdContentCopy size={20} />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               </Box>
             )}
           </Box>
+
           {remainingDebt > 0 && contractId && (
             <Button
               variant="contained"
               color="success"
               size="small"
-              onClick={handlePayAll}>
+              onClick={handlePayAll}
+            >
               Barchasini to'lash ({remainingDebt.toLocaleString()} $)
             </Button>
           )}
@@ -339,7 +386,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
           <Table
             size="small"
             stickyHeader
-            sx={{ minWidth: "100%", width: "100%" }}>
+            sx={{ minWidth: "100%", width: "100%" }}
+          >
             <TableHead>
               <TableRow>
                 <TableCell
@@ -351,7 +399,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
                     borderBottom: "1px solid rgba(224, 224, 224, 1)",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   #
                 </TableCell>
                 <TableCell
@@ -363,7 +412,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
                     borderBottom: "1px solid rgba(224, 224, 224, 1)",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   Belgilangan sana
                 </TableCell>
                 <TableCell
@@ -375,7 +425,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
                     borderBottom: "1px solid rgba(224, 224, 224, 1)",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   To'langan sana
                 </TableCell>
                 <TableCell
@@ -388,7 +439,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
                     borderBottom: "1px solid rgba(224, 224, 224, 1)",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   Summa
                 </TableCell>
                 <TableCell
@@ -401,7 +453,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
                     borderBottom: "1px solid rgba(224, 224, 224, 1)",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   To&apos;langan
                 </TableCell>
                 <TableCell
@@ -414,7 +467,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
                     borderBottom: "1px solid rgba(224, 224, 224, 1)",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   Holat
                 </TableCell>
                 {contractId && (
@@ -428,7 +482,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                       fontSize: { xs: "0.688rem", sm: "0.75rem" },
                       borderBottom: "1px solid rgba(224, 224, 224, 1)",
                       whiteSpace: "nowrap",
-                    }}>
+                    }}
+                  >
                     Amal
                   </TableCell>
                 )}
@@ -442,7 +497,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
                     borderBottom: "1px solid rgba(224, 224, 224, 1)",
                     whiteSpace: "nowrap",
-                  }}>
+                  }}
+                >
                   Izoh
                 </TableCell>
                 {contractId && (
@@ -456,7 +512,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                       fontSize: { xs: "0.688rem", sm: "0.75rem" },
                       borderBottom: "1px solid rgba(224, 224, 224, 1)",
                       whiteSpace: "nowrap",
-                    }}>
+                    }}
+                  >
                     Actions
                   </TableCell>
                 )}
@@ -465,10 +522,12 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
             <TableBody>
               {(() => {
                 const sortedPayments = [...payments].sort((a, b) => {
-                  const dateA =
-                    a.confirmedAt ? new Date(a.confirmedAt) : new Date(a.date);
-                  const dateB =
-                    b.confirmedAt ? new Date(b.confirmedAt) : new Date(b.date);
+                  const dateA = a.confirmedAt
+                    ? new Date(a.confirmedAt)
+                    : new Date(a.date);
+                  const dateB = b.confirmedAt
+                    ? new Date(b.confirmedAt)
+                    : new Date(b.date);
 
                   if (dateA.getTime() === dateB.getTime()) {
                     return (
@@ -593,9 +652,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                   const monthlyPaymentAmount = item.amount; // Oylik to'lov
 
                   // Agar actualPayment mavjud bo'lsa, serverdan kelgan expectedAmount ni ishlatamiz
-                  const needToPay =
-                    actualPayment?.expectedAmount ?
-                      actualPayment.expectedAmount
+                  const needToPay = actualPayment?.expectedAmount
+                    ? actualPayment.expectedAmount
                     : Math.max(0, monthlyPaymentAmount - fromPreviousMonth); // To'lash kerak
 
                   const actuallyPaid = actualPaidAmount;
@@ -632,28 +690,32 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     <React.Fragment key={`payment-${item.month}`}>
                       <TableRow
                         sx={{
-                          bgcolor:
-                            item.isPaid ? "success.lighter"
-                            : isPast && !item.isPaid ? "error.lighter"
-                            : "inherit",
+                          bgcolor: item.isPaid
+                            ? "success.lighter"
+                            : isPast && !item.isPaid
+                              ? "error.lighter"
+                              : "inherit",
                           borderBottom: "1px solid rgba(224, 224, 224, 1)",
                           "&:hover": {
-                            bgcolor:
-                              item.isPaid ? "success.light"
-                              : isPast && !item.isPaid ? "error.light"
-                              : "grey.100",
+                            bgcolor: item.isPaid
+                              ? "success.light"
+                              : isPast && !item.isPaid
+                                ? "error.light"
+                                : "grey.100",
                           },
                           "&:last-child": {
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
                           },
-                        }}>
+                        }}
+                      >
                         {/* # */}
                         <TableCell
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          }}>
+                          }}
+                        >
                           <Box display="flex" alignItems="center" gap={0.5}>
                             {isPast && !item.isPaid && (
                               <Iconify
@@ -667,13 +729,14 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                               fontWeight="600"
                               fontSize={{ xs: "0.688rem", sm: "0.75rem" }}
                               color={
-                                isPast && !item.isPaid ?
-                                  "error.main"
-                                : "inherit"
-                              }>
-                              {item.isInitial ?
-                                "Boshlang'ich"
-                              : `${item.month}-oy`}
+                                isPast && !item.isPaid
+                                  ? "error.main"
+                                  : "inherit"
+                              }
+                            >
+                              {item.isInitial
+                                ? "Boshlang'ich"
+                                : `${item.month}-oy`}
                               {isPast && !item.isPaid && " (Kechikkan)"}
                             </Typography>
                           </Box>
@@ -685,10 +748,12 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          }}>
+                          }}
+                        >
                           <Typography
                             variant="body2"
-                            fontSize={{ xs: "0.688rem", sm: "0.75rem" }}>
+                            fontSize={{ xs: "0.688rem", sm: "0.75rem" }}
+                          >
                             {format(new Date(item.date), "dd.MM.yyyy")}
                           </Typography>
                         </TableCell>
@@ -699,35 +764,38 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          }}>
-                          {item.isPaid ?
+                          }}
+                        >
+                          {item.isPaid ? (
                             <Typography
                               variant="body2"
                               fontSize="0.75rem"
                               color={
                                 delayDays > 0 ? "error.main" : "success.main"
-                              }>
-                              {item.isInitial ?
-                                format(new Date(item.date), "dd.MM.yyyy")
-                              : actualPayment && actualPayment.confirmedAt ?
-                                format(
-                                  new Date(actualPayment.confirmedAt),
-                                  "dd.MM.yyyy",
-                                )
-                              : actualPayment ?
-                                format(
-                                  new Date(actualPayment.date),
-                                  "dd.MM.yyyy",
-                                )
-                              : format(new Date(item.date), "dd.MM.yyyy")}
+                              }
+                            >
+                              {item.isInitial
+                                ? format(new Date(item.date), "dd.MM.yyyy")
+                                : actualPayment && actualPayment.confirmedAt
+                                  ? format(
+                                      new Date(actualPayment.confirmedAt),
+                                      "dd.MM.yyyy",
+                                    )
+                                  : actualPayment
+                                    ? format(
+                                        new Date(actualPayment.date),
+                                        "dd.MM.yyyy",
+                                      )
+                                    : format(new Date(item.date), "dd.MM.yyyy")}
                               {!item.isInitial &&
                                 delayDays > 0 &&
                                 ` (+${delayDays})`}
                             </Typography>
-                          : <Typography variant="body2" color="text.disabled">
+                          ) : (
+                            <Typography variant="body2" color="text.disabled">
                               —
                             </Typography>
-                          }
+                          )}
                         </TableCell>
 
                         {/* Summa - Oylik to'lov (har doim bir xil) */}
@@ -737,11 +805,13 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          }}>
+                          }}
+                        >
                           <Typography
                             variant="body2"
                             fontWeight="medium"
-                            fontSize={{ xs: "0.688rem", sm: "0.75rem" }}>
+                            fontSize={{ xs: "0.688rem", sm: "0.75rem" }}
+                          >
                             {item.amount.toLocaleString()} $
                           </Typography>
                         </TableCell>
@@ -753,18 +823,21 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          }}>
-                          {item.isPaid ?
+                          }}
+                        >
+                          {item.isPaid ? (
                             <Box
                               display="flex"
                               flexDirection="column"
                               alignItems="flex-end"
-                              gap={0.3}>
+                              gap={0.3}
+                            >
                               <Typography
                                 variant="body2"
                                 fontWeight="medium"
                                 color="success.main"
-                                fontSize="0.813rem">
+                                fontSize="0.813rem"
+                              >
                                 {actualPaidAmount.toLocaleString()} $
                               </Typography>
                               {hasShortage && remainingAmountToShow > 0.01 && (
@@ -775,16 +848,18 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                     fontWeight: 600,
                                     fontSize: "0.688rem",
                                     lineHeight: 1.2,
-                                  }}>
+                                  }}
+                                >
                                   ({remainingAmountToShow.toLocaleString()} $
                                   kam)
                                 </Typography>
                               )}
                             </Box>
-                          : <Typography variant="body2" color="text.disabled">
+                          ) : (
+                            <Typography variant="body2" color="text.disabled">
                               —
                             </Typography>
-                          }
+                          )}
                         </TableCell>
 
                         {/* Holat */}
@@ -794,22 +869,25 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          }}>
+                          }}
+                        >
                           <Typography
                             variant="body2"
                             sx={{
                               fontSize: { xs: "0.688rem", sm: "0.75rem" },
                               fontWeight: 600,
-                              color:
-                                item.isPaid ? "success.main"
-                                : isPast ? "error.main"
-                                : "text.secondary",
-                            }}>
-                            {item.isPaid ?
-                              "Paid"
-                            : isPast ?
-                              "Kechikkan"
-                            : "Kutilmoqda"}
+                              color: item.isPaid
+                                ? "success.main"
+                                : isPast
+                                  ? "error.main"
+                                  : "text.secondary",
+                            }}
+                          >
+                            {item.isPaid
+                              ? "Paid"
+                              : isPast
+                                ? "Kechikkan"
+                                : "Kutilmoqda"}
                           </Typography>
                         </TableCell>
 
@@ -821,8 +899,9 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                               py: 0.25,
                               px: { xs: 0.5, sm: 0.75, md: 1 },
                               borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                            }}>
-                            {!item.isPaid ?
+                            }}
+                          >
+                            {!item.isPaid ? (
                               <Typography
                                 variant="body2"
                                 onClick={() => handlePayment(item.amount)}
@@ -838,11 +917,12 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                   "&:hover": {
                                     opacity: 0.8,
                                   },
-                                }}>
+                                }}
+                              >
                                 <Iconify icon="mdi:cash" width={16} />
                                 To'lash
                               </Typography>
-                            : hasShortage && remainingAmountToShow > 0.01 ?
+                            ) : hasShortage && remainingAmountToShow > 0.01 ? (
                               <Box>
                                 <Typography
                                   variant="body2"
@@ -885,13 +965,15 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                     "&:hover": {
                                       opacity: 0.8,
                                     },
-                                  }}>
+                                  }}
+                                >
                                   <Iconify icon="mdi:alert-circle" width={16} />
                                   Qarz ({remainingAmountToShow.toLocaleString()}{" "}
                                   $)
                                 </Typography>
                               </Box>
-                            : <Typography
+                            ) : (
+                              <Typography
                                 variant="body2"
                                 sx={{
                                   fontSize: { xs: "0.688rem", sm: "0.75rem" },
@@ -901,11 +983,12 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                   alignItems: "center",
                                   justifyContent: "center",
                                   gap: 0.5,
-                                }}>
+                                }}
+                              >
                                 <Iconify icon="mdi:check-circle" width={16} />
                                 To'langan
                               </Typography>
-                            }
+                            )}
                           </TableCell>
                         )}
 
@@ -916,46 +999,49 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75 },
                             borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                          }}>
+                          }}
+                        >
                           {(() => {
-                            const noteText =
-                              actualPayment?.notes ?
-                                typeof actualPayment.notes === "string" ?
-                                  actualPayment.notes
+                            const noteText = actualPayment?.notes
+                              ? typeof actualPayment.notes === "string"
+                                ? actualPayment.notes
                                 : actualPayment.notes?.text || ""
                               : "";
-                            return noteText ?
-                                <Tooltip title="Izohni ko'rish">
-                                  <IconButton
-                                    size="small"
-                                    color="info"
-                                    onClick={() => {
-                                      setNoteDialog({
-                                        open: true,
-                                        note: noteText,
-                                        month:
-                                          item.isInitial ?
-                                            "Boshlang'ich to'lov"
-                                          : `${item.month}-oy`,
-                                      });
-                                    }}
-                                    sx={{
-                                      fontSize: { xs: "0.9rem", sm: "1rem" },
-                                    }}>
-                                    <Iconify
-                                      icon="solar:chat-round-line-bold"
-                                      width={20}
-                                    />
-                                  </IconButton>
-                                </Tooltip>
-                              : <Typography
-                                  variant="caption"
-                                  color="text.disabled"
+                            return noteText ? (
+                              <Tooltip title="Izohni ko'rish">
+                                <IconButton
+                                  size="small"
+                                  color="info"
+                                  onClick={() => {
+                                    setNoteDialog({
+                                      open: true,
+                                      note: noteText,
+                                      month: item.isInitial
+                                        ? "Boshlang'ich to'lov"
+                                        : `${item.month}-oy`,
+                                    });
+                                  }}
                                   sx={{
-                                    fontSize: { xs: "0.6rem", sm: "0.75rem" },
-                                  }}>
-                                  -
-                                </Typography>;
+                                    fontSize: { xs: "0.9rem", sm: "1rem" },
+                                  }}
+                                >
+                                  <Iconify
+                                    icon="solar:chat-round-line-bold"
+                                    width={20}
+                                  />
+                                </IconButton>
+                              </Tooltip>
+                            ) : (
+                              <Typography
+                                variant="caption"
+                                color="text.disabled"
+                                sx={{
+                                  fontSize: { xs: "0.6rem", sm: "0.75rem" },
+                                }}
+                              >
+                                -
+                              </Typography>
+                            );
                           })()}
                         </TableCell>
 
@@ -967,8 +1053,9 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                               py: 0.25,
                               px: { xs: 0.5, sm: 0.75 },
                               borderBottom: "1px solid rgba(224, 224, 224, 1)",
-                            }}>
-                            {item.isPaid && actualPayment?._id ?
+                            }}
+                          >
+                            {item.isPaid && actualPayment?._id ? (
                               <Tooltip title="Amallar">
                                 <IconButton
                                   size="small"
@@ -978,31 +1065,34 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                       actualPayment._id!,
                                       actualPayment.actualAmount ??
                                         actualPayment.amount,
-                                      item.isInitial ?
-                                        "Boshlang'ich to'lov"
-                                      : `${item.month}-oy`,
+                                      item.isInitial
+                                        ? "Boshlang'ich to'lov"
+                                        : `${item.month}-oy`,
                                     )
                                   }
                                   sx={{
                                     p: 0.5,
                                     color: "black",
                                     "&:hover": { bgcolor: "grey.200" },
-                                  }}>
+                                  }}
+                                >
                                   <Iconify
                                     icon="eva:more-vertical-fill"
                                     width={22}
                                   />
                                 </IconButton>
                               </Tooltip>
-                            : <Typography
+                            ) : (
+                              <Typography
                                 variant="caption"
                                 color="text.disabled"
                                 sx={{
                                   fontSize: { xs: "0.6rem", sm: "0.75rem" },
-                                }}>
+                                }}
+                              >
                                 —
                               </Typography>
-                            }
+                            )}
                           </TableCell>
                         )}
                       </TableRow>
@@ -1026,7 +1116,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
             alignItems: "center",
             flexWrap: "wrap",
             gap: 2,
-          }}>
+          }}
+        >
           <Box display="flex" gap={3} flexWrap="wrap">
             <Box>
               <Typography variant="caption" color="text.secondary">
@@ -1089,7 +1180,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
         open={Boolean(actionsMenu.anchorEl)}
         onClose={handleCloseActionsMenu}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}>
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+      >
         <MenuItem onClick={handleOpenEditDialog}>
           <ListItemIcon>
             <Iconify icon="solar:pen-bold" width={18} />
@@ -1111,7 +1203,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
           })
         }
         maxWidth="xs"
-        fullWidth>
+        fullWidth
+      >
         <DialogTitle>
           To'lov summasini tahrirlash — {editDialog.month}
         </DialogTitle>
@@ -1121,7 +1214,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
               variant="caption"
               color="text.secondary"
               mb={1}
-              display="block">
+              display="block"
+            >
               Joriy summa: <b>{editDialog.currentAmount.toLocaleString()} $</b>
             </Typography>
             <TextField
@@ -1152,7 +1246,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
               })
             }
             variant="outlined"
-            color="inherit">
+            color="inherit"
+          >
             Bekor qilish
           </Button>
           <Button
@@ -1163,7 +1258,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
               editDialog.newAmount === "" ||
               isNaN(parseFloat(editDialog.newAmount)) ||
               parseFloat(editDialog.newAmount) < 0
-            }>
+            }
+          >
             Saqlash
           </Button>
         </DialogActions>
@@ -1174,7 +1270,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
         open={noteDialog.open}
         onClose={() => setNoteDialog({ open: false, note: "", month: "" })}
         maxWidth="sm"
-        fullWidth>
+        fullWidth
+      >
         <DialogTitle>
           <Box display="flex" alignItems="center" gap={1}>
             <Iconify icon="solar:chat-round-line-bold" width={24} />
@@ -1192,14 +1289,16 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
               borderRadius: 0,
               whiteSpace: "pre-wrap",
               wordBreak: "break-word",
-            }}>
+            }}
+          >
             <Typography variant="body2">{noteDialog.note}</Typography>
           </Box>
         </DialogContent>
         <DialogActions>
           <Button
             onClick={() => setNoteDialog({ open: false, note: "", month: "" })}
-            color="primary">
+            color="primary"
+          >
             Yopish
           </Button>
         </DialogActions>
