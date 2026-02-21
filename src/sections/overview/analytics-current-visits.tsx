@@ -8,6 +8,7 @@ import CardHeader from "@mui/material/CardHeader";
 
 import { fNumber } from "@/utils/format-number"
 import { Chart, useChart, ChartLegends } from "@/components/chart"
+import { Typography } from "@mui/material";
 
 
 type Props = CardProps & {
@@ -57,9 +58,25 @@ export function AnalyticsCurrentVisits({
   });
 
   return (
-    <Card {...other} sx={{ height: "100%" }}>
-      <CardHeader title={title} subheader={subheader} />
-
+    <Card
+      {...other}
+      sx={{
+        height: "100%",
+        p: "1.5rem",
+        bgcolor: "#ffffff",
+        borderRadius: "18px",
+        boxShadow: `
+      0 1px 2px rgba(0, 0, 0, 0.02),
+      0 4px 14px rgba(0, 0, 0, 0.03),
+      0 15px 35px rgba(0, 0, 0, 0.05)
+    `,
+        border: "0.5px solid rgba(0, 0, 0, 0.08)",
+        transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+      }}
+    >
+      {/* <CardHeader title={title} subheader={subheader} /> */}
+    <Typography sx={{textTransform:"uppercase", fontWeight:"fontWeightBold",fontSize:"1.25rem",lineHeight:"1rem",color:"var(--palette-grey-800)"}}>{title}</Typography>
+      
       <Chart
         type="pie"
         series={chartSeries}

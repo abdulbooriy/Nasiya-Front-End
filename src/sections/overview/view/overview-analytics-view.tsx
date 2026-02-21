@@ -46,14 +46,15 @@ export function OverviewAnalyticsView() {
   }
   return (
     <DashboardContent maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
+      {/* <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
         Dashbord
-      </Typography>
+      </Typography> */}
 
-      <Grid container spacing={{ xs: 2, sm: 2.5, md: 3 }}>
+      {/* <Grid container spacing={{ xs: 2, sm: 2.5, md: 3, }}> */}
+      <Grid container rowSpacing={1} columnSpacing={2}>
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Jami Xodimlar Soni"
+            title="Xodimlar"
             total={dashboard?.employees || 0}
             color="secondary"
             icon={
@@ -63,7 +64,7 @@ export function OverviewAnalyticsView() {
         </Grid>
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Jami mijozlar soni"
+            title="Mijozlar"
             total={dashboard?.customers || 0}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-buy.svg" />}
@@ -71,7 +72,7 @@ export function OverviewAnalyticsView() {
         </Grid>
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Jami shartnomalar soni"
+            title="Shartnomalar"
             total={dashboard?.contracts || 0}
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
           />
@@ -79,7 +80,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Yopilmagan to'lovlar"
+            title="Qarzdorlar"
             total={dashboard?.debtors || 0}
             color="error"
             icon={
@@ -90,7 +91,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Balans ($)"
+            title="Kassa ($)"
             total={dashboard?.totalBalance.dollar || 0}
             color="success"
             icon={<img alt="icon" src="/assets/icons/glass/currency.png" />}
@@ -100,7 +101,7 @@ export function OverviewAnalyticsView() {
           {dashboard?.totalBalance.hasCurrencyRate &&
           dashboard?.totalBalance.sum !== null ? (
             <AnalyticsWidgetSummary
-              title="Balans (sum)"
+              title="Umumiy Balans (UZS)"
               total={dashboard.totalBalance.sum}
               color="success"
               icon={<img alt="icon" src="/assets/icons/glass/currency.png" />}
@@ -128,7 +129,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Dollar kurs"
+            title="USD/UZS"
             total={currency}
             color="info"
             currency={currency}
@@ -192,7 +193,6 @@ export function OverviewAnalyticsView() {
             <Skeleton variant="rounded" width="100%" height="100%" />
           )}
         </Grid>
-
       </Grid>
     </DashboardContent>
   );
