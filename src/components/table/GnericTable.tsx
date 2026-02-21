@@ -94,10 +94,13 @@ export function GenericTable<T extends Record<string, any>>({
       />
       <Card sx={{ 
         ...excelCardStyle,
-        overflow: "auto", 
-        maxHeight: "calc(100vh - 200px)",
-        boxShadow: 3,
-        borderRadius: 2,
+        overflow: "hidden", 
+        height: "100%",
+        // maxHeight: "calc(100vh - 200px)",
+        // boxShadow: 3,
+        border: "none",
+        borderRadius: "18px"  
+        
       }}>
         <TableToolbar
           onFilterClick={(e) => setFilterAnchorEl(e.currentTarget)}

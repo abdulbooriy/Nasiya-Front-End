@@ -145,9 +145,9 @@ export const excelTableContainerStyle: SxProps<Theme> = {
 export const excelCardStyle: SxProps<Theme> = {
   boxShadow: 'none',
   border: `${EXCEL_DIMENSIONS.borderWidth}px solid ${EXCEL_COLORS.gridLine}`,
-  borderRadius: '8px',
+  borderRadius: '18px',
   overflow: 'hidden',
-  backgroundColor: '#FFFFFF',
+  backgroundColor: 'transparent',
 };
 
 // Pagination style
