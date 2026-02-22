@@ -137,7 +137,7 @@ export default function ActionCustomer({ customer }: { customer: ICustomer }) {
         fullWidth
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdWarning color="orange" size={24} />
+          <MdWarning color="var(--palette-warning-main)" size={24} />
           Mijozni o&lsquo;chirish
         </DialogTitle>
         <DialogContent>
@@ -148,10 +148,10 @@ export default function ActionCustomer({ customer }: { customer: ICustomer }) {
             sx={{
               mt: 2,
               p: 2,
-              bgcolor: "error.lighter",
+              bgcolor: "rgba(var(--palette-error-mainChannel) / 0.1)",
               borderRadius: 0,
               border: "1px solid",
-              borderColor: "error.light",
+              borderColor: "rgba(var(--palette-error-mainChannel) / 0.3)",
             }}
           >
             <Stack spacing={1}>
@@ -180,14 +180,14 @@ export default function ActionCustomer({ customer }: { customer: ICustomer }) {
               alignItems: "center",
               gap: 1,
               p: 1,
-              bgcolor: "warning.lighter",
+              bgcolor: "rgba(var(--palette-warning-mainChannel) / 0.1)",
               borderRadius: 0,
             }}
           >
-            <MdWarning size={18} color="#ed6c02" />
+            <MdWarning size={18} color="var(--palette-warning-main)" />
             <Typography
               variant="caption"
-              color="warning.dark"
+              color="warning.main"
               fontWeight="medium"
             >
               Diqqat: O&lsquo;chirilgan mijozni keyinchalik tiklash mumkin.
@@ -221,7 +221,7 @@ export default function ActionCustomer({ customer }: { customer: ICustomer }) {
         fullWidth
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdRefresh color="green" size={24} />
+          <MdRefresh color="var(--palette-success-main)" size={24} />
           Mijozni tiklash
         </DialogTitle>
         <DialogContent>
@@ -230,10 +230,10 @@ export default function ActionCustomer({ customer }: { customer: ICustomer }) {
             sx={{
               mt: 2,
               p: 2,
-              bgcolor: "success.lighter",
+              bgcolor: "rgba(var(--palette-success-mainChannel) / 0.1)",
               borderRadius: 0,
               border: "1px solid",
-              borderColor: "success.light",
+              borderColor: "rgba(var(--palette-success-mainChannel) / 0.3)",
             }}
           >
             <Stack spacing={1}>

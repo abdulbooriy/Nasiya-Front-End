@@ -222,13 +222,11 @@ export function CashView() {
 
         {/* Bo'sh holat - pending to'lovlar yo'q */}
         {!isLoading && pendingPayments.length === 0 && (
-          <Card sx={{ 
-            p: 6, 
+          <Card sx={{
+            p: 6,
             textAlign: "center",
-            bgcolor: 'success.lighter',
-            border: 2,
-            borderColor: 'success.light',
-            borderStyle: 'dashed',
+            bgcolor: "rgba(var(--palette-success-mainChannel) / 0.08)",
+            border: "2px dashed rgba(var(--palette-success-mainChannel) / 0.4)",
           }}>
             <Box sx={{ 
               mb: 3,
@@ -246,7 +244,7 @@ export function CashView() {
                 <MdCheckCircle size={64} color="white" />
               </Box>
             </Box>
-            <Typography variant="h5" gutterBottom fontWeight={600} color="success.dark">
+            <Typography variant="h5" gutterBottom fontWeight={600} color="success.main">
               Tasdiqlash uchun to&lsquo;lovlar yo&lsquo;q
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
@@ -273,13 +271,12 @@ export function CashView() {
         )}
 
         {selectedRows.length > 0 && canConfirmPayments && (
-          <Card 
-            sx={{ 
-              p: 2.5, 
-              mb: 1, 
-              bgcolor: "success.lighter",
-              border: 2,
-              borderColor: "success.main",
+          <Card
+            sx={{
+              p: 2.5,
+              mb: 1,
+              bgcolor: "rgba(var(--palette-success-mainChannel) / 0.12)",
+              border: "2px solid rgba(var(--palette-success-mainChannel) / 0.5)",
               boxShadow: 2,
             }}
           >
@@ -362,7 +359,7 @@ export function CashView() {
         fullWidth
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdPerson size={24} color="#1976d2" />
+          <MdPerson size={24} color="var(--palette-primary-main)" />
           Mijoz ma'lumotlari
         </DialogTitle>
         <DialogContent>
@@ -501,7 +498,7 @@ export function CashView() {
         fullWidth
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdCheckCircle color="green" size={24} />
+          <MdCheckCircle color="var(--palette-success-main)" size={24} />
           To&lsquo;lovlarni tasdiqlash
         </DialogTitle>
         <DialogContent>

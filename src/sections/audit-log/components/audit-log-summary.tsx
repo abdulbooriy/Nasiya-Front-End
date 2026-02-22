@@ -14,6 +14,15 @@ interface SummaryCardProps {
   loading?: boolean;
 }
 
+const COLOR_ALPHA_BG: Record<string, string> = {
+  primary: 'rgba(var(--palette-primary-mainChannel) / 0.12)',
+  secondary: 'rgba(var(--palette-secondary-mainChannel) / 0.12)',
+  success: 'rgba(var(--palette-success-mainChannel) / 0.12)',
+  warning: 'rgba(var(--palette-warning-mainChannel) / 0.12)',
+  error: 'rgba(var(--palette-error-mainChannel) / 0.12)',
+  info: 'rgba(var(--palette-info-mainChannel) / 0.12)',
+};
+
 function SummaryCard({ title, value, subtitle, icon, color = 'primary', loading }: SummaryCardProps) {
   if (loading) {
     return (
@@ -38,7 +47,7 @@ function SummaryCard({ title, value, subtitle, icon, color = 'primary', loading 
               width: 48,
               height: 48,
               borderRadius: '50%',
-              bgcolor: `${color}.lighter`,
+              bgcolor: COLOR_ALPHA_BG[color] || COLOR_ALPHA_BG.primary,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

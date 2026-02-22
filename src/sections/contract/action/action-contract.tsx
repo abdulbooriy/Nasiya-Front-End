@@ -123,7 +123,7 @@ export default function ActionContract({ contract }: { contract: IContract }) {
         fullWidth
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdDelete color="red" size={24} />
+          <MdDelete color="var(--palette-error-main)" size={24} />
           Shartnomani o&lsquo;chirish
         </DialogTitle>
         <DialogContent>
@@ -134,10 +134,10 @@ export default function ActionContract({ contract }: { contract: IContract }) {
             sx={{
               mt: 2,
               p: 2,
-              bgcolor: "error.lighter",
+              bgcolor: "rgba(var(--palette-error-mainChannel) / 0.1)",
               borderRadius: 1,
               border: "2px solid",
-              borderColor: "error.main",
+              borderColor: "rgba(var(--palette-error-mainChannel) / 0.4)",
             }}
           >
             <Stack spacing={1.5}>

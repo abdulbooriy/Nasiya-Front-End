@@ -149,7 +149,7 @@ export function ResetView() {
         )}
 
         {/* Warning Card */}
-        <Card sx={{ p: 3, bgcolor: "error.lighter" }}>
+        <Card sx={{ p: 3, bgcolor: "rgba(var(--palette-error-mainChannel) / 0.1)" }}>
           <Stack direction="row" spacing={2} alignItems="center">
             <Warning sx={{ fontSize: 40, color: "error.main" }} />
             <Box>

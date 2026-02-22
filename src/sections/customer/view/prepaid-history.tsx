@@ -125,7 +125,7 @@ export function PrepaidHistory({
         </Stack>
 
         {/* Jami zapas */}
-        <Paper sx={{ p: 2, bgcolor: "info.lighter", borderRadius: 1 }}>
+        <Paper sx={{ p: 2, bgcolor: "rgba(var(--palette-info-mainChannel) / 0.1)", borderRadius: 1 }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             Jami Zapas
           </Typography>

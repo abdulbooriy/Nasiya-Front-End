@@ -139,13 +139,13 @@ const CustomerInfo: FC<IProps> = ({ customer, top = false }) => {
             {customer?.isActive ? (
               <Tooltip title="Tasdiqlangan mijoz" placement="top">
                 <Typography>
-                  <MdCheckCircle color="green" />
+                  <MdCheckCircle color="var(--palette-success-main)" />
                 </Typography>
               </Tooltip>
             ) : (
               <Tooltip title="Hali tasdiqlanmagan" placement="top">
                 <Typography>
-                  <MdCancel color="red" />
+                  <MdCancel color="var(--palette-error-main)" />
                 </Typography>
               </Tooltip>
             )}
@@ -304,7 +304,7 @@ const CustomerInfo: FC<IProps> = ({ customer, top = false }) => {
         fullWidth
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdCheckCircle color="green" size={24} />
+          <MdCheckCircle color="var(--palette-success-main)" size={24} />
           Mijozni tasdiqlash
         </DialogTitle>
         <DialogContent>
