@@ -64,7 +64,7 @@ export const ManagerSelectCell = React.memo(
             border: "none", // Excel uslubida border-siz ko'rinsin
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            border: "1px solid #ccc",
+            border: "1px solid rgba(var(--palette-grey-500Channel) / 0.3)",
           }
         }}
         onClick={(e) => e.stopPropagation()}

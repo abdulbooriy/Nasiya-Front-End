@@ -71,7 +71,7 @@ export default function ActionCustomer({ customer }: { customer: ICustomer }) {
   }, [dispatch, customer._id, handleClosePopover]);
   return (
     <>
-      <IconButton onClick={handleOpenPopover} sx={{ color: "black" }}>
+      <IconButton onClick={handleOpenPopover} sx={{ color: "text.primary" }}>
         <Iconify icon="eva:more-vertical-fill" width={22} />
       </IconButton>
 

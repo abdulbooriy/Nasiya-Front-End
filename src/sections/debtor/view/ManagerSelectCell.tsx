@@ -74,7 +74,7 @@ export const ManagerSelectCellDebtor = React.memo(
             border: "none",
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            border: "1px solid #ccc",
+            border: "1px solid rgba(var(--palette-grey-500Channel) / 0.3)",
           }
         }}
         onClick={(e) => e.stopPropagation()}

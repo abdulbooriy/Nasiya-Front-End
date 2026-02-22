@@ -409,7 +409,7 @@ export function CashView() {
                       mr: 2,
                     }}
                   >
-                    <MdPhone size={20} color="#666" />
+                    <MdPhone size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Telefon raqami"
@@ -426,7 +426,7 @@ export function CashView() {
                       mr: 2,
                     }}
                   >
-                    <MdLocationOn size={20} color="#666" />
+                    <MdLocationOn size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Manzil"
@@ -443,7 +443,7 @@ export function CashView() {
                       mr: 2,
                     }}
                   >
-                    <MdCreditCard size={20} color="#666" />
+                    <MdCreditCard size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Passport seriyasi"

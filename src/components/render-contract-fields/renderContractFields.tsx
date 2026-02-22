@@ -1,4 +1,4 @@
-import type { IContract } from "@/types/contract"
+import type { IContract } from "@/types/contract";
 
 import React, { useMemo } from "react";
 import { FaChevronDown } from "react-icons/fa";
@@ -18,16 +18,12 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 
-import { useAppDispatch } from "@/hooks/useAppDispatch"
-
-import { formatNumber } from "@/utils/format-number"
-
-import { grey } from "@/theme/core"
-import { setModal } from "@/store/slices/modalSlice"
-
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { formatNumber } from "@/utils/format-number";
+import { setModal } from "@/store/slices/modalSlice";
 import { Iconify } from "@/components/iconify";
 import { useSelector } from "react-redux";
-import type { RootState } from "@/store"
+import type { RootState } from "@/store";
 
 interface IReadOnlyTextFieldProps {
   value: string | number;
@@ -43,18 +39,18 @@ const ReadOnlyTextField = ({ value, label }: IReadOnlyTextFieldProps) => (
     disabled
     InputProps={{
       sx: {
-        color: "black",
+        color: "text.primary",
         "& .MuiInputBase-input.Mui-disabled": {
-          WebkitTextFillColor: "black",
+          WebkitTextFillColor: "var(--palette-text-primary)",
         },
       },
     }}
     InputLabelProps={{
       shrink: true,
       sx: {
-        color: "black",
+        color: "text.secondary",
         "&.Mui-disabled": {
-          color: "black",
+          color: "text.secondary",
         },
       },
     }}
@@ -75,12 +71,15 @@ const RenderContractFields: React.FC<IProps> = ({
   onEditDate,
 }) => {
   const dispatch = useAppDispatch();
-  
+
   // ✅ Role tekshirish - faqat admin va moderator edit qila oladi
   const { profile } = useSelector((state: RootState) => state.auth);
-  const userRole = (typeof profile?.role === 'string' ? profile.role : (profile?.role as any)?.name)?.toLowerCase();
+  const userRole = (
+    typeof profile?.role === "string" ?
+      profile.role
+    : (profile?.role as any)?.name)?.toLowerCase();
   const canEditContract = userRole === "admin" || userRole === "moderator";
-  
+
   const { paymentDeadline } = useMemo(() => {
     try {
       // contract.startDate ni tekshirish
@@ -89,7 +88,7 @@ const RenderContractFields: React.FC<IProps> = ({
       }
 
       const deadlineDate = new Date(contract.startDate);
-      
+
       // Invalid date tekshirish
       if (isNaN(deadlineDate.getTime())) {
         console.warn("Invalid startDate:", contract.startDate);
@@ -115,8 +114,7 @@ const RenderContractFields: React.FC<IProps> = ({
         alignItems="center"
         justifyContent="space-between"
         width="100%"
-        mb={2}
-      >
+        mb={2}>
         <Typography variant="h6">Shartnoma ma&#39;lumotlari</Typography>
         {/* ✅ Edit faqat admin va moderator uchun */}
         {!readOnly && canEditContract && (
@@ -126,28 +124,29 @@ const RenderContractFields: React.FC<IProps> = ({
                 variant="contained"
                 size="small"
                 onClick={onEditDate}
-                startIcon={<Iconify icon="solar:calendar-date-bold-duotone" width={18} />}
+                startIcon={
+                  <Iconify icon="solar:calendar-date-bold-duotone" width={18} />
+                }
                 sx={{
                   bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
-                  color: 'primary.main',
+                  color: "primary.main",
                   fontWeight: 700,
-                  fontSize: '0.75rem',
+                  fontSize: "0.75rem",
                   px: 1.5,
                   borderRadius: 1,
-                  boxShadow: 'none',
-                  '&:hover': {
+                  boxShadow: "none",
+                  "&:hover": {
                     bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
-                    color: 'primary.darker',
-                    transform: 'translateY(-1px)',
-                    boxShadow: 'none',
+                    color: "primary.darker",
+                    transform: "translateY(-1px)",
+                    boxShadow: "none",
                   },
-                  transition: 'all 0.2s',
-                }}
-              >
+                  transition: "all 0.2s",
+                }}>
                 Sana
               </Button>
             )}
-            
+
             <IconButton
               aria-label="update"
               size="small"
@@ -156,10 +155,9 @@ const RenderContractFields: React.FC<IProps> = ({
                   setModal({
                     modal: "contractModal",
                     data: { type: "edit", data: contract },
-                  })
+                  }),
                 );
-              }}
-            >
+              }}>
               <Iconify icon="solar:pen-bold" />
             </IconButton>
           </Stack>
@@ -176,7 +174,9 @@ const RenderContractFields: React.FC<IProps> = ({
       )}
       <Grid xs={6} md={4}>
         <ReadOnlyTextField
-          value={contract.originalPrice ? formatNumber(contract.originalPrice) : "—"}
+          value={
+            contract.originalPrice ? formatNumber(contract.originalPrice) : "—"
+          }
           label="Asl narxi"
         />
       </Grid>
@@ -188,13 +188,21 @@ const RenderContractFields: React.FC<IProps> = ({
       </Grid>
       <Grid xs={6} md={4}>
         <ReadOnlyTextField
-          value={contract.initialPayment ? formatNumber(contract.initialPayment) : "—"}
+          value={
+            contract.initialPayment ?
+              formatNumber(contract.initialPayment)
+            : "—"
+          }
           label={`Oldindan to'lov`}
         />
       </Grid>
       <Grid xs={6} md={4}>
         <ReadOnlyTextField
-          value={contract.initialPaymentDueDate ? dateFormat(contract.initialPaymentDueDate) : "—"}
+          value={
+            contract.initialPaymentDueDate ?
+              dateFormat(contract.initialPaymentDueDate)
+            : "—"
+          }
           label="Oldindan to'lov sanasi"
         />
       </Grid>
@@ -212,7 +220,11 @@ const RenderContractFields: React.FC<IProps> = ({
       </Grid>
       <Grid xs={6} md={4}>
         <ReadOnlyTextField
-          value={contract.monthlyPayment ? formatNumber(contract.monthlyPayment) : "—"}
+          value={
+            contract.monthlyPayment ?
+              formatNumber(contract.monthlyPayment)
+            : "—"
+          }
           label={`Oylik to'lov`}
         />
       </Grid>
@@ -224,13 +236,24 @@ const RenderContractFields: React.FC<IProps> = ({
       </Grid>
       <Grid xs={6} md={4}>
         <ReadOnlyTextField
-          value={contract.totalPaid !== undefined && contract.totalPaid !== null ? formatNumber(contract.totalPaid) : "—"}
+          value={
+            contract.totalPaid !== undefined && contract.totalPaid !== null ?
+              formatNumber(contract.totalPaid)
+            : "—"
+          }
           label="To'langan summa"
         />
       </Grid>
       <Grid xs={6} md={4}>
         <ReadOnlyTextField
-          value={contract.remainingDebt !== undefined && contract.remainingDebt !== null ? formatNumber(contract.remainingDebt) : "—"}
+          value={
+            (
+              contract.remainingDebt !== undefined &&
+              contract.remainingDebt !== null
+            ) ?
+              formatNumber(contract.remainingDebt)
+            : "—"
+          }
           label="Qolgan summa"
         />
       </Grid>
@@ -257,20 +280,20 @@ const RenderContractFields: React.FC<IProps> = ({
           disabled
           InputProps={{
             sx: {
-              color: "black",
+              color: "text.primary",
               maxHeight: "200px",
               overflow: "auto",
               "& .MuiInputBase-input.Mui-disabled": {
-                WebkitTextFillColor: "black",
+                WebkitTextFillColor: "var(--palette-text-primary)",
               },
             },
           }}
           InputLabelProps={{
             shrink: true,
             sx: {
-              color: "black",
+              color: "text.secondary",
               "&.Mui-disabled": {
-                color: "black",
+                color: "text.secondary",
               },
             },
           }}
@@ -280,10 +303,9 @@ const RenderContractFields: React.FC<IProps> = ({
         <Accordion
           sx={{
             mt: 2,
-            bgcolor: grey[300],
+            bgcolor: "background.neutral",
             borderRadius: 0,
-          }}
-        >
+          }}>
           <AccordionSummary expandIcon={<FaChevronDown />}>
             <Typography variant="subtitle1">
               Qo&lsquo;shimcha ma&#39;lumotlar
@@ -294,7 +316,11 @@ const RenderContractFields: React.FC<IProps> = ({
               <Grid xs={6}>
                 <FormControlLabel
                   control={
-                    <Checkbox checked={contract.info?.box || false} readOnly name="box" />
+                    <Checkbox
+                      checked={contract.info?.box || false}
+                      readOnly
+                      name="box"
+                    />
                   }
                   label="Karobka"
                 />

@@ -725,7 +725,7 @@ const ModalContract = () => {
                     <Accordion
                       sx={{
                         mt: 2,
-                        bgcolor: grey[300],
+                        bgcolor: "background.neutral",
                         borderRadius: 0,
                       }}
                     >
