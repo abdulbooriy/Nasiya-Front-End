@@ -228,11 +228,13 @@ export function TableComponent<T extends Record<string, any>>({
                   ))}
                 {renderActions && (
                   <TableCell
-                    align="right"
-                    sx={excelHeaderCellStyle}
-                  >
-                    Actions
-                  </TableCell>
+                    sx={{
+                      ...excelHeaderCellStyle,
+                      width: '40px',
+                      minWidth: '40px',
+                      px: '4px',
+                    }}
+                  />
                 )}
               </TableRow>
             </TableHead>
@@ -331,9 +333,9 @@ export function TableComponent<T extends Record<string, any>>({
                           align="right"
                           sx={{
                             ...excelBodyCellStyle,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
+                            width: '40px',
+                            minWidth: '40px',
+                            px: '4px',
                           }}
                         >
                           {renderActions(row)}
