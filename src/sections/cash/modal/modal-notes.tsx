@@ -77,7 +77,7 @@ export default function NotesModal({
         </Typography>
         <Box
           sx={{
-            bgcolor: "grey.100",
+            bgcolor: "background.neutral",
             p: 2,
             borderRadius: 0,
             maxHeight: "400px",

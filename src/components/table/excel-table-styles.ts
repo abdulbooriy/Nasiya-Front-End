@@ -78,9 +78,9 @@ export const excelBodyCellStyle: SxProps<Theme> = {
   py: `${EXCEL_DIMENSIONS.cellPaddingY}px`,
   fontSize: `${EXCEL_DIMENSIONS.cellFontSize}px`,
   lineHeight: `${EXCEL_DIMENSIONS.rowHeight - EXCEL_DIMENSIONS.cellPaddingY * 2}px`,
-  color: EXCEL_COLORS.cellText,
-  borderRight: `${EXCEL_DIMENSIONS.borderWidth}px solid ${EXCEL_COLORS.cellBorder}`,
-  borderBottom: `${EXCEL_DIMENSIONS.borderWidth}px solid ${EXCEL_COLORS.cellBorder}`,
+  color: 'var(--palette-text-primary)',
+  borderRight: `${EXCEL_DIMENSIONS.borderWidth}px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
+  borderBottom: `${EXCEL_DIMENSIONS.borderWidth}px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -96,71 +96,71 @@ export const excelRowStyle: SxProps<Theme> = {
   cursor: 'pointer',
   transition: 'background-color 0.1s ease',
   '&:nth-of-type(even)': {
-    backgroundColor: EXCEL_COLORS.rowEven,
+    backgroundColor: 'var(--palette-background-paper)',
   },
   '&:nth-of-type(odd)': {
-    backgroundColor: EXCEL_COLORS.rowOdd,
+    backgroundColor: 'var(--palette-background-neutral)',
   },
   '&:hover': {
-    backgroundColor: `${EXCEL_COLORS.rowHover} !important`,
+    backgroundColor: 'rgba(33, 115, 70, 0.12) !important',
   },
   '&.Mui-selected': {
-    backgroundColor: `${EXCEL_COLORS.rowSelected} !important`,
+    backgroundColor: 'rgba(33, 115, 70, 0.24) !important',
     '&:hover': {
-      backgroundColor: `${EXCEL_COLORS.rowSelected} !important`,
+      backgroundColor: 'rgba(33, 115, 70, 0.32) !important',
     },
   },
 };
 
 // Table container style
 export const excelTableContainerStyle: SxProps<Theme> = {
-  border: `${EXCEL_DIMENSIONS.borderWidth}px solid ${EXCEL_COLORS.gridLine}`,
+  border: `${EXCEL_DIMENSIONS.borderWidth}px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
   borderRadius: 0,
   maxHeight: 'calc(100vh - 280px)',
   overflow: 'auto',
-  backgroundColor: '#FFFFFF',
+  backgroundColor: 'var(--palette-background-paper)',
   // Custom scrollbar
   '&::-webkit-scrollbar': {
     width: '12px',
     height: '12px',
   },
   '&::-webkit-scrollbar-track': {
-    backgroundColor: '#F4F4F5',
-    borderLeft: `1px solid ${EXCEL_COLORS.gridLine}`,
+    backgroundColor: 'var(--palette-background-neutral)',
+    borderLeft: `1px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
   },
   '&::-webkit-scrollbar-thumb': {
-    backgroundColor: '#A1A1AA',
+    backgroundColor: 'rgba(var(--palette-grey-500Channel) / 0.5)',
     borderRadius: '6px',
-    border: '2px solid #F4F4F5',
+    border: '2px solid var(--palette-background-neutral)',
     '&:hover': {
-      backgroundColor: '#71717A',
+      backgroundColor: 'rgba(var(--palette-grey-500Channel) / 0.7)',
     },
   },
   '&::-webkit-scrollbar-corner': {
-    backgroundColor: '#F4F4F5',
+    backgroundColor: 'var(--palette-background-neutral)',
   },
 };
 
 // Card wrapper style
 export const excelCardStyle: SxProps<Theme> = {
   boxShadow: 'none',
-  border: `${EXCEL_DIMENSIONS.borderWidth}px solid ${EXCEL_COLORS.gridLine}`,
+  border: `${EXCEL_DIMENSIONS.borderWidth}px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
   borderRadius: '8px',
   overflow: 'hidden',
-  backgroundColor: '#FFFFFF',
+  backgroundColor: 'var(--palette-background-paper)',
 };
 
 // Pagination style
 export const excelPaginationStyle: SxProps<Theme> = {
-  borderTop: `${EXCEL_DIMENSIONS.borderWidth}px solid ${EXCEL_COLORS.gridLine}`,
-  backgroundColor: '#FAFAFA',
+  borderTop: `${EXCEL_DIMENSIONS.borderWidth}px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
+  backgroundColor: 'var(--palette-background-neutral)',
   '& .MuiTablePagination-toolbar': {
     minHeight: '36px',
     px: 1.5,
   },
   '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
     fontSize: '10px',
-    color: EXCEL_COLORS.cellTextSecondary,
+    color: 'var(--palette-text-secondary)',
     m: 0,
   },
   '& .MuiTablePagination-select': {
@@ -187,7 +187,7 @@ export const excelStickyLeftStyle = (offset: number = 0): SxProps<Theme> => ({
     top: 0,
     bottom: 0,
     width: '1px',
-    backgroundColor: EXCEL_COLORS.gridLine,
+    backgroundColor: 'rgba(var(--palette-grey-500Channel) / 0.2)',
   },
 });
 
@@ -203,7 +203,7 @@ export const excelStickyRightStyle = (offset: number = 0): SxProps<Theme> => ({
     top: 0,
     bottom: 0,
     width: '1px',
-    backgroundColor: EXCEL_COLORS.gridLine,
+    backgroundColor: 'rgba(var(--palette-grey-500Channel) / 0.2)',
   },
 });
 
@@ -220,7 +220,7 @@ export const excelCheckboxStyle: SxProps<Theme> = {
 export const excelNoDataStyle: SxProps<Theme> = {
   py: 4,
   textAlign: 'center',
-  color: EXCEL_COLORS.cellTextSecondary,
+  color: 'var(--palette-text-secondary)',
   fontSize: '11px',
   fontStyle: 'italic',
 };

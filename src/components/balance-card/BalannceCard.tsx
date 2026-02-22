@@ -67,7 +67,7 @@ const BalanceCard: FC<Props> = ({
       display: "flex",
       alignItems: "center",
       boxShadow: 3,
-      background: "linear-gradient(135deg, #f5f5f5, #ffffff)",
+      background: "var(--palette-background-paper)",
     }}
   >
     <Avatar sx={{ bgcolor: color, width: 56, height: 56, mr: 2 }}>

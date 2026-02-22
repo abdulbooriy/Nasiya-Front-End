@@ -1,4 +1,4 @@
-import type { RootState } from "@/store"
+import type { RootState } from "@/store";
 import type { Breakpoint } from "@mui/material/styles";
 import type { TypedUseSelectorHook } from "react-redux";
 import type { AppBarProps } from "@mui/material/AppBar";
@@ -14,10 +14,10 @@ import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
 import { ListItem, ListItemButton } from "@mui/material";
 
-import { usePathname } from "@/routes/hooks"
-import { RouterLink } from "@/routes/components"
+import { usePathname } from "@/routes/hooks";
+import { RouterLink } from "@/routes/components";
 
-import { bgBlur, varAlpha } from "@/theme/styles"
+import { bgBlur, varAlpha } from "@/theme/styles";
 
 import { layoutClasses } from "@/layouts/classes";
 import { navData } from "@/layouts/config-nav-dashboard";
@@ -89,8 +89,7 @@ export function HeaderSection({
         zIndex: "var(--layout-header-zIndex)",
         ...(sx ?? {}),
       }}
-      {...other}
-    >
+      {...other}>
       {slots?.topArea}
 
       <Toolbar
@@ -99,8 +98,7 @@ export function HeaderSection({
         sx={{
           ...toolbarStyles?.default,
           ...(slotProps?.toolbar?.sx ?? {}),
-        }}
-      >
+        }}>
         <Container
           {...slotProps?.container}
           sx={{
@@ -108,8 +106,7 @@ export function HeaderSection({
             display: "flex",
             alignItems: "center",
             ...(slotProps?.container?.sx ?? {}),
-          }}
-        >
+          }}>
           {slots?.leftArea}
 
           <Box
@@ -117,8 +114,7 @@ export function HeaderSection({
               display: "flex",
               flex: "1 1 auto",
               justifyContent: "center",
-            }}
-          >
+            }}>
             <Box sx={{ display: { xs: "none", md: "flex" }, flex: "1 auto" }}>
               {roleNavItems.map((item: DataType) => {
                 const isActived = item.path === pathname;
@@ -147,8 +143,7 @@ export function HeaderSection({
                             bgcolor: "var(--layout-nav-item-hover-bg)",
                           },
                         }),
-                      }}
-                    >
+                      }}>
                       <Box component="span" sx={{ width: 24, height: 24 }}>
                         {item.icon}
                       </Box>
