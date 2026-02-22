@@ -308,7 +308,7 @@ const PaymentModal: FC<PaymentModalProps> = ({
           <Box
             sx={{
               p: 2,
-              bgcolor: isPayAll ? "success.lighter" : "grey.100",
+              bgcolor: isPayAll ? "success.lighter" : "background.neutral",
               borderRadius: 0,
             }}
           >
