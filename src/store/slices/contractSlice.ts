@@ -1,8 +1,7 @@
-import type { IContract } from "@/types/contract"
+import type { IContract } from "@/types/contract";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
-
 
 export interface UserState {
   contracts: IContract[] | [];
@@ -22,7 +21,7 @@ const initialState: UserState = {
   isLoading: false,
 };
 
-const authSlice = createSlice({
+const contractSlice = createSlice({
   name: "contract",
   initialState,
   reducers: {
@@ -69,5 +68,6 @@ export const {
   setContract,
   setNewContracts,
   setCompletedContracts,
-} = authSlice.actions;
-export default authSlice.reducer;
+} = contractSlice.actions;
+
+export default contractSlice.reducer;

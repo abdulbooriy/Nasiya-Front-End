@@ -31,9 +31,7 @@ export default function App() {
       return;
     }
 
-    if (token && savedProfile) {
-      dispatch(refreshProfile());
-    } else if (token && !savedProfile) {
+    if (token) {
       dispatch(refreshProfile());
     }
   }, []);
