@@ -117,7 +117,7 @@ const Uploader: React.FC<Iprops> = ({
                   {...dragProps}
                   onClick={onImageUpload}
                   className="upload__image-drag-image"
-                  style={isDragging ? { color: "#1877f2" } : {}}
+                  style={isDragging ? { color: "var(--palette-primary-main)" } : {}}
                 >
                   <MdImageNotSupported size={100} />
                 </div>

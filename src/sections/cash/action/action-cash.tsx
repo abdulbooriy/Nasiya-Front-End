@@ -104,7 +104,7 @@ export default function ActionCash({ cash }: { cash: IPayment }) {
             height: '24px',
             '&:hover': {
               borderWidth: 1.5,
-              bgcolor: 'error.lighter',
+              bgcolor: 'rgba(var(--palette-error-mainChannel) / 0.08)',
             },
           }}
         >
@@ -126,13 +126,12 @@ export default function ActionCash({ cash }: { cash: IPayment }) {
           size="small"
           sx={{
             color: isReminderNotification ? 'warning.main' : 'info.main',
-            bgcolor: isReminderNotification ? 'warning.lighter' : 'info.lighter',
+            bgcolor: isReminderNotification ? 'rgba(var(--palette-warning-mainChannel) / 0.12)' : 'rgba(var(--palette-info-mainChannel) / 0.12)',
             ml: 0.5,
             width: 24,
             height: 24,
             '&:hover': {
-              bgcolor: isReminderNotification ? 'warning.light' : 'info.light',
-              color: isReminderNotification ? 'warning.dark' : 'info.dark',
+              bgcolor: isReminderNotification ? 'rgba(var(--palette-warning-mainChannel) / 0.2)' : 'rgba(var(--palette-info-mainChannel) / 0.2)',
             },
             p: 0.5,
           }}

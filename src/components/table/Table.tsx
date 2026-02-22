@@ -188,8 +188,8 @@ export function TableComponent<T extends Record<string, any>>({
                       sx={{
                         ...excelCheckboxStyle,
                         color: 'rgba(255,255,255,0.7)',
-                        '&.Mui-checked': { color: '#FFFFFF' },
-                        '&.MuiCheckbox-indeterminate': { color: '#FFFFFF' },
+                        '&.Mui-checked': { color: 'var(--palette-common-white)' },
+                        '&.MuiCheckbox-indeterminate': { color: 'var(--palette-common-white)' },
                       }}
                       indeterminate={
                         selectedRows.length > 0 &&
@@ -256,21 +256,21 @@ export function TableComponent<T extends Record<string, any>>({
                         ...excelRowStyle,
                         cursor: onRowClick ? "pointer" : "default",
                         ...(row['isDeleted'] && {
-                          backgroundColor: "rgba(239, 68, 68, 0.1) !important",
+                          backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.1) !important",
                           "&:hover": {
-                            backgroundColor: "rgba(239, 68, 68, 0.2) !important",
+                            backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.2) !important",
                           },
                         }),
                         ...(isExpiredReminder && {
-                          backgroundColor: "rgba(244, 67, 54, 0.08) !important",
+                          backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.08) !important",
                           "&:hover": {
-                            backgroundColor: "rgba(244, 67, 54, 0.15) !important",
+                            backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.15) !important",
                           },
                         }),
                         ...(row['isReminderNotification'] && !isExpiredReminder && {
-                          backgroundColor: "rgba(255, 193, 7, 0.08) !important",
+                          backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.08) !important",
                           "&:hover": {
-                            backgroundColor: "rgba(255, 193, 7, 0.15) !important",
+                            backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.15) !important",
                           },
                         }),
                       }}
@@ -283,10 +283,10 @@ export function TableComponent<T extends Record<string, any>>({
                             ...excelStickyLeftStyle(0),
                             zIndex: 1,
                             ...(isExpiredReminder && {
-                              backgroundColor: "rgba(244, 67, 54, 0.08)",
+                              backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.08)",
                             }),
                             ...(row['isReminderNotification'] && !isExpiredReminder && {
-                              backgroundColor: "rgba(255, 193, 7, 0.08)",
+                              backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.08)",
                             }),
                           }}
                         >
@@ -315,10 +315,10 @@ export function TableComponent<T extends Record<string, any>>({
                                 ),
                                 zIndex: 1,
                                 ...(isExpiredReminder && {
-                                  backgroundColor: "rgba(244, 67, 54, 0.08)",
+                                  backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.08)",
                                 }),
                                 ...(row['isReminderNotification'] && !isExpiredReminder && {
-                                  backgroundColor: "rgba(255, 193, 7, 0.08)",
+                                  backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.08)",
                                 }),
                               }),
                             }}

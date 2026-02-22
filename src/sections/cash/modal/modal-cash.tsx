@@ -133,12 +133,12 @@ const ModalCash = () => {
           justifyContent="space-between"
           alignItems="center"
           flexDirection="column"
-          bgcolor="success.lighter"
+          bgcolor="rgba(var(--palette-success-mainChannel) / 0.1)"
           borderRadius={0}
           p={1}>
           <Typography
             variant="h4"
-            color="success.darker"
+            color="success.main"
             fontWeight={700}
             textAlign="center">
             <Box>

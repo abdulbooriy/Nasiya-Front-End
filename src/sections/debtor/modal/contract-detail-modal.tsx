@@ -136,15 +136,15 @@ export function ContractDetailModal({
                     ${contract.totalPrice?.toLocaleString() || 0}
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ bgcolor: "success.lighter" }}>
+                <TableRow sx={{ bgcolor: "rgba(var(--palette-success-mainChannel) / 0.1)" }}>
                   <TableCell>To'langan:</TableCell>
-                  <TableCell align="right" sx={{ color: "success.dark", fontWeight: 600 }}>
+                  <TableCell align="right" sx={{ color: "success.main", fontWeight: 600 }}>
                     ${contract.totalPaid?.toLocaleString() || 0}
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ bgcolor: "error.lighter" }}>
+                <TableRow sx={{ bgcolor: "rgba(var(--palette-error-mainChannel) / 0.1)" }}>
                   <TableCell>Qoldiq qarz:</TableCell>
-                  <TableCell align="right" sx={{ color: "error.dark", fontWeight: 600 }}>
+                  <TableCell align="right" sx={{ color: "error.main", fontWeight: 600 }}>
                     ${contract.remainingDebt?.toLocaleString() || 0}
                   </TableCell>
                 </TableRow>
@@ -184,7 +184,7 @@ export function ContractDetailModal({
                     {contract.startDate ? new Date(contract.startDate).toLocaleDateString("uz-UZ") : "—"}
                   </TableCell>
                 </TableRow>
-                <TableRow sx={{ bgcolor: hasDelay ? "error.lighter" : "background.paper" }}>
+                <TableRow sx={{ bgcolor: hasDelay ? "rgba(var(--palette-error-mainChannel) / 0.1)" : "background.paper" }}>
                   <TableCell>Keyingi to'lov:</TableCell>
                   <TableCell align="right" sx={{ color: hasDelay ? "error.main" : "text.primary", fontWeight: hasDelay ? 600 : 400 }}>
                     {contract.nextPaymentDate ? new Date(contract.nextPaymentDate).toLocaleDateString("uz-UZ") : "—"}

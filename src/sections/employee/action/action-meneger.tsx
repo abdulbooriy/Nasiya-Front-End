@@ -58,7 +58,7 @@ export default function ActionEmployee({ employee }: { employee: IEmployee }) {
         fullWidth
       >
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdWarning color="orange" size={24} />
+          <MdWarning color="var(--palette-warning-main)" size={24} />
           Xodimni o&lsquo;chirish
         </DialogTitle>
         <DialogContent>
@@ -69,10 +69,10 @@ export default function ActionEmployee({ employee }: { employee: IEmployee }) {
             sx={{
               mt: 2,
               p: 2,
-              bgcolor: "error.lighter",
+              bgcolor: "rgba(var(--palette-error-mainChannel) / 0.1)",
               borderRadius: 0,
               border: "1px solid",
-              borderColor: "error.light",
+              borderColor: "rgba(var(--palette-error-mainChannel) / 0.3)",
             }}
           >
             <Stack spacing={1}>
@@ -101,11 +101,11 @@ export default function ActionEmployee({ employee }: { employee: IEmployee }) {
               alignItems: "center",
               gap: 1,
               p: 1,
-              bgcolor: "error.lighter",
+              bgcolor: "rgba(var(--palette-error-mainChannel) / 0.1)",
               borderRadius: 0,
             }}
           >
-            <MdWarning size={18} color="#d32f2f" />
+            <MdWarning size={18} color="var(--palette-error-main)" />
             <Typography
               variant="caption"
               color="error.main"

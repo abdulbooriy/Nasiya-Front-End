@@ -114,7 +114,7 @@ export const columnsCash: Column[] = [
                 sx={{
                   p: 0.25,
                   "&:hover": {
-                    bgcolor: "primary.lighter",
+                    bgcolor: "rgba(var(--palette-primary-mainChannel) / 0.08)",
                     color: "primary.main",
                   },
                 }}
@@ -532,7 +532,7 @@ export const columnsCash: Column[] = [
               sx={{
                 color: isExpired ? "error.main" : "warning.main",
                 "&:hover": {
-                  bgcolor: isExpired ? "error.lighter" : "warning.lighter",
+                  bgcolor: isExpired ? "rgba(var(--palette-error-mainChannel) / 0.08)" : "rgba(var(--palette-warning-mainChannel) / 0.08)",
                 },
                 p: 1,
               }}
@@ -561,7 +561,7 @@ export const columnsCash: Column[] = [
               sx={{
                 color: hasNotes ? "primary.main" : "text.disabled",
                 "&:hover": {
-                  bgcolor: hasNotes ? "primary.lighter" : "transparent",
+                  bgcolor: hasNotes ? "rgba(var(--palette-primary-mainChannel) / 0.08)" : "transparent",
                 },
                 p: 1,
               }}

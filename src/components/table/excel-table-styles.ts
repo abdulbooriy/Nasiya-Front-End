@@ -102,12 +102,12 @@ export const excelRowStyle: SxProps<Theme> = {
     backgroundColor: 'var(--palette-background-neutral)',
   },
   '&:hover': {
-    backgroundColor: 'rgba(33, 115, 70, 0.12) !important',
+    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.12) !important',
   },
   '&.Mui-selected': {
-    backgroundColor: 'rgba(33, 115, 70, 0.24) !important',
+    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.24) !important',
     '&:hover': {
-      backgroundColor: 'rgba(33, 115, 70, 0.32) !important',
+      backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.32) !important',
     },
   },
 };
