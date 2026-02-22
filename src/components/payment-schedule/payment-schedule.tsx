@@ -204,7 +204,6 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
 
     // ✅ TUZATILDI: period nol yoki undefined bo'lsa, xato
     if (!period || period <= 0) {
-      console.warn("⚠️ Period is invalid:", period);
       return schedule;
     }
 
@@ -288,8 +287,6 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     });
     if (onPaymentSuccess) {
       onPaymentSuccess();
-    } else {
-      console.warn("onPaymentSuccess callback not provided");
     }
   };
 
@@ -925,16 +922,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                 <Typography
                                   variant="body2"
                                   onClick={() => {
-                                    console.log("🔴 Qarz tugmasi bosildi:", {
-                                      month: item.month,
-                                      remainingAmount: remainingAmountToShow,
-                                      paymentId: actualPayment?._id,
-                                      hasPaymentId: !!actualPayment?._id,
-                                      actualPayment: actualPayment,
-                                    });
-
                                     if (!actualPayment?._id) {
-                                      console.error("❌ Payment ID topilmadi!");
                                       alert(
                                         "Xatolik: To'lov ID topilmadi. Sahifani yangilang va qayta urinib ko'ring.",
                                       );

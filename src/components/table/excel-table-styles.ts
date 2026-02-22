@@ -8,20 +8,20 @@ export const EXCEL_COLORS = {
   headerText: '#FFFFFF',
   headerBorder: '#1A5C37',
   
-  // Grid ranglari
-  gridLine: '#D4D4D8',
-  gridLineLight: '#E4E4E7',
-  
-  // Row ranglari
-  rowEven: '#FFFFFF',
-  rowOdd: '#F9FAFB',
-  rowHover: '#F3F4F6',
-  rowSelected: '#E0F2FE',
-  
-  // Cell ranglari
-  cellText: '#18181B',
-  cellTextSecondary: '#71717A',
-  cellBorder: '#E4E4E7',
+  // Grid ranglari (CSS vars for dark mode support)
+  gridLine: 'rgba(var(--palette-grey-500Channel) / 0.2)',
+  gridLineLight: 'rgba(var(--palette-grey-500Channel) / 0.12)',
+
+  // Row ranglari (CSS vars for dark mode support)
+  rowEven: 'var(--palette-background-paper)',
+  rowOdd: 'var(--palette-background-neutral)',
+  rowHover: 'rgba(33, 115, 70, 0.12)',
+  rowSelected: 'rgba(33, 115, 70, 0.24)',
+
+  // Cell ranglari (CSS vars for dark mode support)
+  cellText: 'var(--palette-text-primary)',
+  cellTextSecondary: 'var(--palette-text-secondary)',
+  cellBorder: 'rgba(var(--palette-grey-500Channel) / 0.2)',
 } as const;
 
 export const EXCEL_DIMENSIONS = {
