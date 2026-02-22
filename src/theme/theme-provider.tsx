@@ -16,7 +16,10 @@ export function ThemeProvider({ children }: Props) {
   const theme = createTheme();
 
   return (
-    <CssVarsProvider theme={theme}>
+    <CssVarsProvider
+      theme={theme}
+      defaultColorScheme="light"
+      modeStorageKey="nasiya-theme-mode">
       <CssBaseline />
       {children}
     </CssVarsProvider>
