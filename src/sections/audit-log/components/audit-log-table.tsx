@@ -211,7 +211,7 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
   const isPaymentAction = log.action === "CONFIRM" || log.action === "REJECT";
 
   return (
-    <Box sx={{ p: 0.5, bgcolor: "grey.50", borderRadius: 0 }}>
+    <Box sx={{ p: 0.5, bgcolor: "background.neutral", borderRadius: 0 }}>
       <Stack spacing={0.5}>
         {/* To'lov tasdiqlash/rad etish uchun sodda ko'rinish */}
         {isPaymentAction && (
@@ -258,7 +258,7 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
                 <Typography variant="body2">
                   Summa: <strong>${log.metadata.amount}</strong>
                   {log.metadata.targetMonth && (
-                    <span style={{ color: "#666", marginLeft: 8 }}>
+                    <span style={{ color: "inherit", opacity: 0.6, marginLeft: 8 }}>
                       ({log.metadata.targetMonth}-oy)
                     </span>
                   )}
@@ -391,7 +391,7 @@ function ExpandedRow({ log, allLogs }: ExpandedRowProps) {
                     <strong>Import:</strong> {log.metadata.successfulRows}/
                     {log.metadata.totalRows} muvaffaqiyatli
                     {log.metadata.failedRows && log.metadata.failedRows > 0 && (
-                      <span style={{ color: "#d32f2f", marginLeft: 8 }}>
+                      <span style={{ color: "var(--palette-error-main)", marginLeft: 8 }}>
                         ({log.metadata.failedRows} xato)
                       </span>
                     )}
@@ -671,7 +671,7 @@ export default function AuditLogTable({
                 py: 0.3,
                 fontWeight: 600,
                 fontSize: "0.6rem",
-                bgcolor: "grey.50",
+                bgcolor: "background.neutral",
               },
             }}
           >

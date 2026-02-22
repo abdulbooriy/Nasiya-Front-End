@@ -90,7 +90,7 @@ const CustomerContract: React.FC<IProps> = ({
               <AccordionSummary
                 expandIcon={<IoChevronDownOutline size={20} />}
                 sx={{
-                  bgcolor: "grey.50",
+                  bgcolor: "background.neutral",
                   "&:hover": { bgcolor: "action.hover" },
                   py: 1,
                   pl: 3.5,
@@ -203,7 +203,7 @@ const CustomerContract: React.FC<IProps> = ({
                       gridTemplateColumns: "repeat(4, 1fr)",
                       gap: 2,
                       p: 1.5,
-                      bgcolor: "grey.50",
+                      bgcolor: "background.neutral",
                       borderRadius: 0,
                     }}
                   >
@@ -271,7 +271,7 @@ const CustomerContract: React.FC<IProps> = ({
                       gridTemplateColumns: "repeat(2, 1fr)",
                       gap: 2,
                       p: 1.5,
-                      bgcolor: "grey.50",
+                      bgcolor: "background.neutral",
                       borderRadius: 0,
                     }}
                   >

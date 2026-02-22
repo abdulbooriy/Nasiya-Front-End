@@ -55,13 +55,11 @@ export function CashView() {
   const dataEmployee = useSelector((state: RootState) => state.employee);
   const { profile } = useSelector((state: RootState) => state.auth);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  console.log("selectedRows:", selectedRows); // ✅ DEBUG: selectedRows tekshirish
-  
+
   const { isLoading, payments, error } = useSelector(
     (state: RootState) => state.cash
   );
-  const cashPayments = payments; // ✅ Alias for debug
-  
+
   const [manager, setManager] = useState<{
     firstName: string;
     lastName: string;
@@ -89,18 +87,6 @@ export function CashView() {
   useEffect(() => {
     dispatch(getPendingPayments());
   }, [dispatch]);
-
-  // ✅ DEBUG: Cash data tekshirish
-  useEffect(() => {
-    if (cashPayments && cashPayments.length > 0) {
-      console.log("🔍 Cash payments:", cashPayments);
-      const reminderPayments = cashPayments.filter((p: any) => p.isReminderNotification);
-      console.log("🔔 Eslatma payments:", reminderPayments);
-      if (reminderPayments.length > 0) {
-        console.log("📋 Birinchi eslatma:", reminderPayments[0]);
-      }
-    }
-  }, [cashPayments]);
 
   const handleCustomerFocus = useCallback(() => {
     dispatch(getManagers());
@@ -409,7 +395,7 @@ export function CashView() {
                       mr: 2,
                     }}
                   >
-                    <MdPhone size={20} color="#666" />
+                    <MdPhone size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Telefon raqami"
@@ -426,7 +412,7 @@ export function CashView() {
                       mr: 2,
                     }}
                   >
-                    <MdLocationOn size={20} color="#666" />
+                    <MdLocationOn size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Manzil"
@@ -443,7 +429,7 @@ export function CashView() {
                       mr: 2,
                     }}
                   >
-                    <MdCreditCard size={20} color="#666" />
+                    <MdCreditCard size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Passport seriyasi"

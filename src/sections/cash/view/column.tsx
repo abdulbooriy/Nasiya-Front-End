@@ -65,7 +65,7 @@ export const columnsCash: Column[] = [
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
               <MdAccessTime
                 size={16}
-                color={isExpired ? "#f44336" : "#ff9800"}
+                color={isExpired ? "var(--palette-error-main)" : "var(--palette-warning-main)"}
               />
               <span>{day.toString().padStart(2, "0")}</span>
             </Box>
@@ -377,7 +377,7 @@ export const columnsCash: Column[] = [
                 gap: 0.75,
               }}
             >
-              <MdAccessTime size={16} color={isPast ? "#f44336" : "#666"} />
+              <MdAccessTime size={16} color={isPast ? "var(--palette-error-main)" : "var(--palette-text-secondary)"} />
               <Typography
                 sx={{
                   fontSize: "0.75rem",

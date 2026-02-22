@@ -35,8 +35,8 @@ export function TableToolbar({
         position: "sticky",
         top: 0,
         zIndex: 1000,
-        backgroundColor: "#FAFAFA",
-        borderBottom: `1px solid ${EXCEL_COLORS.gridLine}`,
+        backgroundColor: "var(--palette-background-neutral)",
+        borderBottom: `1px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
       }}
     >
       <Grid container spacing={1} width={1}>
@@ -52,7 +52,7 @@ export function TableToolbar({
               '& .MuiOutlinedInput-root': {
                 fontSize: '11px',
                 height: '32px',
-                backgroundColor: '#FFFFFF',
+                backgroundColor: 'var(--palette-background-paper)',
                 '& fieldset': {
                   borderColor: EXCEL_COLORS.gridLine,
                 },

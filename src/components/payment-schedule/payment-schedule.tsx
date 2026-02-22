@@ -198,15 +198,12 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     }
   };
 
-  React.useEffect(() => {}, [payments]);
-
   const generateSchedule = (): PaymentScheduleItem[] => {
     const schedule: PaymentScheduleItem[] = [];
     const start = new Date(startDate);
 
     // ✅ TUZATILDI: period nol yoki undefined bo'lsa, xato
     if (!period || period <= 0) {
-      console.warn("⚠️ Period is invalid:", period);
       return schedule;
     }
 
@@ -290,8 +287,6 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     });
     if (onPaymentSuccess) {
       onPaymentSuccess();
-    } else {
-      console.warn("onPaymentSuccess callback not provided");
     }
   };
 
@@ -393,11 +388,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: 600,
-                    bgcolor: "grey.50",
+                    bgcolor: "background.neutral",
                     py: 0.25,
                     px: { xs: 0.5, sm: 0.75, md: 1 },
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -406,11 +401,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: 600,
-                    bgcolor: "grey.50",
+                    bgcolor: "background.neutral",
                     py: 0.25,
                     px: { xs: 0.5, sm: 0.75, md: 1 },
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -419,11 +414,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: 600,
-                    bgcolor: "grey.50",
+                    bgcolor: "background.neutral",
                     py: 0.25,
                     px: { xs: 0.5, sm: 0.75, md: 1 },
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -433,11 +428,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                   align="right"
                   sx={{
                     fontWeight: 600,
-                    bgcolor: "grey.50",
+                    bgcolor: "background.neutral",
                     py: 0.25,
                     px: { xs: 0.5, sm: 0.75, md: 1 },
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -447,11 +442,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                   align="right"
                   sx={{
                     fontWeight: 600,
-                    bgcolor: "grey.50",
+                    bgcolor: "background.neutral",
                     py: 0.25,
                     px: { xs: 0.5, sm: 0.75, md: 1 },
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -461,11 +456,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                   align="center"
                   sx={{
                     fontWeight: 600,
-                    bgcolor: "grey.50",
+                    bgcolor: "background.neutral",
                     py: 0.25,
                     px: { xs: 0.5, sm: 0.75, md: 1 },
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -476,11 +471,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     align="center"
                     sx={{
                       fontWeight: 600,
-                      bgcolor: "grey.50",
+                      bgcolor: "background.neutral",
                       py: 0.25,
                       px: { xs: 0.5, sm: 0.75, md: 1 },
                       fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                      borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                      borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                       whiteSpace: "nowrap",
                     }}
                   >
@@ -491,11 +486,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                   align="center"
                   sx={{
                     fontWeight: 600,
-                    bgcolor: "grey.50",
+                    bgcolor: "background.neutral",
                     py: 0.25,
                     px: { xs: 0.5, sm: 0.75 },
                     fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                    borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                    borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -506,11 +501,11 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                     align="center"
                     sx={{
                       fontWeight: 600,
-                      bgcolor: "grey.50",
+                      bgcolor: "background.neutral",
                       py: 0.25,
                       px: { xs: 0.5, sm: 0.75 },
                       fontSize: { xs: "0.688rem", sm: "0.75rem" },
-                      borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                      borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                       whiteSpace: "nowrap",
                     }}
                   >
@@ -695,16 +690,16 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             : isPast && !item.isPaid
                               ? "error.lighter"
                               : "inherit",
-                          borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                          borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           "&:hover": {
                             bgcolor: item.isPaid
                               ? "success.light"
                               : isPast && !item.isPaid
                                 ? "error.light"
-                                : "grey.100",
+                                : "background.neutral",
                           },
                           "&:last-child": {
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           },
                         }}
                       >
@@ -713,7 +708,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           }}
                         >
                           <Box display="flex" alignItems="center" gap={0.5}>
@@ -747,7 +742,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           }}
                         >
                           <Typography
@@ -763,7 +758,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           }}
                         >
                           {item.isPaid ? (
@@ -804,7 +799,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           }}
                         >
                           <Typography
@@ -822,7 +817,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           }}
                         >
                           {item.isPaid ? (
@@ -868,7 +863,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75, md: 1 },
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           }}
                         >
                           <Typography
@@ -898,7 +893,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             sx={{
                               py: 0.25,
                               px: { xs: 0.5, sm: 0.75, md: 1 },
-                              borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                              borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                             }}
                           >
                             {!item.isPaid ? (
@@ -927,16 +922,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                 <Typography
                                   variant="body2"
                                   onClick={() => {
-                                    console.log("🔴 Qarz tugmasi bosildi:", {
-                                      month: item.month,
-                                      remainingAmount: remainingAmountToShow,
-                                      paymentId: actualPayment?._id,
-                                      hasPaymentId: !!actualPayment?._id,
-                                      actualPayment: actualPayment,
-                                    });
-
                                     if (!actualPayment?._id) {
-                                      console.error("❌ Payment ID topilmadi!");
                                       alert(
                                         "Xatolik: To'lov ID topilmadi. Sahifani yangilang va qayta urinib ko'ring.",
                                       );
@@ -998,7 +984,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                           sx={{
                             py: 0.25,
                             px: { xs: 0.5, sm: 0.75 },
-                            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                            borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           }}
                         >
                           {(() => {
@@ -1052,7 +1038,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                             sx={{
                               py: 0.25,
                               px: { xs: 0.5, sm: 0.75 },
-                              borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                              borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                             }}
                           >
                             {item.isPaid && actualPayment?._id ? (
@@ -1072,8 +1058,8 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                                   }
                                   sx={{
                                     p: 0.5,
-                                    color: "black",
-                                    "&:hover": { bgcolor: "grey.200" },
+                                    color: "text.primary",
+                                    "&:hover": { bgcolor: "background.neutral" },
                                   }}
                                 >
                                   <Iconify
@@ -1109,7 +1095,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
           sx={{
             mt: 1.5,
             p: 1.5,
-            bgcolor: "grey.50",
+            bgcolor: "background.neutral",
             borderRadius: 0,
             display: "flex",
             justifyContent: "space-between",
@@ -1285,7 +1271,7 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
             sx={{
               mt: 2,
               p: 2,
-              bgcolor: "grey.100",
+              bgcolor: "background.neutral",
               borderRadius: 0,
               whiteSpace: "pre-wrap",
               wordBreak: "break-word",

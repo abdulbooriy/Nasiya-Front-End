@@ -27,7 +27,7 @@ const initialState: UserState = {
   isLoadingExpenses: false,
 };
 
-const authSlice = createSlice({
+const employeeSlice = createSlice({
   name: "employee",
   initialState,
   reducers: {
@@ -91,5 +91,5 @@ export const {
   startExpenses,
   successExpenses,
   failureExpenses,
-} = authSlice.actions;
-export default authSlice.reducer;
+} = employeeSlice.actions;
+export default employeeSlice.reducer;

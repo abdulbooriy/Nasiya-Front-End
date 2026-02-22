@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { Theme, SxProps, Breakpoint } from "@mui/material/styles";
-
 import React, { useState } from "react";
 
+import type { Theme, SxProps, Breakpoint } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import { useTheme } from "@mui/material/styles";
@@ -14,6 +13,7 @@ import { MenuButton } from "@/layouts/components/menu-button";
 import { LayoutSection } from "@/layouts/core/layout-section";
 import { HeaderSection } from "@/layouts/core/header-section";
 import { AccountPopover } from "@/layouts/components/account-popover";
+import { ThemeToggle } from "@/layouts/components/theme-toggle";
 
 // ----------------------------------------------------------------------
 
@@ -72,6 +72,7 @@ export function DashboardLayout({
             ),
             rightArea: (
               <Box gap={1} display="flex" alignItems="center">
+                <ThemeToggle />
                 <AccountPopover data={[]} />
               </Box>
             ),

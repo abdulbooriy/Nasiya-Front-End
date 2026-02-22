@@ -51,7 +51,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       default:
         return {
           backgroundColor: excelTheme.colors.lightGray,
-          color: "#000000",
+          color: excelTheme.colors.darkGray,
           label: status,
           icon: null,
         };

@@ -47,7 +47,7 @@ export const ManagerSelectCellDebtor = React.memo(
     // Agar managerlar yuklanmagan bo'lsa
     if (!managers || managers.length === 0) {
       return (
-        <span style={{ fontSize: "14px", color: "#999" }}>
+        <span style={{ fontSize: "14px", color: "var(--palette-text-disabled)" }}>
           Yuklanmoqda...
         </span>
       );
@@ -74,7 +74,7 @@ export const ManagerSelectCellDebtor = React.memo(
             border: "none",
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            border: "1px solid #ccc",
+            border: "1px solid rgba(var(--palette-grey-500Channel) / 0.3)",
           }
         }}
         onClick={(e) => e.stopPropagation()}

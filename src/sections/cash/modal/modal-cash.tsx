@@ -1,9 +1,7 @@
-import type { RootState } from "@/store"
-
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
 
-import { green } from "@mui/material/colors";
+import type { RootState } from "@/store";
 import {
   Box,
   Chip,
@@ -17,12 +15,12 @@ import {
   DialogContent,
 } from "@mui/material";
 
-import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
-import { formatNumber } from "@/utils/format-number"
+import { formatNumber } from "@/utils/format-number";
 
-import { closeModal } from "@/store/slices/modalSlice"
-import { getCurrencyCourse } from "@/store/actions/dashboardActions"
+import { closeModal } from "@/store/slices/modalSlice";
+import { getCurrencyCourse } from "@/store/actions/dashboardActions";
 
 interface IForm {
   currencyDetails: {
@@ -68,7 +66,7 @@ const ModalCash = () => {
       const updatedAmount = calculateAmount(
         updatedCurrency.dollar,
         updatedCurrency.sum,
-        currencyCourse
+        currencyCourse,
       );
 
       return {
@@ -122,12 +120,11 @@ const ModalCash = () => {
       open={!!cashModal?.type}
       PaperProps={{ component: "form", onSubmit: handleSubmit }}
       maxWidth="md"
-      fullWidth
-    >
+      fullWidth>
       <DialogTitle>
-        {cashModal?.type === "edit"
-          ? "To‘lovni Tahrirlash"
-          : "Yangi To‘lov Qo‘shish"}
+        {cashModal?.type === "edit" ?
+          "To‘lovni Tahrirlash"
+        : "Yangi To‘lov Qo‘shish"}
       </DialogTitle>
 
       <DialogContent>
@@ -136,16 +133,14 @@ const ModalCash = () => {
           justifyContent="space-between"
           alignItems="center"
           flexDirection="column"
-          bgcolor={green[100]}
+          bgcolor="success.lighter"
           borderRadius={0}
-          p={1}
-        >
+          p={1}>
           <Typography
             variant="h4"
-            color={green[900]}
+            color="success.darker"
             fontWeight={700}
-            textAlign="center"
-          >
+            textAlign="center">
             <Box>
               <Typography
                 component="span"
@@ -153,11 +148,10 @@ const ModalCash = () => {
                 display="block"
                 textAlign="center"
                 fontSize={14}
-                bgcolor={green[50]}
+                bgcolor="background.neutral"
                 px={3}
                 p={1}
-                borderRadius={0}
-              >
+                borderRadius={0}>
                 {cash?.fullName}
               </Typography>
             </Box>

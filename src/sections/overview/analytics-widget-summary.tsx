@@ -48,7 +48,7 @@ export function AnalyticsWidgetSummary({
         boxShadow: "none",
         position: "relative",
         color: `${color}.darker`,
-        backgroundColor: "common.white",
+        backgroundColor: "background.paper",
         ...sx
       }}
       {...other}

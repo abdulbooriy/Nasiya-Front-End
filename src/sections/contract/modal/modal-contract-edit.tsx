@@ -310,7 +310,7 @@ const ModalContractEdit = () => {
         {contract && (
           <Box>
             {/* Contract Info */}
-            <Box sx={{ mb: 3, p: 2, bgcolor: "grey.100", borderRadius: 0 }}>
+            <Box sx={{ mb: 3, p: 2, bgcolor: "background.neutral", borderRadius: 0 }}>
               <Typography variant="subtitle2" color="text.secondary">
                 Shartnoma
               </Typography>

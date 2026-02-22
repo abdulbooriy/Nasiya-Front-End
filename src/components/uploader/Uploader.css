@@ -11,11 +11,11 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  color: gray;
+  color: var(--palette-text-secondary);
 }
 
 .upload__image-drag-image:hover {
-  color: #1877f2;
+  color: var(--palette-primary-main);
 }
 
 .upload__image-grid {
@@ -62,7 +62,7 @@
 
 .upload__add-button {
   font-size: 80px;
-  color: grey;
+  color: var(--palette-text-secondary);
   width: 100px;
   height: 100px;
   display: flex;
@@ -74,14 +74,14 @@
 }
 
 .upload__add-button:hover {
-  color: #1877f2;
+  color: var(--palette-primary-main);
 }
 
 .upload__upload-button {
-  border: solid grey 2px;
+  border: 2px solid var(--palette-text-secondary);
   padding: 10px 40px;
   background: none;
-  color: gray;
+  color: var(--palette-text-secondary);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -89,6 +89,6 @@
 }
 
 .upload__upload-button:hover {
-  color: #1877f2;
-  border-color: #1877f2;
+  color: var(--palette-primary-main);
+  border-color: var(--palette-primary-main);
 }
