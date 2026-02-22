@@ -198,8 +198,6 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
     }
   };
 
-  React.useEffect(() => {}, [payments]);
-
   const generateSchedule = (): PaymentScheduleItem[] => {
     const schedule: PaymentScheduleItem[] = [];
     const start = new Date(startDate);

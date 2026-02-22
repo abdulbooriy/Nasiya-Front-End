@@ -24,12 +24,6 @@ export function ProtectedRoute({
       return;
     }
 
-    console.log("ProtectedRoute Debug:");
-    console.log("  loggedIn:", loggedIn);
-    console.log("  profile.role:", profile.role);
-    console.log("  requiredRoles:", requiredRoles);
-    console.log("  isLoadingRefresh:", isLoadingRefresh);
-
     const token = localStorage.getItem("accessToken");
     const savedProfile = localStorage.getItem("userProfile");
 
