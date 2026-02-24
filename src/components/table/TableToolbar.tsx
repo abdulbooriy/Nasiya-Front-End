@@ -111,7 +111,7 @@ export function TableToolbar({
                   color: EXCEL_COLORS.cellText,
                   '&:hover': {
                     borderColor: EXCEL_COLORS.headerBg,
-                    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+                    backgroundColor: 'rgba(var(--palette-primary-mainChannel) / 0.06)',
                   },
                 }}
               >
@@ -132,7 +132,7 @@ export function TableToolbar({
                   color: EXCEL_COLORS.cellText,
                   '&:hover': {
                     borderColor: EXCEL_COLORS.headerBg,
-                    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+                    backgroundColor: 'rgba(var(--palette-primary-mainChannel) / 0.06)',
                   },
                 }}
               >
@@ -153,7 +153,7 @@ export function TableToolbar({
                   color: EXCEL_COLORS.cellText,
                   '&:hover': {
                     borderColor: EXCEL_COLORS.headerBg,
-                    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+                    backgroundColor: 'rgba(var(--palette-primary-mainChannel) / 0.06)',
                   },
                 }}
               >

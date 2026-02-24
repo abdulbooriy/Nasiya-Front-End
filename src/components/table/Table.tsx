@@ -77,7 +77,7 @@ export function TableComponent<T extends Record<string, any>>({
   // Barcha qatorlarni tanlash/olib tashlash
   const handleSelectAllRows = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = filteredData.map((row) => row['_id'] || row['id']);
+      const newSelected = filteredData.map((row) => row["_id"] || row["id"]);
       setSelectedRows(newSelected);
       onSelectedRowsChange?.(newSelected);
     } else {
@@ -112,7 +112,7 @@ export function TableComponent<T extends Record<string, any>>({
   };
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -122,8 +122,8 @@ export function TableComponent<T extends Record<string, any>>({
     Object.values(item).some(
       (value) =>
         value &&
-        value.toString().toLowerCase().includes(filterName.toLowerCase())
-    )
+        value.toString().toLowerCase().includes(filterName.toLowerCase()),
+    ),
   );
 
   const emptyRows =
@@ -144,11 +144,11 @@ export function TableComponent<T extends Record<string, any>>({
       return value || "—";
     }
 
-    return column.format
-      ? column.format(value)
-      : column.id === "birthDate"
-        ? value.split("T")[0]
-        : value;
+    return (
+      column.format ? column.format(value)
+      : column.id === "birthDate" ? value.split("T")[0]
+      : value
+    );
   };
 
   useEffect(() => {
@@ -171,25 +171,70 @@ export function TableComponent<T extends Record<string, any>>({
             aria-label="sticky table"
             size="small"
             stickyHeader
-            sx={{ width: "100%" }}
-          >
+            sx={{ width: "100%" }}>
             <TableHead>
               <TableRow>
+                {columns
+                  .filter((column) => selectedColumns.includes(column.id))
+                  .map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align || "left"}
+                      sx={{
+                        ...excelHeaderCellStyle,
+                        minWidth: {
+                          xs: "auto",
+                          sm: column.minWidth || column.width || 100,
+                        },
+                        width: column.width ? `${column.width}px` : "auto",
+                        ...(column.sticky && {
+                          ...(column.sticky === "left" ?
+                            excelStickyLeftStyle(column.stickyOffset || 0)
+                          : excelStickyRightStyle(column.stickyOffset || 0)),
+                          zIndex: 4,
+                          backgroundColor: `${EXCEL_COLORS.headerBg} !important`,
+                        }),
+                      }}>
+                      {column.label}
+                    </TableCell>
+                  ))}
+                {renderActions && (
+                  <TableCell
+                    align="center"
+                    sx={{
+                      ...excelHeaderCellStyle,
+                      width: selectable ? "40px" : "60px",
+                      minWidth: selectable ? "40px" : "60px",
+                      px: "4px",
+                      ...(selectable && {
+                        ...excelStickyRightStyle(32),
+                        zIndex: 4,
+                        backgroundColor: `${EXCEL_COLORS.headerBg} !important`,
+                      }),
+                    }}>
+                    Actions
+                  </TableCell>
+                )}
                 {selectable && (
                   <TableCell
                     padding="checkbox"
                     sx={{
                       ...excelHeaderCellStyle,
-                      ...excelStickyLeftStyle(0),
+                      ...excelStickyRightStyle(0),
                       zIndex: 4,
-                    }}
-                  >
+                      width: "32px",
+                      minWidth: "32px",
+                    }}>
                     <Checkbox
                       sx={{
                         ...excelCheckboxStyle,
-                        color: 'rgba(255,255,255,0.7)',
-                        '&.Mui-checked': { color: 'var(--palette-common-white)' },
-                        '&.MuiCheckbox-indeterminate': { color: 'var(--palette-common-white)' },
+                        color: "rgba(255,255,255,0.7)",
+                        "&.Mui-checked": {
+                          color: "var(--palette-common-white)",
+                        },
+                        "&.MuiCheckbox-indeterminate": {
+                          color: "var(--palette-common-white)",
+                        },
                       }}
                       indeterminate={
                         selectedRows.length > 0 &&
@@ -203,52 +248,21 @@ export function TableComponent<T extends Record<string, any>>({
                     />
                   </TableCell>
                 )}
-                {columns
-                  .filter((column) => selectedColumns.includes(column.id))
-                  .map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align || "left"}
-                      sx={{
-                        ...excelHeaderCellStyle,
-                        minWidth: { xs: "auto", sm: column.minWidth || column.width || 100 },
-                        width: column.width ? `${column.width}px` : "auto",
-                        ...(column.sticky && {
-                          ...(column.sticky === "left" 
-                            ? excelStickyLeftStyle(column.stickyOffset || 0)
-                            : excelStickyRightStyle(column.stickyOffset || 0)
-                          ),
-                          zIndex: 4,
-                          backgroundColor: `${EXCEL_COLORS.headerBg} !important`,
-                        }),
-                      }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                {renderActions && (
-                  <TableCell
-                    sx={{
-                      ...excelHeaderCellStyle,
-                      width: '40px',
-                      minWidth: '40px',
-                      px: '4px',
-                    }}
-                  />
-                )}
               </TableRow>
             </TableHead>
             <TableBody>
-              
               {filteredData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const rowId = row['_id'] || row['id'] || index.toString();
+                  const rowId = row["_id"] || row["id"] || index.toString();
                   const isSelected = selectedRows.includes(rowId);
 
                   // ✅ Muddati o'tgan eslatmani tekshirish
-                  const isExpiredReminder = row['isReminderNotification'] && row['date'] && new Date(row['date']) < new Date();
-                  
+                  const isExpiredReminder =
+                    row["isReminderNotification"] &&
+                    row["date"] &&
+                    new Date(row["date"]) < new Date();
+
                   return (
                     <TableRow
                       hover
@@ -257,48 +271,32 @@ export function TableComponent<T extends Record<string, any>>({
                       sx={{
                         ...excelRowStyle,
                         cursor: onRowClick ? "pointer" : "default",
-                        ...(row['isDeleted'] && {
-                          backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.1) !important",
+                        ...(row["isDeleted"] && {
+                          backgroundColor:
+                            "rgba(var(--palette-error-mainChannel) / 0.1) !important",
                           "&:hover": {
-                            backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.2) !important",
+                            backgroundColor:
+                              "rgba(var(--palette-error-mainChannel) / 0.2) !important",
                           },
                         }),
                         ...(isExpiredReminder && {
-                          backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.08) !important",
+                          backgroundColor:
+                            "rgba(var(--palette-error-mainChannel) / 0.08) !important",
                           "&:hover": {
-                            backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.15) !important",
+                            backgroundColor:
+                              "rgba(var(--palette-error-mainChannel) / 0.15) !important",
                           },
                         }),
-                        ...(row['isReminderNotification'] && !isExpiredReminder && {
-                          backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.08) !important",
-                          "&:hover": {
-                            backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.15) !important",
-                          },
-                        }),
-                      }}
-                    >
-                      {selectable && (
-                        <TableCell
-                          padding="checkbox"
-                          sx={{
-                            ...excelBodyCellStyle,
-                            ...excelStickyLeftStyle(0),
-                            zIndex: 1,
-                            ...(isExpiredReminder && {
-                              backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.08)",
-                            }),
-                            ...(row['isReminderNotification'] && !isExpiredReminder && {
-                              backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.08)",
-                            }),
-                          }}
-                        >
-                          <Checkbox
-                            sx={excelCheckboxStyle}
-                            checked={isSelected}
-                            onClick={(event) => handleSelectRow(event, rowId)}
-                          />
-                        </TableCell>
-                      )}
+                        ...(row["isReminderNotification"] &&
+                          !isExpiredReminder && {
+                            backgroundColor:
+                              "rgba(var(--palette-warning-mainChannel) / 0.08) !important",
+                            "&:hover": {
+                              backgroundColor:
+                                "rgba(var(--palette-warning-mainChannel) / 0.15) !important",
+                            },
+                          }),
+                      }}>
                       {columns
                         .filter((column) => selectedColumns.includes(column.id))
                         .map((column) => (
@@ -308,44 +306,72 @@ export function TableComponent<T extends Record<string, any>>({
                             onClick={() => onRowClick?.(row)}
                             sx={{
                               ...excelBodyCellStyle,
-                              minWidth: { xs: "auto", sm: column.minWidth || column['width'] || 100 },
-                              width: column['width'] ? `${column['width']}px` : "auto",
+                              minWidth: {
+                                xs: "auto",
+                                sm: column.minWidth || column["width"] || 100,
+                              },
+                              width:
+                                column["width"] ?
+                                  `${column["width"]}px`
+                                : "auto",
                               ...(column.sticky && {
-                                ...(column.sticky === "left" 
-                                  ? excelStickyLeftStyle(column.stickyOffset || 0)
-                                  : excelStickyRightStyle(column.stickyOffset || 0)
-                                ),
+                                ...(column.sticky === "left" ?
+                                  excelStickyLeftStyle(column.stickyOffset || 0)
+                                : excelStickyRightStyle(
+                                    column.stickyOffset || 0,
+                                  )),
                                 zIndex: 1,
                                 ...(isExpiredReminder && {
-                                  backgroundColor: "rgba(var(--palette-error-mainChannel) / 0.08)",
+                                  backgroundColor:
+                                    "rgba(var(--palette-error-mainChannel) / 0.08)",
                                 }),
-                                ...(row['isReminderNotification'] && !isExpiredReminder && {
-                                  backgroundColor: "rgba(var(--palette-warning-mainChannel) / 0.08)",
-                                }),
+                                ...(row["isReminderNotification"] &&
+                                  !isExpiredReminder && {
+                                    backgroundColor:
+                                      "rgba(var(--palette-warning-mainChannel) / 0.08)",
+                                  }),
                               }),
-                            }}
-                          >
+                            }}>
                             {renderCellValue(row, column)}
                           </TableCell>
                         ))}
                       {renderActions && (
                         <TableCell
-                          align="right"
+                          align="center"
                           sx={{
                             ...excelBodyCellStyle,
-                            width: '40px',
-                            minWidth: '40px',
-                            px: '4px',
-                          }}
-                        >
+                            width: selectable ? "40px" : "60px",
+                            minWidth: selectable ? "40px" : "60px",
+                            px: "4px",
+                            ...(selectable && {
+                              ...excelStickyRightStyle(32),
+                              zIndex: 1,
+                            }),
+                          }}>
                           {renderActions(row)}
                         </TableCell>
                       )}
-
-
-
-
-
+                      {selectable && (
+                        <TableCell
+                          padding="checkbox"
+                          sx={{
+                            ...excelBodyCellStyle,
+                            ...excelStickyRightStyle(0),
+                            zIndex: 1,
+                            width: "32px",
+                            minWidth: "32px",
+                            ...(isSelected && {
+                              backgroundColor:
+                                "rgba(var(--palette-primary-mainChannel) / 0.16)",
+                            }),
+                          }}>
+                          <Checkbox
+                            sx={excelCheckboxStyle}
+                            checked={isSelected}
+                            onClick={(event) => handleSelectRow(event, rowId)}
+                          />
+                        </TableCell>
+                      )}
                     </TableRow>
                   );
                 })}

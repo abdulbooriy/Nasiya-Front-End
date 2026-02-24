@@ -1,56 +1,30 @@
 // Excel-style status badge component
 import { Box } from '@mui/material';
-import { excelTheme } from '@/theme/excel-theme'
 
 interface ExcelStatusBadgeProps {
   status: 'PAID' | 'PENDING' | 'UNDERPAID' | 'OVERPAID' | 'REJECTED' | 'active' | 'completed' | 'cancelled';
   label?: string;
 }
 
-export function ExcelStatusBadge({ status, label }: ExcelStatusBadgeProps) {
-  const getStatusStyle = () => {
-    switch (status) {
-      case 'PAID':
-      case 'completed':
-        return {
-          backgroundColor: excelTheme.colors.green,
-          color: excelTheme.colors.greenText,
-        };
-      case 'REJECTED':
-      case 'cancelled':
-        return {
-          backgroundColor: excelTheme.colors.red,
-          color: excelTheme.colors.redText,
-        };
-      case 'PENDING':
-        return {
-          backgroundColor: excelTheme.colors.yellow,
-          color: excelTheme.colors.yellowText,
-        };
-      case 'UNDERPAID':
-        return {
-          backgroundColor: excelTheme.colors.yellow,
-          color: excelTheme.colors.yellowText,
-        };
-      case 'OVERPAID':
-        return {
-          backgroundColor: excelTheme.colors.blue,
-          color: excelTheme.colors.blueText,
-        };
-      case 'active':
-        return {
-          backgroundColor: excelTheme.colors.blue,
-          color: excelTheme.colors.blueText,
-        };
-      default:
-        return {
-          backgroundColor: excelTheme.colors.lightGray,
-          color: excelTheme.colors.darkGray,
-        };
-    }
-  };
+const STATUS_STYLES: Record<string, { bg: string; color: string; border: string }> = {
+  PAID:      { bg: 'rgba(var(--palette-success-mainChannel) / 0.16)', color: 'var(--palette-success-dark)',  border: 'rgba(var(--palette-success-mainChannel) / 0.4)' },
+  completed: { bg: 'rgba(var(--palette-success-mainChannel) / 0.16)', color: 'var(--palette-success-dark)',  border: 'rgba(var(--palette-success-mainChannel) / 0.4)' },
+  REJECTED:  { bg: 'rgba(var(--palette-error-mainChannel)   / 0.16)', color: 'var(--palette-error-main)',    border: 'rgba(var(--palette-error-mainChannel)   / 0.4)' },
+  cancelled: { bg: 'rgba(var(--palette-error-mainChannel)   / 0.16)', color: 'var(--palette-error-main)',    border: 'rgba(var(--palette-error-mainChannel)   / 0.4)' },
+  PENDING:   { bg: 'rgba(var(--palette-warning-mainChannel) / 0.16)', color: 'var(--palette-warning-dark)',  border: 'rgba(var(--palette-warning-mainChannel) / 0.4)' },
+  UNDERPAID: { bg: 'rgba(var(--palette-warning-mainChannel) / 0.16)', color: 'var(--palette-warning-dark)',  border: 'rgba(var(--palette-warning-mainChannel) / 0.4)' },
+  OVERPAID:  { bg: 'rgba(var(--palette-info-mainChannel)    / 0.16)', color: 'var(--palette-info-dark)',     border: 'rgba(var(--palette-info-mainChannel)    / 0.4)' },
+  active:    { bg: 'rgba(var(--palette-info-mainChannel)    / 0.16)', color: 'var(--palette-info-dark)',     border: 'rgba(var(--palette-info-mainChannel)    / 0.4)' },
+};
 
-  const statusStyle = getStatusStyle();
+const DEFAULT_STYLE = {
+  bg: 'rgba(var(--palette-grey-500Channel) / 0.16)',
+  color: 'var(--palette-text-secondary)',
+  border: 'rgba(var(--palette-grey-500Channel) / 0.4)',
+};
+
+export function ExcelStatusBadge({ status, label }: ExcelStatusBadgeProps) {
+  const s = STATUS_STYLES[status] ?? DEFAULT_STYLE;
   const displayLabel = label || status;
 
   return (
@@ -61,11 +35,12 @@ export function ExcelStatusBadge({ status, label }: ExcelStatusBadgeProps) {
         fontSize: '11px',
         fontWeight: 600,
         fontFamily: 'Calibri, Arial, sans-serif',
-        border: `1px solid ${statusStyle.color}`,
-        borderRadius: 0, // Excel: sharp corners
+        backgroundColor: s.bg,
+        color: s.color,
+        border: `1px solid ${s.border}`,
+        borderRadius: 0,
         textAlign: 'center',
         textTransform: 'uppercase',
-        ...statusStyle,
       }}
     >
       {displayLabel}
