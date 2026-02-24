@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { excelTheme } from "@/theme/excel-theme"
 import { Iconify } from "@/components/iconify";
 
 interface StatusBadgeProps {
@@ -7,58 +6,29 @@ interface StatusBadgeProps {
   size?: "small" | "medium";
 }
 
-export const StatusBadge: React.FC<StatusBadgeProps> = ({ 
-  status, 
-  size = "small" 
-}) => {
-  const getStatusStyle = () => {
-    switch (status?.toUpperCase()) {
-      case "PAID":
-        return {
-          backgroundColor: excelTheme.colors.green,
-          color: excelTheme.colors.greenText,
-          label: "TO'LANDI",
-          icon: "mdi:check-circle",
-        };
-      case "UNDERPAID":
-        return {
-          backgroundColor: excelTheme.colors.yellow,
-          color: excelTheme.colors.yellowText,
-          label: "KAM",
-          icon: "mdi:alert",
-        };
-      case "OVERPAID":
-        return {
-          backgroundColor: excelTheme.colors.blue,
-          color: excelTheme.colors.blueText,
-          label: "KO'P",
-          icon: "mdi:arrow-up",
-        };
-      case "PENDING":
-        return {
-          backgroundColor: excelTheme.colors.yellow,
-          color: excelTheme.colors.yellowText,
-          label: "KUTISH",
-          icon: "mdi:clock-outline",
-        };
-      case "REJECTED":
-        return {
-          backgroundColor: excelTheme.colors.red,
-          color: excelTheme.colors.redText,
-          label: "RAD ETILDI",
-          icon: "mdi:close-circle",
-        };
-      default:
-        return {
-          backgroundColor: excelTheme.colors.lightGray,
-          color: excelTheme.colors.darkGray,
-          label: status,
-          icon: null,
-        };
-    }
-  };
+const STATUS_STYLES: Record<string, { bg: string; color: string; border: string; label: string; icon: string | null }> = {
+  PAID:     { bg: 'rgba(var(--palette-success-mainChannel) / 0.16)', color: 'var(--palette-success-dark)',  border: 'rgba(var(--palette-success-mainChannel) / 0.4)', label: "TO'LANDI",   icon: "mdi:check-circle" },
+  UNDERPAID:{ bg: 'rgba(var(--palette-warning-mainChannel) / 0.16)', color: 'var(--palette-warning-dark)',  border: 'rgba(var(--palette-warning-mainChannel) / 0.4)', label: "KAM",        icon: "mdi:alert" },
+  OVERPAID: { bg: 'rgba(var(--palette-info-mainChannel)    / 0.16)', color: 'var(--palette-info-dark)',     border: 'rgba(var(--palette-info-mainChannel)    / 0.4)', label: "KO'P",       icon: "mdi:arrow-up" },
+  PENDING:  { bg: 'rgba(var(--palette-warning-mainChannel) / 0.16)', color: 'var(--palette-warning-dark)',  border: 'rgba(var(--palette-warning-mainChannel) / 0.4)', label: "KUTISH",     icon: "mdi:clock-outline" },
+  REJECTED: { bg: 'rgba(var(--palette-error-mainChannel)   / 0.16)', color: 'var(--palette-error-main)',    border: 'rgba(var(--palette-error-mainChannel)   / 0.4)', label: "RAD ETILDI", icon: "mdi:close-circle" },
+};
 
-  const statusStyle = getStatusStyle();
+const DEFAULT_STYLE = {
+  bg: 'rgba(var(--palette-grey-500Channel) / 0.16)',
+  color: 'var(--palette-text-secondary)',
+  border: 'rgba(var(--palette-grey-500Channel) / 0.4)',
+  icon: null,
+};
+
+export const StatusBadge: React.FC<StatusBadgeProps> = ({
+  status,
+  size = "small",
+}) => {
+  const key = status?.toUpperCase();
+  const s = STATUS_STYLES[key] ?? { ...DEFAULT_STYLE, label: status };
+  const displayLabel = (s as typeof STATUS_STYLES[string]).label ?? status;
+  const icon = (s as typeof STATUS_STYLES[string]).icon ?? null;
 
   return (
     <Box
@@ -70,19 +40,19 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
         fontSize: size === "small" ? "10px" : "11px",
         fontWeight: 600,
         fontFamily: "Calibri, Arial, sans-serif",
-        border: `1px solid ${statusStyle.color}`,
-        borderRadius: 0, // Excel: sharp corners
-        backgroundColor: statusStyle.backgroundColor,
-        color: statusStyle.color,
+        backgroundColor: s.bg,
+        color: s.color,
+        border: `1px solid ${s.border}`,
+        borderRadius: 0,
       }}
     >
-      {statusStyle.icon && (
-        <Iconify 
-          icon={statusStyle.icon} 
-          width={size === "small" ? 12 : 14} 
+      {icon && (
+        <Iconify
+          icon={icon}
+          width={size === "small" ? 12 : 14}
         />
       )}
-      {statusStyle.label}
+      {displayLabel}
     </Box>
   );
 };

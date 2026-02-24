@@ -295,7 +295,8 @@ const CustomerView = () => {
           <Box
             display="flex"
             alignItems="center"
-            gap={2}
+            flexWrap="wrap"
+            gap={1}
             px={2}
             py={1}
             sx={{
@@ -304,26 +305,28 @@ const CustomerView = () => {
               borderRadius: 1,
             }}
           >
-            <Typography variant="body1" color="error.main" fontWeight={600}>
-              {selectedRows.length} ta tanlangan
+            <Typography variant="body2" color="error.main" fontWeight={700} sx={{ flex: '1 1 auto' }}>
+              {selectedRows.length} ta mijoz tanlandi
             </Typography>
-            <Button
-              variant="contained"
-              color="error"
-              size="small"
-              startIcon={<Iconify icon="mingcute:delete-2-line" />}
-              onClick={() => setBulkDeleteDialog(true)}
-            >
-              O'chirish
-            </Button>
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="small"
-              onClick={() => setSelectedRows([])}
-            >
-              Bekor qilish
-            </Button>
+            <Box display="flex" gap={1} flexShrink={0}>
+              <Button
+                variant="contained"
+                color="error"
+                size="small"
+                startIcon={<Iconify icon="mingcute:delete-2-line" />}
+                onClick={() => setBulkDeleteDialog(true)}
+              >
+                O'chirish
+              </Button>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="small"
+                onClick={() => setSelectedRows([])}
+              >
+                Bekor qilish
+              </Button>
+            </Box>
           </Box>
         )}
 

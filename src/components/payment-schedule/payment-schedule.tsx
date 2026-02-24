@@ -686,16 +686,16 @@ const PaymentSchedule: FC<PaymentScheduleProps> = ({
                       <TableRow
                         sx={{
                           bgcolor: item.isPaid
-                            ? "success.lighter"
+                            ? "rgba(var(--palette-success-mainChannel) / 0.1)"
                             : isPast && !item.isPaid
-                              ? "error.lighter"
+                              ? "rgba(var(--palette-error-mainChannel) / 0.1)"
                               : "inherit",
                           borderBottom: "1px solid rgba(var(--palette-grey-500Channel) / 0.2)",
                           "&:hover": {
                             bgcolor: item.isPaid
-                              ? "success.light"
+                              ? "rgba(var(--palette-success-mainChannel) / 0.18)"
                               : isPast && !item.isPaid
-                                ? "error.light"
+                                ? "rgba(var(--palette-error-mainChannel) / 0.18)"
                                 : "background.neutral",
                           },
                           "&:last-child": {

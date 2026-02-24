@@ -15,8 +15,8 @@ export const EXCEL_COLORS = {
   // Row ranglari (CSS vars for dark mode support)
   rowEven: 'var(--palette-background-paper)',
   rowOdd: 'var(--palette-background-neutral)',
-  rowHover: 'rgba(33, 115, 70, 0.12)',
-  rowSelected: 'rgba(33, 115, 70, 0.24)',
+  rowHover: 'rgba(var(--palette-primary-mainChannel) / 0.08)',
+  rowSelected: 'rgba(var(--palette-primary-mainChannel) / 0.16)',
 
   // Cell ranglari (CSS vars for dark mode support)
   cellText: 'var(--palette-text-primary)',
@@ -102,12 +102,12 @@ export const excelRowStyle: SxProps<Theme> = {
     backgroundColor: 'var(--palette-background-neutral)',
   },
   '&:hover': {
-    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.12) !important',
+    backgroundColor: 'rgba(var(--palette-primary-mainChannel) / 0.08) !important',
   },
   '&.Mui-selected': {
-    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.24) !important',
+    backgroundColor: 'rgba(var(--palette-primary-mainChannel) / 0.16) !important',
     '&:hover': {
-      backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.32) !important',
+      backgroundColor: 'rgba(var(--palette-primary-mainChannel) / 0.24) !important',
     },
   },
 };
