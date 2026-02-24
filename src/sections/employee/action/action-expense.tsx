@@ -46,7 +46,7 @@ export default function ActionExpense({
 
   return (
     <>
-      <IconButton onClick={handleOpenPopover} sx={{ color: "black" }}>
+      <IconButton onClick={handleOpenPopover} sx={{ color: "text.primary" }}>
         <Iconify icon="eva:more-vertical-fill" width={22} />
       </IconButton>
 

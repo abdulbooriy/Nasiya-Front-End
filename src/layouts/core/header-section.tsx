@@ -89,8 +89,7 @@ export function HeaderSection({
         zIndex: "var(--layout-header-zIndex)",
         ...(sx ?? {}),
       }}
-      {...other}
-    >
+      {...other}>
       {slots?.topArea}
 
       <Toolbar
@@ -99,8 +98,7 @@ export function HeaderSection({
         sx={{
           ...toolbarStyles?.default,
           ...(slotProps?.toolbar?.sx ?? {}),
-        }}
-      >
+        }}>
         <Container
           {...slotProps?.container}
           sx={{
@@ -109,12 +107,16 @@ export function HeaderSection({
             alignItems: "center",
             justifyContent: "space-between",
             ...(slotProps?.container?.sx ?? {}),
+<<<<<<< HEAD
 
             background: "rgba(255, 255, 255, 0.75)",
             backdropFilter: "saturate(200%) blur(30px)",
             borderBottom: "0.5px solid rgba(0, 0, 0, 0.08)",
           }}
         >
+=======
+          }}>
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
           {slots?.leftArea}
 
           <Box
@@ -122,6 +124,7 @@ export function HeaderSection({
               display: "flex",
               flex: "1 1 auto",
               justifyContent: "center",
+<<<<<<< HEAD
               gap: "0.5rem",
               p: "4px",
               maxWidth: "1000px",
@@ -139,6 +142,10 @@ export function HeaderSection({
                 borderRadius: "10px",
               }}
             >
+=======
+            }}>
+            <Box sx={{ display: { xs: "none", md: "flex" }, flex: "1 auto" }}>
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
               {roleNavItems.map((item: DataType) => {
                 const isActived = item.path === pathname;
 
@@ -181,9 +188,14 @@ export function HeaderSection({
                             bgcolor: "var(--layout-nav-item-active-bg)",
                           },
                         }),
+<<<<<<< HEAD
                       }}
                     >
                       <Box component="span" sx={{ width: 20, height: 20 }}>
+=======
+                      }}>
+                      <Box component="span" sx={{ width: 24, height: 24 }}>
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                         {item.icon}
                       </Box>
 

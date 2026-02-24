@@ -149,7 +149,7 @@ export function ResetView() {
         )}
 
         {/* Warning Card */}
-        <Card sx={{ p: 3, bgcolor: "error.lighter" }}>
+        <Card sx={{ p: 3, bgcolor: "rgba(var(--palette-error-mainChannel) / 0.1)" }}>
           <Stack direction="row" spacing={2} alignItems="center">
             <Warning sx={{ fontSize: 40, color: "error.main" }} />
             <Box>
@@ -307,7 +307,7 @@ export function ResetView() {
               Haqiqatan ham barcha ma'lumotlarni o'chirmoqchimisiz? Bu amal
               qaytarib bo'lmaydi!
             </Typography>
-            <Box sx={{ mt: 2, p: 2, bgcolor: "grey.100", borderRadius: 0 }}>
+            <Box sx={{ mt: 2, p: 2, bgcolor: "background.neutral", borderRadius: 0 }}>
               <Typography variant="body2" fontWeight="bold" gutterBottom>
                 O'chiriladigan ma'lumotlar:
               </Typography>

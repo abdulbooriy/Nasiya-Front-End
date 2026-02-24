@@ -56,7 +56,12 @@ export function AnalyticsWidgetSummary({
         border: "0.5px solid rgba(0, 0, 0, 0.08)",
         transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
         color: `${color}.darker`,
+<<<<<<< HEAD
         ...sx,
+=======
+        backgroundColor: "background.paper",
+        ...sx
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
       }}
       {...other}
     >

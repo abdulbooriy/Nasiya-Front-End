@@ -7,7 +7,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Box, Paper, Button } from "@mui/material";
 
 import { useAppDispatch } from "@/hooks/useAppDispatch"
-
 import { DashboardContent } from "@/layouts/dashboard"
 import { setContractId } from "@/store/slices/contractSlice"
 import { getContract } from "@/store/actions/contractActions"
@@ -34,7 +33,7 @@ const ContractDetails = () => {
   
   // Check if user is admin or moderator
   const userRole = (typeof profile?.role === 'string' ? profile.role : (profile?.role as any)?.name)?.toLowerCase();
-  userRole === "admin" || userRole === "moderator";
+  const isAdminOrModerator = userRole === "admin" || userRole === "moderator";
 
   useEffect(() => {
     if (contractId) {
@@ -43,12 +42,6 @@ const ContractDetails = () => {
   }, [contractId, dispatch]);
 
   const contractCustomer = contract?.customer || customer;
-
-  useEffect(() => {
-    if (contract) {
-      // Contract data is available
-    }
-  }, [contract]);
 
   if (!contract && isLoading) {
     return <Loader />;

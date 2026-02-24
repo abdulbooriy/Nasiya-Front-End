@@ -303,8 +303,12 @@ export function ContractsView() {
             gap={2}
             px={2}
             py={1}
-            sx={{ bgcolor: "error.lighter", borderRadius: 1 }}>
-            <Typography variant="body1" color="error.dark" fontWeight={700}>
+            sx={{
+              bgcolor: "rgba(var(--palette-error-mainChannel) / 0.12)",
+              border: "1px solid rgba(var(--palette-error-mainChannel) / 0.24)",
+              borderRadius: 1,
+            }}>
+            <Typography variant="body1" color="error.main" fontWeight={700}>
               {selectedRows.length} ta tanlangan
             </Typography>
             <Button
@@ -424,7 +428,7 @@ export function ContractsView() {
         maxWidth="sm"
         fullWidth>
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdPerson size={24} color="#1976d2" />
+          <MdPerson size={24} color="var(--palette-primary-main)" />
           Mijoz ma'lumotlari
         </DialogTitle>
         <DialogContent>
@@ -457,7 +461,7 @@ export function ContractsView() {
                       gap: 1,
                       mr: 2,
                     }}>
-                    <MdPhone size={20} color="#666" />
+                    <MdPhone size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Telefon raqami"
@@ -473,7 +477,7 @@ export function ContractsView() {
                       gap: 1,
                       mr: 2,
                     }}>
-                    <MdLocationOn size={20} color="#666" />
+                    <MdLocationOn size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Manzil"
@@ -489,7 +493,7 @@ export function ContractsView() {
                       gap: 1,
                       mr: 2,
                     }}>
-                    <MdCreditCard size={20} color="#666" />
+                    <MdCreditCard size={20} color="var(--palette-text-secondary)" />
                   </Box>
                   <ListItemText
                     primary="Passport seriyasi"
@@ -547,7 +551,7 @@ export function ContractsView() {
         maxWidth="sm"
         fullWidth>
         <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdCheckCircle color="green" size={24} />
+          <MdCheckCircle color="var(--palette-success-main)" size={24} />
           Shartnomani tasdiqlash
         </DialogTitle>
         <DialogContent>

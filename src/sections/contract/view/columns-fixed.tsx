@@ -60,7 +60,7 @@ export const columnsPageContract: Column[] = [
               sx={{
                 p: 0.25,
                 '&:hover': {
-                  bgcolor: 'primary.lighter',
+                  bgcolor: 'rgba(var(--palette-primary-mainChannel) / 0.08)',
                   color: 'primary.main',
                 },
               }}

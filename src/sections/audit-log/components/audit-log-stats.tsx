@@ -161,7 +161,7 @@ export default function AuditLogStats({ stats, loading, onDateRangeChange }: Aud
                       width: 64,
                       height: 64,
                       borderRadius: '50%',
-                      bgcolor: 'primary.lighter',
+                      bgcolor: 'rgba(var(--palette-primary-mainChannel) / 0.12)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -191,7 +191,7 @@ export default function AuditLogStats({ stats, loading, onDateRangeChange }: Aud
                       width: 64,
                       height: 64,
                       borderRadius: '50%',
-                      bgcolor: 'success.lighter',
+                      bgcolor: 'rgba(var(--palette-success-mainChannel) / 0.12)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -221,7 +221,7 @@ export default function AuditLogStats({ stats, loading, onDateRangeChange }: Aud
                       width: 64,
                       height: 64,
                       borderRadius: '50%',
-                      bgcolor: 'warning.lighter',
+                      bgcolor: 'rgba(var(--palette-warning-mainChannel) / 0.12)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -265,7 +265,7 @@ export default function AuditLogStats({ stats, loading, onDateRangeChange }: Aud
                       {entityStat.actions.map((actionStat) => {
                         const percentage = (actionStat.count / entityStat.totalCount) * 100;
                         return (
-                          <Paper key={actionStat.action} sx={{ p: 2, bgcolor: 'grey.50' }}>
+                          <Paper key={actionStat.action} sx={{ p: 2, bgcolor: 'background.neutral' }}>
                             <Stack spacing={1}>
                               <Stack direction="row" alignItems="center" justifyContent="space-between">
                                 <Typography variant="subtitle2">
@@ -287,7 +287,7 @@ export default function AuditLogStats({ stats, loading, onDateRangeChange }: Aud
                                 sx={{
                                   height: 6,
                                   borderRadius: 0,
-                                  bgcolor: 'grey.200',
+                                  bgcolor: 'action.disabledBackground',
                                   '& .MuiLinearProgress-bar': {
                                     borderRadius: 0,
                                   },

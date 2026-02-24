@@ -35,6 +35,7 @@ export function TableToolbar({
         position: "sticky",
         top: 0,
         zIndex: 1000,
+<<<<<<< HEAD
         backgroundColor: "#ffffff",
         borderBottom: `1px solid ${EXCEL_COLORS.gridLine}`,
         p: "6px",
@@ -46,6 +47,10 @@ export function TableToolbar({
     0 6px 20px rgba(0,0,0,0.06),
     0 20px 40px rgba(0,0,0,0.08)
   `,
+=======
+        backgroundColor: "var(--palette-background-neutral)",
+        borderBottom: `1px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
       }}
     >
       <Grid
@@ -62,6 +67,7 @@ export function TableToolbar({
             onChange={(e) => onSearchChange(e.target.value)}
             sx={{
               width: 1,
+<<<<<<< HEAD
               "& .MuiOutlinedInput-root": {
                 borderRadius: "12px",
                 background: "var(--layout-nav-item-hover-bg)",
@@ -78,6 +84,14 @@ export function TableToolbar({
                 transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
                 "& fieldset": {
                   border: "none",
+=======
+              '& .MuiOutlinedInput-root': {
+                fontSize: '11px',
+                height: '32px',
+                backgroundColor: 'var(--palette-background-paper)',
+                '& fieldset': {
+                  borderColor: EXCEL_COLORS.gridLine,
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                 },
                 "&.Mui-focused": {
                   background: "#fff",
@@ -130,6 +144,7 @@ export function TableToolbar({
                 startIcon={<MdFilterList size={14} />}
                 onClick={onFilterClick}
                 sx={{
+<<<<<<< HEAD
                   fontSize: "10px",
                   minHeight: "28px",
                   fontWeight: 900,
@@ -144,6 +159,18 @@ export function TableToolbar({
                     borderColor: "var(--layout-nav-item-hover-bg)",
                     // borderColor: EXCEL_COLORS.headerBg,
                     backgroundColor: "#fff",
+=======
+                  fontSize: '10px',
+                  minHeight: '28px',
+                  py: '4px',
+                  px: '10px',
+                  textTransform: 'none',
+                  borderColor: EXCEL_COLORS.gridLine,
+                  color: EXCEL_COLORS.cellText,
+                  '&:hover': {
+                    borderColor: EXCEL_COLORS.headerBg,
+                    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
@@ -164,7 +191,11 @@ export function TableToolbar({
                   color: EXCEL_COLORS.cellText,
                   "&:hover": {
                     borderColor: EXCEL_COLORS.headerBg,
+<<<<<<< HEAD
                     backgroundColor: "rgba(33, 115, 70, 0.04)",
+=======
+                    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
@@ -185,7 +216,11 @@ export function TableToolbar({
                   color: EXCEL_COLORS.cellText,
                   "&:hover": {
                     borderColor: EXCEL_COLORS.headerBg,
+<<<<<<< HEAD
                     backgroundColor: "rgba(33, 115, 70, 0.04)",
+=======
+                    backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >

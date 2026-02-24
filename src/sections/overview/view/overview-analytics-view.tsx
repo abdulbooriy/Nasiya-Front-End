@@ -111,9 +111,9 @@ export function OverviewAnalyticsView() {
               sx={{
                 p: 3,
                 borderRadius: 0,
-                bgcolor: "warning.lighter",
+                bgcolor: "rgba(var(--palette-warning-mainChannel) / 0.1)",
                 border: "1px dashed",
-                borderColor: "warning.main",
+                borderColor: "rgba(var(--palette-warning-mainChannel) / 0.5)",
                 textAlign: "center",
               }}
             >

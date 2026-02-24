@@ -37,11 +37,11 @@ const MuiButton: Components<Theme>['MuiButton'] = {
 
 const MuiCard: Components<Theme>['MuiCard'] = {
   styleOverrides: {
-    root: ({}) => ({
+    root: ({ theme }) => ({
       zIndex: 0,
       position: 'relative',
       boxShadow: 'none',
-      border: '1px solid #D4D4D4',
+      border: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
       borderRadius: 0,
     }),
   },
@@ -72,36 +72,36 @@ const MuiPaper: Components<Theme>['MuiPaper'] = {
     elevation: 0,
   },
   styleOverrides: {
-    root: { 
+    root: ({ theme }) => ({
       backgroundImage: 'none',
       boxShadow: 'none',
-      border: '1px solid #D4D4D4',
+      border: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
       borderRadius: 0,
-    },
-    outlined: ({}) => ({
-      borderColor: '#D4D4D4',
+    }),
+    outlined: ({ theme }) => ({
+      borderColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.2),
     }),
   },
 };
 
 const MuiTableCell: Components<Theme>['MuiTableCell'] = {
   styleOverrides: {
-    root: {
-      borderRight: '1px solid #D0D0D0',
-      borderBottom: '1px solid #D0D0D0',
-      padding: '4px 8px', // Kichikroq padding (Excel kabi)
-      fontSize: '11px', // Excel default size
+    root: ({ theme }) => ({
+      borderRight: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
+      borderBottom: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
+      padding: '4px 8px',
+      fontSize: '11px',
       fontFamily: 'Calibri, Arial, sans-serif',
       lineHeight: '1.4',
       '&:last-child': {
         borderRight: 'none',
       },
-    },
+    }),
     head: ({}) => ({
       fontSize: '11px !important',
-      color: '#FFFFFF !important', // Oq text - MUHIM!
+      color: '#FFFFFF !important',
       fontWeight: '700 !important',
-      backgroundColor: '#217346 !important', // Excel yashil header
+      backgroundColor: '#217346 !important',
       borderBottom: '2px solid #1A5C37',
       borderTop: '1px solid #1A5C37',
       borderRight: '1px solid #1A5C37',
@@ -114,10 +114,10 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
         borderRight: 'none',
       },
     }),
-    body: {
+    body: ({ theme }) => ({
       fontSize: '11px',
-      color: '#000000',
-    },
+      color: theme.vars.palette.text.primary,
+    }),
   },
 };
 
@@ -165,40 +165,40 @@ const MuiCheckbox: Components<Theme>['MuiCheckbox'] = {
 // Excel-like TableRow styling
 const MuiTableRow: Components<Theme>['MuiTableRow'] = {
   styleOverrides: {
-    root: {
-      height: '21px', // Excel standart row height (kichik)
+    root: ({ theme }) => ({
+      height: '21px',
       '&:nth-of-type(even)': {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: theme.vars.palette.background.paper,
       },
       '&:nth-of-type(odd)': {
-        backgroundColor: '#F9F9F9', // Excel default zebra
+        backgroundColor: theme.vars.palette.background.neutral,
       },
       '&:hover': {
-        backgroundColor: '#D3E4CD !important', // Excel yashil hover
+        backgroundColor: `rgba(var(--palette-success-mainChannel) / 0.12) !important`,
         transition: 'background-color 0.1s ease',
       },
       '&.Mui-selected': {
-        backgroundColor: '#A8D08D !important', // Excel yashil selected
+        backgroundColor: `rgba(var(--palette-success-mainChannel) / 0.24) !important`,
         '&:hover': {
-          backgroundColor: '#9BC97E !important',
+          backgroundColor: `rgba(var(--palette-success-mainChannel) / 0.32) !important`,
         },
       },
-    },
+    }),
   },
 };
 
 // Excel-like TableContainer styling
 const MuiTableContainer: Components<Theme>['MuiTableContainer'] = {
   styleOverrides: {
-    root: {
-      border: '1px solid #D4D4D4',
+    root: ({ theme }) => ({
+      border: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.2)}`,
       borderRadius: 0,
       boxShadow: 'none',
       '& .MuiTable-root': {
         borderCollapse: 'separate',
         borderSpacing: 0,
       },
-    },
+    }),
   },
 };
 

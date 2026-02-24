@@ -94,7 +94,7 @@ export function PrepaidHistory({
 
   if (records.length === 0) {
     return (
-      <Paper sx={{ p: 3, textAlign: "center", bgcolor: "grey.50" }}>
+      <Paper sx={{ p: 3, textAlign: "center", bgcolor: "background.neutral" }}>
         <Typography color="text.secondary">Zapas tarihi mavjud emas</Typography>
       </Paper>
     );
@@ -125,7 +125,7 @@ export function PrepaidHistory({
         </Stack>
 
         {/* Jami zapas */}
-        <Paper sx={{ p: 2, bgcolor: "info.lighter", borderRadius: 1 }}>
+        <Paper sx={{ p: 2, bgcolor: "rgba(var(--palette-info-mainChannel) / 0.1)", borderRadius: 1 }}>
           <Typography variant="body2" color="text.secondary" gutterBottom>
             Jami Zapas
           </Typography>
@@ -138,7 +138,7 @@ export function PrepaidHistory({
         <TableContainer>
           <Table>
             <TableHead>
-              <TableRow sx={{ bgcolor: "grey.100" }}>
+              <TableRow sx={{ bgcolor: "background.neutral" }}>
                 <TableCell>Sana</TableCell>
                 <TableCell>Summa</TableCell>
                 <TableCell>To'lov usuli</TableCell>

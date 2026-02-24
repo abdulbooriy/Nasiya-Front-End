@@ -29,14 +29,14 @@ export const Balance = ({ employee }: { employee: IEmployee }) => {
         amount={employee.balance.dollar ?? 0}
         currency="$"
         icon={BsCash}
-        color="#1e88e5"
+        color="primary.main"
       />
       <BalanceCard
-        title="Naqt so‘m"
+        title="Naqt so’m"
         amount={employee.balance.sum ?? 0}
         currency="so'm"
         icon={BsCash}
-        color="#43a047"
+        color="success.main"
       />
     </Stack>
   );
@@ -55,7 +55,7 @@ const BalanceCard: FC<Props> = ({
   amount,
   currency,
   icon: Icon,
-  color = "#1976d2",
+  color = "primary.main",
 }) => (
   <Card
     sx={{
@@ -67,7 +67,7 @@ const BalanceCard: FC<Props> = ({
       display: "flex",
       alignItems: "center",
       boxShadow: 3,
-      background: "linear-gradient(135deg, #f5f5f5, #ffffff)",
+      background: "var(--palette-background-paper)",
     }}
   >
     <Avatar sx={{ bgcolor: color, width: 56, height: 56, mr: 2 }}>

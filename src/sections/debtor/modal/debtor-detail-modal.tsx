@@ -168,8 +168,8 @@ export function DebtorDetailModal({
                   <TableRow 
                     key={contract._id || index}
                     sx={{ 
-                      bgcolor: hasDelay ? "error.lighter" : "background.paper",
-                      '&:hover': { bgcolor: hasDelay ? "error.light" : "action.hover" }
+                      bgcolor: hasDelay ? "rgba(var(--palette-error-mainChannel) / 0.1)" : "background.paper",
+                      '&:hover': { bgcolor: hasDelay ? "rgba(var(--palette-error-mainChannel) / 0.18)" : "action.hover" }
                     }}
                   >
                     <TableCell>

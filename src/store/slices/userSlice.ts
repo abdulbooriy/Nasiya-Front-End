@@ -19,7 +19,7 @@ const initialState: UserState = {
   isLoading: false,
 };
 
-const authSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -73,5 +73,5 @@ export const {
   startGetCourse,
   successGetCourse,
   failureGetCourse,
-} = authSlice.actions;
-export default authSlice.reducer;
+} = userSlice.actions;
+export default userSlice.reducer;

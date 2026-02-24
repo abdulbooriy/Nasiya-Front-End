@@ -65,7 +65,7 @@ export const columnsCash: Column[] = [
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
               <MdAccessTime
                 size={16}
-                color={isExpired ? "#f44336" : "#ff9800"}
+                color={isExpired ? "var(--palette-error-main)" : "var(--palette-warning-main)"}
               />
               <span>{day.toString().padStart(2, "0")}</span>
             </Box>
@@ -114,7 +114,7 @@ export const columnsCash: Column[] = [
                 sx={{
                   p: 0.25,
                   "&:hover": {
-                    bgcolor: "primary.lighter",
+                    bgcolor: "rgba(var(--palette-primary-mainChannel) / 0.08)",
                     color: "primary.main",
                   },
                 }}
@@ -377,7 +377,7 @@ export const columnsCash: Column[] = [
                 gap: 0.75,
               }}
             >
-              <MdAccessTime size={16} color={isPast ? "#f44336" : "#666"} />
+              <MdAccessTime size={16} color={isPast ? "var(--palette-error-main)" : "var(--palette-text-secondary)"} />
               <Typography
                 sx={{
                   fontSize: "0.75rem",
@@ -532,7 +532,7 @@ export const columnsCash: Column[] = [
               sx={{
                 color: isExpired ? "error.main" : "warning.main",
                 "&:hover": {
-                  bgcolor: isExpired ? "error.lighter" : "warning.lighter",
+                  bgcolor: isExpired ? "rgba(var(--palette-error-mainChannel) / 0.08)" : "rgba(var(--palette-warning-mainChannel) / 0.08)",
                 },
                 p: 1,
               }}
@@ -561,7 +561,7 @@ export const columnsCash: Column[] = [
               sx={{
                 color: hasNotes ? "primary.main" : "text.disabled",
                 "&:hover": {
-                  bgcolor: hasNotes ? "primary.lighter" : "transparent",
+                  bgcolor: hasNotes ? "rgba(var(--palette-primary-mainChannel) / 0.08)" : "transparent",
                 },
                 p: 1,
               }}

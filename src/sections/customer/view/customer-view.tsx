@@ -298,9 +298,13 @@ const CustomerView = () => {
             gap={2}
             px={2}
             py={1}
-            sx={{ bgcolor: "error.lighter", borderRadius: 1 }}
+            sx={{
+              bgcolor: "rgba(var(--palette-error-mainChannel) / 0.12)",
+              border: "1px solid rgba(var(--palette-error-mainChannel) / 0.24)",
+              borderRadius: 1,
+            }}
           >
-            <Typography variant="body1" color="error.dark" fontWeight={600}>
+            <Typography variant="body1" color="error.main" fontWeight={600}>
               {selectedRows.length} ta tanlangan
             </Typography>
             <Button

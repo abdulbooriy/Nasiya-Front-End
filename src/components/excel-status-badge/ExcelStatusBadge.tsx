@@ -45,7 +45,7 @@ export function ExcelStatusBadge({ status, label }: ExcelStatusBadgeProps) {
       default:
         return {
           backgroundColor: excelTheme.colors.lightGray,
-          color: '#000000',
+          color: excelTheme.colors.darkGray,
         };
     }
   };

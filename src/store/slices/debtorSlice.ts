@@ -15,8 +15,8 @@ const initialState: UserState = {
   isLoading: false,
 };
 
-const authSlice = createSlice({
-  name: "contract",
+const debtorSlice = createSlice({
+  name: "debtor",
   initialState,
   reducers: {
     setDebtors(state, action: PayloadAction<IDebt[] | []>) {
@@ -40,5 +40,5 @@ const authSlice = createSlice({
 });
 
 export const { setDebtors, setDebtContract, start, success, failure } =
-  authSlice.actions;
-export default authSlice.reducer;
+  debtorSlice.actions;
+export default debtorSlice.reducer;

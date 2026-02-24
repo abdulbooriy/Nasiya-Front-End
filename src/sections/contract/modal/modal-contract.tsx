@@ -429,13 +429,13 @@ const ModalContract = () => {
                     {customer?.isActive ? (
                       <Tooltip title="Tasdiqlangan mijoz" placement="top">
                         <Typography>
-                          <MdCheckCircle color="green" />
+                          <MdCheckCircle color="var(--palette-success-main)" />
                         </Typography>
                       </Tooltip>
                     ) : (
                       <Tooltip title="Hali tasdiqlanmagan" placement="top">
                         <Typography>
-                          <MdCancel color="red" />
+                          <MdCancel color="var(--palette-error-main)" />
                         </Typography>
                       </Tooltip>
                     )}
@@ -731,7 +731,7 @@ const ModalContract = () => {
                     <Accordion
                       sx={{
                         mt: 2,
-                        bgcolor: grey[300],
+                        bgcolor: "background.neutral",
                         borderRadius: 0,
                       }}
                     >

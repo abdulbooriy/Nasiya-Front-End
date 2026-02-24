@@ -35,7 +35,7 @@ export default function NotesModal({
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <MdNoteAlt size={24} color="#1976d2" />
+          <MdNoteAlt size={24} color="var(--palette-primary-main)" />
           <Typography variant="h6" component="span">
             To'lov izohi
           </Typography>
@@ -77,7 +77,7 @@ export default function NotesModal({
         </Typography>
         <Box
           sx={{
-            bgcolor: "grey.100",
+            bgcolor: "background.neutral",
             p: 2,
             borderRadius: 0,
             maxHeight: "400px",
