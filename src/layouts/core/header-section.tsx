@@ -107,16 +107,11 @@ export function HeaderSection({
             alignItems: "center",
             justifyContent: "space-between",
             ...(slotProps?.container?.sx ?? {}),
-<<<<<<< HEAD
-
-            background: "rgba(255, 255, 255, 0.75)",
+            // Colleague's UI: blur glass effect — hardcoded rgba(255,255,255,0.75) replaced with CSS var
+            background: `rgba(var(--palette-background-defaultChannel) / 0.75)`,
             backdropFilter: "saturate(200%) blur(30px)",
             borderBottom: "0.5px solid rgba(0, 0, 0, 0.08)",
-          }}
-        >
-=======
           }}>
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
           {slots?.leftArea}
 
           <Box
@@ -124,28 +119,20 @@ export function HeaderSection({
               display: "flex",
               flex: "1 1 auto",
               justifyContent: "center",
-<<<<<<< HEAD
+              // Colleague's UI: pill-shaped nav container
               gap: "0.5rem",
               p: "4px",
               maxWidth: "1000px",
               borderRadius: "10px",
               bgcolor: "var(--layout-nav-item-hover-bg)",
-              // mr: "200px",
-            }}
-          >
+            }}>
             <Box
               sx={{
                 display: { xs: "none", md: "flex" },
                 flex: "1 auto",
-
                 bgcolor: "var(--layout-nav-item-hover-bg)",
                 borderRadius: "10px",
-              }}
-            >
-=======
-            }}>
-            <Box sx={{ display: { xs: "none", md: "flex" }, flex: "1 auto" }}>
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
+              }}>
               {roleNavItems.map((item: DataType) => {
                 const isActived = item.path === pathname;
 
@@ -169,17 +156,17 @@ export function HeaderSection({
                         "&:hover": {
                           color: "var(--layout-nav-item-hover-color)",
                           bgcolor: "var(--layout-nav-item-hover-bg)",
-                          transition:"all 0.2s ease"
+                          transition: "all 0.2s ease",
                         },
                         ...(isActived && {
                           borderRadius: "10px",
                           fontWeight: "fontWeightSemiBold",
                           bgcolor: "var(--layout-nav-item-active-bg)",
                           color: "var(--layout-nav-item-active-color)",
-                          
+
                           boxShadow:
-                          "0 3px 8px rgba(0, 0, 0, 0.1), 0 3px 1px rgba(0, 0, 0, 0.04)",
-                          
+                            "0 3px 8px rgba(0, 0, 0, 0.1), 0 3px 1px rgba(0, 0, 0, 0.04)",
+
                           border: "0.5px solid rgba(0, 0, 0, 0.04)",
                           transition: "all 0.2s ease",
 
@@ -188,14 +175,9 @@ export function HeaderSection({
                             bgcolor: "var(--layout-nav-item-active-bg)",
                           },
                         }),
-<<<<<<< HEAD
-                      }}
-                    >
-                      <Box component="span" sx={{ width: 20, height: 20 }}>
-=======
                       }}>
-                      <Box component="span" sx={{ width: 24, height: 24 }}>
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
+                      {/* Colleague's UI: icon size 20×20 */}
+                      <Box component="span" sx={{ width: 20, height: 20 }}>
                         {item.icon}
                       </Box>
 

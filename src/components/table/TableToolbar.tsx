@@ -35,22 +35,17 @@ export function TableToolbar({
         position: "sticky",
         top: 0,
         zIndex: 1000,
-<<<<<<< HEAD
-        backgroundColor: "#ffffff",
-        borderBottom: `1px solid ${EXCEL_COLORS.gridLine}`,
+        // Colleague's UI: rounded floating card style — hardcoded colors replaced with CSS vars
+        backgroundColor: "var(--palette-background-neutral)",
+        borderBottom: `1px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
         p: "6px",
         borderRadius: "12px",
         marginBottom: "12px",
-        background: "#fff",
         boxShadow: `
     0 1px 2px rgba(0,0,0,0.04),
     0 6px 20px rgba(0,0,0,0.06),
     0 20px 40px rgba(0,0,0,0.08)
   `,
-=======
-        backgroundColor: "var(--palette-background-neutral)",
-        borderBottom: `1px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
       }}
     >
       <Grid
@@ -67,7 +62,7 @@ export function TableToolbar({
             onChange={(e) => onSearchChange(e.target.value)}
             sx={{
               width: 1,
-<<<<<<< HEAD
+              // Colleague's UI: richer blur/rounded search field
               "& .MuiOutlinedInput-root": {
                 borderRadius: "12px",
                 background: "var(--layout-nav-item-hover-bg)",
@@ -84,17 +79,10 @@ export function TableToolbar({
                 transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
                 "& fieldset": {
                   border: "none",
-=======
-              '& .MuiOutlinedInput-root': {
-                fontSize: '11px',
-                height: '32px',
-                backgroundColor: 'var(--palette-background-paper)',
-                '& fieldset': {
-                  borderColor: EXCEL_COLORS.gridLine,
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                 },
                 "&.Mui-focused": {
-                  background: "#fff",
+                  // Dark-mode-safe: replaced hardcoded "#fff" with CSS var
+                  background: "var(--palette-background-paper)",
                   boxShadow: `
           0 0 0 3px rgba(0,122,255,0.15),
           0 8px 24px rgba(0,0,0,0.06)
@@ -144,7 +132,6 @@ export function TableToolbar({
                 startIcon={<MdFilterList size={14} />}
                 onClick={onFilterClick}
                 sx={{
-<<<<<<< HEAD
                   fontSize: "10px",
                   minHeight: "28px",
                   fontWeight: 900,
@@ -157,20 +144,7 @@ export function TableToolbar({
                   "&:hover": {
                     color: "black",
                     borderColor: "var(--layout-nav-item-hover-bg)",
-                    // borderColor: EXCEL_COLORS.headerBg,
-                    backgroundColor: "#fff",
-=======
-                  fontSize: '10px',
-                  minHeight: '28px',
-                  py: '4px',
-                  px: '10px',
-                  textTransform: 'none',
-                  borderColor: EXCEL_COLORS.gridLine,
-                  color: EXCEL_COLORS.cellText,
-                  '&:hover': {
-                    borderColor: EXCEL_COLORS.headerBg,
                     backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
@@ -191,11 +165,7 @@ export function TableToolbar({
                   color: EXCEL_COLORS.cellText,
                   "&:hover": {
                     borderColor: EXCEL_COLORS.headerBg,
-<<<<<<< HEAD
-                    backgroundColor: "rgba(33, 115, 70, 0.04)",
-=======
                     backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
@@ -216,11 +186,7 @@ export function TableToolbar({
                   color: EXCEL_COLORS.cellText,
                   "&:hover": {
                     borderColor: EXCEL_COLORS.headerBg,
-<<<<<<< HEAD
-                    backgroundColor: "rgba(33, 115, 70, 0.04)",
-=======
                     backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
->>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
