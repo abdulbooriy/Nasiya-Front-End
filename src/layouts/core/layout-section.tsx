@@ -1,8 +1,8 @@
-import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
+import type { Theme, SxProps, CSSObject } from "@mui/material/styles";
 
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
-import GlobalStyles from '@mui/material/GlobalStyles';
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
+import GlobalStyles from "@mui/material/GlobalStyles";
 
 import { baseVars } from "@/layouts/config-vars";
 import { layoutClasses } from "@/layouts/classes";
@@ -52,7 +52,15 @@ export function LayoutSection({
           className={layoutClasses.hasSidebar}
         >
           {headerSection}
-          {children}
+          <Box
+            sx={{
+               p: 3,
+               minHeight: "100vh",
+              bgcolor: "#e5e7eb",
+            }}
+          >
+            {children}
+          </Box>
           {footerSection}
         </Box>
       </Box>

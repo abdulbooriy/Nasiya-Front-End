@@ -93,24 +93,29 @@ export function NavContent({ slots, sx }: NavContentProps) {
                     component={RouterLink}
                     href={item.path}
                     sx={{
-                      pl: 2,
-                      py: 1,
-                      gap: 2,
-                      pr: 1.5,
+                      px: 2,
+                      py: "6px",
+                      gap: "0.5rem",
                       borderRadius: 0,
                       typography: "body2",
                       fontWeight: "fontWeightMedium",
                       color: "var(--layout-nav-item-color)",
                       minHeight: "var(--layout-nav-item-height)",
+                      "&:hover": {
+                        bgcolor: "var(--layout-nav-item-hover-bg)",
+                        color: "var(--layout-nav-item-hover-color)",
+                      },
                       ...(isActived && {
                         fontWeight: "fontWeightSemiBold",
                         bgcolor: "var(--layout-nav-item-active-bg)",
                         color: "var(--layout-nav-item-active-color)",
                         "&:hover": {
-                          bgcolor: "var(--layout-nav-item-hover-bg)",
+                          bgcolor: "var(--layout-nav-item-active-bg)",
+                          color: "var(--layout-nav-item-active-color)",
                         },
                       }),
-                    }}>
+                    }}
+                  >
                     <Box component="span" sx={{ width: 24, height: 24 }}>
                       {item.icon}
                     </Box>

@@ -35,39 +35,81 @@ export function TableToolbar({
         position: "sticky",
         top: 0,
         zIndex: 1000,
+<<<<<<< HEAD
+        backgroundColor: "#ffffff",
+        borderBottom: `1px solid ${EXCEL_COLORS.gridLine}`,
+        p: "6px",
+        borderRadius: "12px",
+        marginBottom: "12px",
+        background: "#fff",
+        boxShadow: `
+    0 1px 2px rgba(0,0,0,0.04),
+    0 6px 20px rgba(0,0,0,0.06),
+    0 20px 40px rgba(0,0,0,0.08)
+  `,
+=======
         backgroundColor: "var(--palette-background-neutral)",
         borderBottom: `1px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
       }}
     >
-      <Grid container spacing={1} width={1}>
+      <Grid
+        container
+        // sx={{ alignItems: "center" }}
+        spacing={1}
+        width={1}
+      >
         <Grid xs={12} sm={6} md={component ? 3 : 6}>
           <TextField
             placeholder="Qidirish..."
             size="small"
             value={searchText}
             onChange={(e) => onSearchChange(e.target.value)}
-            sx={{ 
-              mr: 2, 
+            sx={{
               width: 1,
+<<<<<<< HEAD
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "12px",
+                background: "var(--layout-nav-item-hover-bg)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                border: "0.5px solid rgba(0,0,0,0.08)",
+                boxShadow: `
+        0 1px 2px rgba(0,0,0,0.02),
+        0 4px 14px rgba(0,0,0,0.03)
+      `,
+                fontWeight: 600,
+                fontSize: "0.75rem",
+                height: "38px",
+                transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+                "& fieldset": {
+                  border: "none",
+=======
               '& .MuiOutlinedInput-root': {
                 fontSize: '11px',
                 height: '32px',
                 backgroundColor: 'var(--palette-background-paper)',
                 '& fieldset': {
                   borderColor: EXCEL_COLORS.gridLine,
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                 },
-                '&:hover fieldset': {
-                  borderColor: EXCEL_COLORS.headerBg,
+                "&.Mui-focused": {
+                  background: "#fff",
+                  boxShadow: `
+          0 0 0 3px rgba(0,122,255,0.15),
+          0 8px 24px rgba(0,0,0,0.06)
+        `,
                 },
               },
-              '& .MuiOutlinedInput-input': {
-                py: '6px',
+
+              "& .MuiOutlinedInput-input": {
+                padding: "14px 16px",
               },
             }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <MdSearch size={16} />
+                  <MdSearch size={18} />
                 </InputAdornment>
               ),
             }}
@@ -96,12 +138,28 @@ export function TableToolbar({
               </Box>
             )} */}
             <Stack direction="row" spacing={1} justifyContent="end">
-              <Button
+              {/* <Button
                 variant="outlined"
                 size="small"
                 startIcon={<MdFilterList size={14} />}
                 onClick={onFilterClick}
                 sx={{
+<<<<<<< HEAD
+                  fontSize: "10px",
+                  minHeight: "28px",
+                  fontWeight: 900,
+                  px: "10px",
+                  py: "6px",
+                  textTransform: "uppercase",
+                  borderRadius: "10px",
+                  borderColor: "var(--layout-nav-item-hover-bg)",
+                  color: "var(--layout-nav-item-color)",
+                  "&:hover": {
+                    color: "black",
+                    borderColor: "var(--layout-nav-item-hover-bg)",
+                    // borderColor: EXCEL_COLORS.headerBg,
+                    backgroundColor: "#fff",
+=======
                   fontSize: '10px',
                   minHeight: '28px',
                   py: '4px',
@@ -112,6 +170,7 @@ export function TableToolbar({
                   '&:hover': {
                     borderColor: EXCEL_COLORS.headerBg,
                     backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
@@ -123,16 +182,20 @@ export function TableToolbar({
                 startIcon={<MdSort size={14} />}
                 onClick={onSortClick}
                 sx={{
-                  fontSize: '10px',
-                  minHeight: '28px',
-                  py: '4px',
-                  px: '10px',
-                  textTransform: 'none',
+                  fontSize: "10px",
+                  minHeight: "28px",
+                  py: "4px",
+                  px: "10px",
+                  textTransform: "none",
                   borderColor: EXCEL_COLORS.gridLine,
                   color: EXCEL_COLORS.cellText,
-                  '&:hover': {
+                  "&:hover": {
                     borderColor: EXCEL_COLORS.headerBg,
+<<<<<<< HEAD
+                    backgroundColor: "rgba(33, 115, 70, 0.04)",
+=======
                     backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
@@ -144,21 +207,118 @@ export function TableToolbar({
                 startIcon={<MdViewColumn size={14} />}
                 onClick={onColumnClick}
                 sx={{
-                  fontSize: '10px',
-                  minHeight: '28px',
-                  py: '4px',
-                  px: '10px',
-                  textTransform: 'none',
+                  fontSize: "10px",
+                  minHeight: "28px",
+                  py: "4px",
+                  px: "10px",
+                  textTransform: "none",
                   borderColor: EXCEL_COLORS.gridLine,
                   color: EXCEL_COLORS.cellText,
-                  '&:hover': {
+                  "&:hover": {
                     borderColor: EXCEL_COLORS.headerBg,
+<<<<<<< HEAD
+                    backgroundColor: "rgba(33, 115, 70, 0.04)",
+=======
                     backgroundColor: 'rgba(var(--palette-success-mainChannel) / 0.04)',
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
                   },
                 }}
               >
                 Ustunlar
-              </Button>
+              </Button> */}
+              {/* new button design */}
+              <Box
+                sx={{
+                  display: "inline-flex",
+                  gap: "4px",
+                  background: "#F3F4F6",
+                  p: "4px",
+                  borderRadius: "12px",
+                  border: "1px solid rgba(0,0,0,0.04)",
+                }}
+              >
+                <Button
+                  onClick={onFilterClick}
+                  startIcon={<MdFilterList size={14} />}
+                  disableRipple
+                  sx={{
+                    minWidth: 0,
+                    px: "12px",
+                    height: "28px",
+
+                    borderRadius: "10px",
+
+                    fontSize: "11px",
+                    fontWeight: 700,
+
+                    textTransform: "uppercase",
+
+                    color: "#6B7280",
+
+                    background: "transparent",
+
+                    "&:hover": {
+                      background: "#fff",
+                      color: "#111827",
+
+                      boxShadow:
+                        "0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1)",
+                    },
+                  }}
+                >
+                  Filtr
+                </Button>
+
+                <Button
+                  onClick={onSortClick}
+                  startIcon={<MdSort size={14} />}
+                  disableRipple
+                  sx={{
+                    minWidth: 0,
+                    px: "12px",
+                    height: "28px",
+                    borderRadius: "10px",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    color: "#6B7280",
+
+                    "&:hover": {
+                      background: "#fff",
+                      color: "#111827",
+                      boxShadow:
+                        "0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1)",
+                    },
+                  }}
+                >
+                  Saralash
+                </Button>
+
+                <Button
+                  onClick={onColumnClick}
+                  startIcon={<MdViewColumn size={14} />}
+                  disableRipple
+                  sx={{
+                    minWidth: 0,
+                    px: "12px",
+                    height: "28px",
+                    borderRadius: "10px",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    color: "#6B7280",
+
+                    "&:hover": {
+                      background: "#fff",
+                      color: "#111827",
+                      boxShadow:
+                        "0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1)",
+                    },
+                  }}
+                >
+                  Ustunlar
+                </Button>
+              </Box>
               {calendar && <Box sx={{ overflow: "hidden" }}>{calendar}</Box>}
               {/* {uploadData && uploadData} */}
             </Stack>

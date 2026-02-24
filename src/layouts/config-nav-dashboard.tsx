@@ -46,7 +46,7 @@ export const navData = {
     {
       title: "Audit Log",
       path: "/admin/audit-log",
-      icon: icon("ic-analytics"),
+      icon: icon("ic-audit-log"),
     },
   ],
   moderator: [
@@ -79,7 +79,7 @@ export const navData = {
     {
       title: "Audit Log",
       path: "/moderator/audit-log",
-      icon: icon("ic-analytics"),
+      icon: icon("ic-audit-log"),
     },
   ],
   seller: [

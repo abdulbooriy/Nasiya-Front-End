@@ -6,19 +6,31 @@ import { varAlpha } from '@/theme/styles'
 
 export const baseVars = (theme: Theme) => ({
   // nav
+<<<<<<< HEAD
+  "--layout-nav-bg": theme.vars.palette.common.white,
+  "--layout-nav-border-color": varAlpha(
+    theme.vars.palette.grey["500Channel"],
+    0.08,
+  ),
+  "--layout-nav-zIndex": 1101,
+  // "--layout-nav-mobile-width": "320px",
+=======
   '--layout-nav-bg': theme.vars.palette.background.paper,
   '--layout-nav-border-color': varAlpha(theme.vars.palette.grey['500Channel'], 0.08),
   '--layout-nav-zIndex': 1101,
   '--layout-nav-mobile-width': '320px',
+>>>>>>> 5693928f9628cdceeb2056de3e0340a952819e62
   // nav item
-  '--layout-nav-item-height': '44px',
-  '--layout-nav-item-color': theme.vars.palette.text.secondary,
-  '--layout-nav-item-active-color': theme.vars.palette.primary.main,
-  '--layout-nav-item-active-bg': varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
-  '--layout-nav-item-hover-bg': varAlpha(theme.vars.palette.primary.mainChannel, 0.16),
+  "--layout-nav-item-height": "18px",
+  "--layout-nav-item-color": "rgb(142 142 147 / var(--tw-text-opacity, 1))",
+  "--layout-nav-item-active-color": "#007AFF",
+  // '--layout-nav-item-active-bg': varAlpha(theme.vars.palette.primary.mainChannel, 0.08),
+  "--layout-nav-item-active-bg": "#FFFFFF",
+  "--layout-nav-item-hover-bg": "#F2F2F7",
+  "--layout-nav-item-hover-color": "#4C4F53",
   // header
-  '--layout-header-blur': '8px',
-  '--layout-header-zIndex': 1100,
-  '--layout-header-mobile-height': '64px',
-  '--layout-header-desktop-height': '72px',
+  "--layout-header-blur": "8px",
+  "--layout-header-zIndex": 1100,
+  "--layout-header-mobile-height": "64px",
+  "--layout-header-desktop-height": "60px",
 });

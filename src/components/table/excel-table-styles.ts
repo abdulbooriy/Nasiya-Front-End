@@ -144,10 +144,10 @@ export const excelTableContainerStyle: SxProps<Theme> = {
 // Card wrapper style
 export const excelCardStyle: SxProps<Theme> = {
   boxShadow: 'none',
-  border: `${EXCEL_DIMENSIONS.borderWidth}px solid rgba(var(--palette-grey-500Channel) / 0.2)`,
-  borderRadius: '8px',
+  border: `${EXCEL_DIMENSIONS.borderWidth}px solid ${EXCEL_COLORS.gridLine}`,
+  borderRadius: '18px',
   overflow: 'hidden',
-  backgroundColor: 'var(--palette-background-paper)',
+  backgroundColor: 'transparent',
 };
 
 // Pagination style

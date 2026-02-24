@@ -94,7 +94,7 @@ export function AccountPopover({
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         slotProps={{
           paper: {
-            sx: { width: 200 },
+            sx: { width: 200, borderRadius: "10px" },
           },
         }}
       >
@@ -155,6 +155,7 @@ export function AccountPopover({
               size="medium"
               variant="outlined"
               onClick={handleResetClick}
+              sx={{borderRadius:"10px"}}
             >
               Reset
             </Button>
@@ -167,6 +168,7 @@ export function AccountPopover({
             onClick={() => {
               dispatch(logout());
             }}
+            sx={{borderRadius:"10px"}}
           >
             Tizimdan chiqish
           </Button>
