@@ -48,17 +48,16 @@ export function EmployeesView() {
       <Stack spacing={5}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography
-            // variant="h4"
-            sx={{
-              fontSize: "1.5rem", // text-2xl
-              fontWeight: 900, // font-black
-              color: "#000000", // text-black
-              letterSpacing: "-0.025em", // tracking-tight
-            }}
-            flexGrow={1}
-          >
-            Xodimlar
-          </Typography>
+  sx={{
+    fontSize: "1.5rem",
+    fontWeight: 900,
+    letterSpacing: "-0.025em",
+    flexGrow: 1,
+    color: (theme) => (theme.palette.mode === 'dark' ? 'grey.100' : 'grey.900'),
+  }}
+>
+  Xodimlar
+</Typography>
           <Button
             variant="contained"
             color="inherit"

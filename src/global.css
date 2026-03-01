@@ -159,3 +159,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+
+
+
+
+/** **************************************
+* Global Date Picker Fix (Dark Mode)
+*************************************** */
+
+/* Targets the calendar icon when dark mode is active */
+.dark input::-webkit-calendar-picker-indicator,
+[data-theme='dark'] input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* If you want to support system-level dark mode automatically */
+@media (prefers-color-scheme: dark) {
+  input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
