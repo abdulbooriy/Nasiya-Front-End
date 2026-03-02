@@ -59,27 +59,8 @@ export function EmployeesView() {
   Xodimlar
 </Typography>
           <Button
-            variant="contained"
-            color="inherit"
-            sx={{
-              backgroundColor: "#1C1C1E",
-              color: "#FFFFFF",
-              px: "20px", // px-5
-              py: "10px", // py-2.5
-              borderRadius: "14px",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "0.75rem", // text-xs
-              fontWeight: 900, // font-black
-              textTransform: "uppercase",
-              letterSpacing: "0.1em", // tracking-widest
-              transition: "all 0.2s ease",
-              boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)", // shadow-lg + shadow-black/10
-              "&:hover": {
-                backgroundColor: "#000000",
-              },
-            }}
+              variant="contained"
+              color="inherit"
             startIcon={<Iconify icon="mingcute:add-line" width={16} height={16}/>}
             onClick={() => {
               dispatch(
